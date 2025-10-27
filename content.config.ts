@@ -31,7 +31,26 @@ export const collections = {
     type: 'page',
     schema: z.object({
       hero: z.object({
-        links: z.array(createLinkSchema())
+        banner: z.object({
+          text: z.string().nonempty(),
+          color: createEnum(['primary', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose', 'gray', 'neutral']).optional()
+        }).optional(),
+        title: z.string().nonempty(),
+        description: z.string().nonempty(),
+        highlightedWord: z.string().optional(),
+        highlightColor: z.string().optional(),
+        button: z.object({
+          label: z.string().nonempty(),
+          to: z.string().nonempty(),
+          size: createEnum(['xs', 'sm', 'md', 'lg', 'xl']).optional(),
+          color: z.string().optional(),
+          variant: createEnum(['solid', 'outline', 'subtle', 'soft', 'ghost', 'link']).optional()
+        }).optional(),
+        platforms: z.array(z.object({
+          name: z.string().nonempty(),
+          to: z.string().nonempty()
+        })).optional(),
+        links: z.array(createLinkSchema()).optional()
       }),
       section: createBaseSchema().extend({
         headline: z.string().optional(),
@@ -87,6 +106,36 @@ export const collections = {
       cta: createBaseSchema().extend({
         links: z.array(createLinkSchema())
       })
+    })
+  }),
+  blog: defineCollection({
+    source: 'blog/*.md',
+    type: 'page',
+    schema: z.object({
+      title: z.string().nonempty(),
+      description: z.string().nonempty(),
+      date: z.string().nonempty(),
+      author: z.string().nonempty(),
+      category: z.string().nonempty(),
+      image: z.string().optional(),
+      slug: z.string().nonempty()
+    })
+  }),
+  events: defineCollection({
+    source: 'events/*.md',
+    type: 'page',
+    schema: z.object({
+      title: z.string().nonempty(),
+      description: z.string().nonempty(),
+      date: z.string().nonempty(),
+      startTime: z.string().optional(),
+      endTime: z.string().optional(),
+      location: z.string().nonempty(),
+      locationType: createEnum(['physical', 'virtual', 'hybrid']),
+      category: z.string().nonempty(),
+      image: z.string().optional(),
+      registrationLink: z.string().optional(),
+      featured: z.boolean().optional()
     })
   })
 }
