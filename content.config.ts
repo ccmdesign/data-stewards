@@ -25,6 +25,25 @@ const createFeatureSchema = () => createBaseSchema().extend({
   }).editor({ hidden: true })
 })
 
+const postsSchema = z.object({
+  title: z.string().nonempty(),
+  description: z.string().nonempty(),
+  date: z.string().nonempty(),
+  category: createEnum(['blog', 'events', 'interviews', 'videos']),
+  tags: z.array(z.string().nonempty()).optional(),
+  author: z.string().optional(),
+  image: z.string().optional(),
+  slug: z.string().nonempty(),
+  featured: z.boolean().optional(),
+  startTime: z.string().optional(),
+  endTime: z.string().optional(),
+  location: z.string().optional(),
+  locationType: createEnum(['physical', 'virtual', 'hybrid']).optional(),
+  registrationLink: z.string().optional(),
+  videoUrl: z.string().optional(),
+  duration: z.string().optional()
+})
+
 export const collections = {
   content: defineCollection({
     source: 'index.yml',
@@ -108,34 +127,24 @@ export const collections = {
       })
     })
   }),
-  blog: defineCollection({
-    source: 'blog/*.md',
+  posts: defineCollection({
+    source: 'posts/**/*.md',
     type: 'page',
-    schema: z.object({
-      title: z.string().nonempty(),
-      description: z.string().nonempty(),
-      date: z.string().nonempty(),
-      author: z.string().nonempty(),
-      category: z.string().nonempty(),
-      image: z.string().optional(),
-      slug: z.string().nonempty()
-    })
+    schema: postsSchema
   }),
-  events: defineCollection({
-    source: 'events/*.md',
+  faculty: defineCollection({
+    source: 'faculty/**/*.md',
     type: 'page',
     schema: z.object({
-      title: z.string().nonempty(),
-      description: z.string().nonempty(),
-      date: z.string().nonempty(),
-      startTime: z.string().optional(),
-      endTime: z.string().optional(),
-      location: z.string().nonempty(),
-      locationType: createEnum(['physical', 'virtual', 'hybrid']),
-      category: z.string().nonempty(),
+      name: z.string().nonempty(),
+      role: z.string().optional(),
+      affiliation: z.string().optional(),
+      category: createEnum(['instructor', 'guest-faculty']).optional(),
       image: z.string().optional(),
-      registrationLink: z.string().optional(),
-      featured: z.boolean().optional()
+      headshot: z.string().optional(),
+      photo: z.string().optional(),
+      bio: z.string().optional(),
+      expertise: z.array(z.string()).optional()
     })
   })
 }
