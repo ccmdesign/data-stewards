@@ -1,252 +1,230 @@
 <script setup lang="ts">
-const { data: page } = await useAsyncData('index', () => queryCollection('content').first())
-if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
-}
+import type { ButtonProps } from '#ui/types'
+
+const heroLinks: ButtonProps[] = [
+  { label: 'Explore Programs', to: '#programs', color: 'primary', size: 'lg' },
+  { label: 'Download Brochure', to: '#', variant: 'outline', size: 'lg' }
+]
+
+const programCards = [
+  { title: 'Foundations', description: 'Bootcamps for building stewardship maturity' },
+  { title: 'Deep Dives', description: 'Advanced masterclasses for specialists' },
+  { title: 'Exchange', description: 'Network with global practitioners' },
+  { title: 'For Your Organization', description: 'Tailored enterprise solutions' }
+]
+
+const bootcampFormats = [
+  { title: 'In-Person Intensive', badge: '5 Days', description: 'Immersive experience with faculty and peers; includes field visits and a capstone sprint.' },
+  { title: 'Hybrid Bootcamp', badge: '3 weeks online + 2-day capstone', description: 'Flexible for distributed teams; combines live instruction and collaborative labs.' },
+  { title: 'Online Bootcamp', badge: '6 weeks (1×3h/week)', description: 'Global cohort-based, fully remote with recordings and office hours.' },
+  { title: 'LinkedIn Learning', badge: '1h video course', description: 'Orientation and pre-work; ideal for team onboarding.' }
+]
+
+const deepDiveTopics = [
+  { title: 'Social License & Digital Self-Determination' },
+  { title: 'Legal & Ethical Readiness' },
+  { title: 'Designing Data Spaces & Interoperability' },
+  { title: 'Data Contracts & Governance Agreements' },
+  { title: 'Evaluation, KPIs & Value Realization' },
+  { title: 'Synthetic Data & Privacy-Enhancing Technologies' }
+]
+
+const exchangeItems = [
+  { title: 'Community Slack', description: 'Join our active Slack channel to share lessons, tools, and trends with fellow data stewards worldwide.' },
+  { title: 'Events & Salons', description: 'Keynotes, fireside chats, and panels with global thought leaders in data governance and stewardship.' },
+  { title: 'Datathons', description: 'Collaborative sprints where teams tackle data governance challenges using real datasets.' },
+  { title: 'Trends to Watch', description: 'Quarterly briefings on AI governance, data sovereignty, new legal standards, and cross-sector collaborations.' }
+]
+
+const organizationOffers = [
+  { title: 'Private Bootcamps', description: 'Cohort training customized for your specific agency or company needs.' },
+  { title: 'Executive Briefings', description: '90-minute strategy sessions designed for leadership teams.' },
+  { title: 'Capability Roadmaps', description: '6–12 week consulting engagements to establish stewardship functions.' }
+]
+
+const testimonials = [
+  {
+    quote: 'The Data Stewardship Academy transformed how we approach data governance. The bootcamp gave us practical frameworks we could implement immediately.',
+    author: 'Sarah Chen — Chief Data Officer, Global Health Initiative'
+  },
+  {
+    quote: 'An intensive, eye-opening experience. The deep dives into legal and ethical readiness were exactly what our organization needed.',
+    author: 'Marcus Williams — Director of Data Strategy, Federal Agency'
+  },
+  {
+    quote: 'The hybrid format worked perfectly for our distributed team. We built real capability while maintaining our operational commitments.',
+    author: 'Aisha Patel — VP of Analytics, Financial Services'
+  }
+]
 
 useSeoMeta({
-  title: page.value.seo?.title || page.value.title,
-  ogTitle: page.value.seo?.title || page.value.title,
-  description: page.value.seo?.description || page.value.description,
-  ogDescription: page.value.seo?.description || page.value.description
+  title: 'Data Stewardship Academy',
+  description: 'Make data stewardship strategic with world-class training, frameworks, and a global community of practitioners.'
 })
 </script>
 
 <template>
-  <div
-    v-if="page"
-    class="relative"
-  >
-    <div class="hidden lg:block">
-      <UColorModeImage
-        light="/images/light/line-1.svg"
-        dark="/images/dark/line-1.svg"
-        class="absolute pointer-events-none pb-10 left-0 top-0 object-cover h-[650px]"
-      />
-    </div>
-
-    <UPageHero
-      :description="page.description"
-      :links="page.hero.links"
-      :ui="{
-        container: 'md:pt-18 lg:pt-20',
-        title: 'max-w-3xl mx-auto'
-      }"
+  <div class="relative">
+    <section
+      class="relative isolate mb-24 overflow-hidden border border-primary/20 bg-primary/10 py-16 sm:py-24"
     >
-      <template #top>
-        <HeroBackground />
-      </template>
+      <HeroBackground />
 
-      <template #title>
-        <MDC
-          :value="page.title"
-          unwrap="p"
-        />
-      </template>
-    </UPageHero>
-
-    <UPageSection
-      :description="page.section.description"
-      :features="page.section.features"
-      orientation="horizontal"
-      :ui="{
-        container: 'lg:px-0 2xl:px-20 mx-0 max-w-none md:mr-10',
-        features: 'gap-0'
-      }"
-      reverse
-    >
-      <template #title>
-        <MDC
-          :value="page.section.title"
-          class="sm:*:leading-11"
-        />
-      </template>
-      <img
-        :src="page.section.images.desktop"
-        :alt="page.section.title"
-        class="hidden lg:block 2xl:hidden left-0 w-full max-w-2xl"
-      >
-      <img
-        :src="page.section.images.mobile"
-        :alt="page.section.title"
-        class="block lg:hidden 2xl:block 2xl:w-full 2xl:max-w-2xl"
-      >
-    </UPageSection>
-
-    <USeparator :ui="{ border: 'border-primary/30' }" />
-
-    <UPageSection
-      id="features"
-      :description="page.features.description"
-      :features="page.features.features"
-      :ui="{
-        title: 'text-left @container relative flex',
-        description: 'text-left'
-      }"
-      class="relative overflow-hidden"
-    >
-      <div class="absolute rounded-full -left-10 top-10 size-[300px] z-10 bg-primary opacity-30 blur-[200px]" />
-      <div class="absolute rounded-full -right-10 -bottom-10 size-[300px] z-10 bg-primary opacity-30 blur-[200px]" />
-      <template #title>
-        <MDC
-          :value="page.features.title"
-          class="*:leading-9"
-        />
-        <div class="hidden @min-[1020px]:block">
-          <UColorModeImage
-            light="/images/light/line-2.svg"
-            dark="/images/dark/line-2.svg"
-            class="absolute top-0 right-0 size-full transform scale-95 translate-x-[70%]"
-          />
-        </div>
-      </template>
-    </UPageSection>
-
-    <USeparator :ui="{ border: 'border-primary/30' }" />
-
-    <UPageSection
-      id="steps"
-      :description="page.steps.description"
-      class="relative overflow-hidden"
-    >
-      <template #headline>
-        <UColorModeImage
-          light="/images/light/line-3.svg"
-          dark="/images/dark/line-3.svg"
-          class="absolute -top-10 sm:top-0 right-1/2 h-24"
-        />
-      </template>
-      <template #title>
-        <MDC :value="page.steps.title" />
-      </template>
-
-      <template #features>
-        <UPageCard
-          v-for="(step, index) in page.steps.items"
-          :key="index"
-          class="group"
-          :ui="{ container: 'p-4 sm:p-4', title: 'flex items-center gap-1' }"
+      <div class="px-6 sm:px-12">
+        <UPageHero
+          class="relative z-10 mx-auto max-w-4xl space-y-8 text-left"
+          :description="'Make data stewardship strategic with world-class training, frameworks, and a global community of practitioners.'"
+          :links="heroLinks"
         >
-          <UColorModeImage
-            v-if="step.image"
-            :light="step.image?.light"
-            :dark="step.image?.dark"
-            :alt="step.title"
-            class="size-full"
-          />
+          <template #title>
+            <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+              <span class="mb-4 block text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+                Accessing Data in Systematic, Sustainable and Responsible Ways
+              </span>
+              Data Stewardship for a New Era
+            </h1>
+          </template>
+        </UPageHero>
+      </div>
+    </section>
 
-          <div class="flex flex-col gap-2">
-            <span class="text-lg font-semibold">
-              {{ step.title }}
-            </span>
-            <span class="text-sm text-muted">
-              {{ step.description }}
-            </span>
-          </div>
-        </UPageCard>
-      </template>
+    <UPageSection
+      id="programs"
+      title="Our Programs"
+      description="From foundational bootcamps to deep dives, we offer comprehensive training for every stage of your data stewardship journey."
+    >
+      <UPageColumns class="lg:columns-4">
+        <UPageCard
+          v-for="(program, index) in programCards"
+          :key="index"
+          :title="program.title"
+          :description="program.description"
+        />
+      </UPageColumns>
     </UPageSection>
 
     <UPageSection
-      id="pricing"
-      class="mb-32 overflow-hidden"
-      :title="page.pricing.title"
-      :description="page.pricing.description"
-      :plans="page.pricing.plans"
-      :ui="{ title: 'text-left @container relative', description: 'text-left' }"
+      id="foundations"
+      title="Data Stewardship Foundations"
+      description="Our flagship, hands-on program for leaders building data stewardship maturity. Learn to define purpose, design trust frameworks, and operationalize stewardship."
     >
-      <template #title>
-        <MDC :value="page.pricing.title" />
-
-        <div class="hidden @min-[1120px]:block">
-          <UColorModeImage
-            light="/images/light/line-4.svg"
-            dark="/images/dark/line-4.svg"
-            class="absolute top-0 right-0 size-full transform translate-x-[60%]"
-          />
-        </div>
-      </template>
-
-      <UPricingPlans scale>
-        <UPricingPlan
-          v-for="(plan, index) in page.pricing.plans"
+      <div class="space-y-4">
+        <UCard
+          v-for="(format, index) in bootcampFormats"
           :key="index"
-          :title="plan.title"
-          :description="plan.description"
-          :price="plan.price"
-          :billing-period="plan.billing_period"
-          :billing-cycle="plan.billing_cycle"
-          :highlight="plan.highlight"
-          :scale="plan.highlight"
-          variant="soft"
-          :features="plan.features"
-          :button="plan.button"
+        >
+          <template #header>
+            <div class="flex items-center justify-between">
+              <span class="font-semibold">{{ format.title }}</span>
+              <UBadge variant="subtle">{{ format.badge }}</UBadge>
+            </div>
+          </template>
+          <p class="text-muted">{{ format.description }}</p>
+        </UCard>
+
+        <UCard>
+          <template #header>
+            <span class="font-semibold">Learning Outcomes</span>
+          </template>
+          <ul class="list-disc space-y-2 pl-5">
+            <li>Understand the core principles of responsible data stewardship</li>
+            <li>Design and govern data initiatives using the 4P framework (Purpose, Principles, Processes, Practices)</li>
+            <li>Learn to establish a social license for data re-use</li>
+            <li>Develop data-sharing agreements, evaluation KPIs, and trust mechanisms</li>
+            <li>Build a capstone plan ready to implement in your organization</li>
+          </ul>
+          <div class="mt-4 flex gap-3">
+            <UButton label="Reserve Your Seat" color="primary" />
+            <UButton label="Request In-House Training" variant="outline" />
+          </div>
+        </UCard>
+      </div>
+    </UPageSection>
+
+    <UPageSection
+      id="deep-dives"
+      title="Deep Dives"
+      description="Focused 1-hour masterclasses for experienced stewards who want to specialize in specific topics."
+    >
+      <UPageColumns class="lg:columns-3">
+        <UPageCard
+          v-for="(topic, index) in deepDiveTopics"
+          :key="index"
+          :title="topic.title"
         />
-      </UPricingPlans>
+      </UPageColumns>
+      <div class="mt-6 flex gap-3">
+        <UButton label="Reserve Your Seat" color="primary" />
+        <UButton label="Request In-House Training" variant="outline" />
+      </div>
+    </UPageSection>
+
+    <UPageSection
+      id="exchange"
+      title="Exchange"
+      description="A vibrant network for practitioners, alumni, and partners to stay engaged and share knowledge."
+    >
+      <UPageColumns class="lg:columns-2">
+        <UPageCard
+          v-for="(item, index) in exchangeItems"
+          :key="index"
+          :title="item.title"
+          :description="item.description"
+        />
+      </UPageColumns>
+      <div class="mt-6 flex gap-3">
+        <UButton label="Subscribe to Updates" color="primary" />
+        <UButton label="Download Latest Brief" variant="outline" />
+      </div>
+    </UPageSection>
+
+    <UPageSection
+      id="organizations"
+      title="For Organizations"
+      description="Tailored offerings to institutionalize data stewardship across your organization."
+    >
+      <UPageColumns class="lg:columns-3">
+        <UPageCard
+          v-for="(offer, index) in organizationOffers"
+          :key="index"
+          :title="offer.title"
+          :description="offer.description"
+        />
+      </UPageColumns>
+      <div class="mt-6">
+        <UButton label="Schedule a Consultation" size="lg" color="primary" />
+      </div>
     </UPageSection>
 
     <UPageSection
       id="testimonials"
-      :title="page.testimonials.title"
-      :description="page.testimonials.description"
-      :items="page.testimonials.items"
+      title="What Our Alumni Say"
+      description="Join hundreds of data stewards who have transformed their organizations."
     >
-      <template #headline>
-        <UColorModeImage
-          light="/images/light/line-5.svg"
-          dark="/images/dark/line-5.svg"
-          class="absolute -top-10 sm:top-0 right-1/2 h-24"
-        />
-      </template>
-      <template #title>
-        <MDC :value="page.testimonials.title" />
-      </template>
-
-      <UContainer>
-        <UPageColumns class="xl:columns-3">
-          <UPageCard
-            v-for="(testimonial, index) in page.testimonials.items"
-            :key="index"
-            variant="subtle"
-            :description="testimonial.quote"
-            :ui="{ description: 'before:content-[open-quote] after:content-[close-quote]' }"
-          >
-            <template #footer>
-              <UUser
-                v-bind="testimonial.user"
-                size="xl"
-              />
-            </template>
-          </UPageCard>
-        </UPageColumns>
-      </UContainer>
+      <UPageColumns class="xl:columns-3">
+        <UPageCard
+          v-for="(testimonial, index) in testimonials"
+          :key="index"
+          variant="subtle"
+          :description="testimonial.quote"
+        >
+          <template #footer>
+            <div class="text-sm font-medium">{{ testimonial.author }}</div>
+          </template>
+        </UPageCard>
+      </UPageColumns>
     </UPageSection>
 
     <USeparator />
 
     <UPageCTA
-      v-bind="page.cta"
+      :title="'Ready to Transform Your Data Stewardship?'"
+      :description="'Join our next cohort and become part of a global community of responsible data leaders.'"
+      :links="[
+        { label: 'Apply Now', to: '#', size: 'lg', color: 'primary' },
+        { label: 'Learn More', to: '#', size: 'lg', variant: 'outline' }
+      ]"
       variant="naked"
-      class="overflow-hidden @container"
-    >
-      <template #title>
-        <MDC :value="page.cta.title" />
-
-        <div class="@max-[1280px]:hidden">
-          <UColorModeImage
-            light="/images/light/line-6.svg"
-            dark="/images/dark/line-6.svg"
-            class="absolute left-10 -top-10 sm:top-0 h-full"
-          />
-          <UColorModeImage
-            light="/images/light/line-7.svg"
-            dark="/images/dark/line-7.svg"
-            class="absolute right-0 bottom-0 h-full"
-          />
-        </div>
-      </template>
-
-      <LazyStarsBg />
-    </UPageCTA>
+    />
   </div>
 </template>
