@@ -18,6 +18,12 @@ logs
 .fleet
 .idea
 
+# Archive folder
+_archive/
+
+# Process folder
+_process/
+
 # Local env files
 .env
 .env.*
