@@ -1,38 +1,15 @@
 <script setup lang="ts">
-const columns = [{
-  label: 'Resources',
-  children: [{
-    label: 'Help center'
-  }, {
-    label: 'Docs'
-  }, {
-    label: 'Roadmap'
-  }, {
-    label: 'Changelog'
-  }]
-}, {
-  label: 'Features',
-  children: [{
-    label: 'Affiliates'
-  }, {
-    label: 'Portal'
-  }, {
-    label: 'Jobs'
-  }, {
-    label: 'Sponsors'
-  }]
-}, {
-  label: 'Company',
-  children: [{
-    label: 'About'
-  }, {
-    label: 'Pricing'
-  }, {
-    label: 'Careers'
-  }, {
-    label: 'Blog'
-  }]
-}]
+const { items } = useNavigation()
+
+const columns = computed(() => {
+  return items.value.map(item => ({
+    label: item.label,
+    children: [{
+      label: item.label,
+      to: item.path
+    }]
+  }))
+})
 
 const toast = useToast()
 
@@ -89,7 +66,7 @@ function onSubmit() {
 
     <template #left>
       <p class="text-sm text-muted">
-        Built with Nuxt UI • © {{ new Date().getFullYear() }}
+        Data Stewards Academy • © {{ new Date().getFullYear() }}
       </p>
     </template>
 

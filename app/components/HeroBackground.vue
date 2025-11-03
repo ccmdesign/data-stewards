@@ -73,7 +73,7 @@ onMounted(() => {
             stop-opacity="0"
           />
           <stop
-            offset="0.395"
+            offset="0.5"
             stop-color="currentColor"
           />
           <stop

@@ -1,50 +1,28 @@
 <script setup lang="ts">
-const nuxtApp = useNuxtApp()
-const { activeHeadings, updateHeadings } = useScrollspy()
+const route = useRoute()
+const { items } = useNavigation()
 
-const items = computed(() => [{
-  label: 'Features',
-  to: '#features',
-  active: activeHeadings.value.includes('features') && !activeHeadings.value.includes('pricing')
-}, {
-  label: 'Pricing',
-  to: '#pricing',
-  active: activeHeadings.value.includes('pricing')
-}, {
-  label: 'Testimonials',
-  to: '#testimonials',
-  active: activeHeadings.value.includes('testimonials') && !activeHeadings.value.includes('pricing')
-}])
-
-nuxtApp.hooks.hookOnce('page:finish', () => {
-  updateHeadings([
-    document.querySelector('#features'),
-    document.querySelector('#pricing'),
-    document.querySelector('#testimonials')
-  ].filter(Boolean) as Element[])
-})
+const navItems = computed(() =>
+  items.value.map(item => ({
+    label: item.label,
+    to: item.path,
+    active: route.path === item.path
+  }))
+)
 </script>
 
 <template>
   <UHeader>
     <template #left>
-      <NuxtLink to="/">
-        <AppLogo class="w-auto h-6 shrink-0" />
+      <NuxtLink to="/" class="text-sm font-semibold tracking-tight text-primary">
+        Data Stewards Academy
       </NuxtLink>
-
-      <TemplateMenu />
     </template>
 
     <template #right>
       <UNavigationMenu
-        :items="items"
+        :items="navItems"
         variant="link"
-        class="hidden lg:block"
-      />
-
-      <UButton
-        label="Download App"
-        variant="subtle"
         class="hidden lg:block"
       />
 
@@ -53,15 +31,9 @@ nuxtApp.hooks.hookOnce('page:finish', () => {
 
     <template #body>
       <UNavigationMenu
-        :items="items"
+        :items="navItems"
         orientation="vertical"
         class="-mx-2.5"
-      />
-      <UButton
-        class="mt-4"
-        label="Download App"
-        variant="subtle"
-        block
       />
     </template>
   </UHeader>
