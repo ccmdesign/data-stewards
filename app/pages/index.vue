@@ -2,15 +2,14 @@
 import type { ButtonProps } from '#ui/types'
 
 const heroLinks: ButtonProps[] = [
-  { label: 'Explore Programs', to: '#programs', color: 'primary', size: 'lg' },
-  { label: 'Download Brochure', to: '#', variant: 'outline', size: 'lg' }
+  { label: 'Explore Programs', to: '#programs', color: 'primary', size: 'lg' }
 ]
 
 const programCards = [
-  { title: 'Foundations', description: 'Bootcamps for building stewardship maturity' },
-  { title: 'Deep Dives', description: 'Advanced masterclasses for specialists' },
-  { title: 'Exchange', description: 'Network with global practitioners' },
-  { title: 'For Your Organization', description: 'Tailored enterprise solutions' }
+  { title: 'Foundations', description: 'Bootcamps for building stewardship maturity', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Foundations' },
+  { title: 'Deep Dives', description: 'Advanced masterclasses for specialists', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Deep+Dives' },
+  { title: 'Exchange', description: 'Network with global practitioners', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Exchange' },
+  { title: 'For Your Organization', description: 'Tailored enterprise solutions', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=For+Your+Organization' }
 ]
 
 const bootcampFormats = [
@@ -66,7 +65,7 @@ useSeoMeta({
 <template>
   <div class="relative">
     <section
-      class="relative isolate mb-24 overflow-hidden border border-primary/20 bg-primary/10 py-16 sm:py-24"
+      class="relative isolate overflow-hidden border border-primary/20 bg-primary/10 py-12 sm:py-16"
     >
       <HeroBackground />
 
@@ -92,14 +91,25 @@ useSeoMeta({
       id="programs"
       title="Our Programs"
       description="From foundational bootcamps to deep dives, we offer comprehensive training for every stage of your data stewardship journey."
+      class="bg-gray-50 mb-0"
     >
-      <UPageColumns class="lg:columns-4">
+      <UPageColumns class="lg:columns-2">
         <UPageCard
           v-for="(program, index) in programCards"
           :key="index"
           :title="program.title"
           :description="program.description"
-        />
+        >
+          <template #header>
+            <div class="relative aspect-video w-full overflow-hidden bg-muted rounded-t-lg">
+              <img
+                :src="program.image"
+                :alt="program.title"
+                class="h-full w-full object-cover object-center"
+              />
+            </div>
+          </template>
+        </UPageCard>
       </UPageColumns>
     </UPageSection>
 
@@ -107,20 +117,23 @@ useSeoMeta({
       id="foundations"
       title="Data Stewardship Foundations"
       description="Our flagship, hands-on program for leaders building data stewardship maturity. Learn to define purpose, design trust frameworks, and operationalize stewardship."
+      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
     >
-      <div class="space-y-4">
-        <UCard
-          v-for="(format, index) in bootcampFormats"
-          :key="index"
-        >
-          <template #header>
-            <div class="flex items-center justify-between">
-              <span class="font-semibold">{{ format.title }}</span>
-              <UBadge variant="subtle">{{ format.badge }}</UBadge>
-            </div>
-          </template>
-          <p class="text-muted">{{ format.description }}</p>
-        </UCard>
+      <div class="space-y-6">
+        <div class="grid gap-4 lg:grid-cols-2">
+          <UCard
+            v-for="(format, index) in bootcampFormats"
+            :key="index"
+          >
+            <template #header>
+              <div class="flex items-center justify-between">
+                <span class="font-semibold">{{ format.title }}</span>
+                <UBadge variant="subtle">{{ format.badge }}</UBadge>
+              </div>
+            </template>
+            <p class="text-muted">{{ format.description }}</p>
+          </UCard>
+        </div>
 
         <UCard>
           <template #header>
@@ -133,9 +146,9 @@ useSeoMeta({
             <li>Develop data-sharing agreements, evaluation KPIs, and trust mechanisms</li>
             <li>Build a capstone plan ready to implement in your organization</li>
           </ul>
-          <div class="mt-4 flex gap-3">
-            <UButton label="Reserve Your Seat" color="primary" />
-            <UButton label="Request In-House Training" variant="outline" />
+          <div class="mt-4 flex justify-center gap-3">
+            <UButton label="Reserve Your Seat" color="primary" size="lg" />
+            <UButton label="Request In-House Training" variant="outline" size="lg" />
           </div>
         </UCard>
       </div>
@@ -145,6 +158,7 @@ useSeoMeta({
       id="deep-dives"
       title="Deep Dives"
       description="Focused 1-hour masterclasses for experienced stewards who want to specialize in specific topics."
+      class="bg-gray-50 mb-0 !py-12 sm:!py-16 lg:!py-24"
     >
       <UPageColumns class="lg:columns-3">
         <UPageCard
@@ -153,9 +167,20 @@ useSeoMeta({
           :title="topic.title"
         />
       </UPageColumns>
-      <div class="mt-6 flex gap-3">
-        <UButton label="Reserve Your Seat" color="primary" />
-        <UButton label="Request In-House Training" variant="outline" />
+      <div class="mt-6 flex justify-center gap-3">
+        <UButton
+          label="Reserve Your Seat"
+          color="primary"
+          size="lg"
+          to="/deep-dives/learn-more"
+        />
+        <UButton
+          label="Request In-House Training"
+          variant="outline"
+          size="lg"
+          to="mailto:datastewards@thegovlab.org"
+          target="_blank"
+        />
       </div>
     </UPageSection>
 
@@ -163,6 +188,7 @@ useSeoMeta({
       id="exchange"
       title="Exchange"
       description="A vibrant network for practitioners, alumni, and partners to stay engaged and share knowledge."
+      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
     >
       <UPageColumns class="lg:columns-2">
         <UPageCard
@@ -172,9 +198,9 @@ useSeoMeta({
           :description="item.description"
         />
       </UPageColumns>
-      <div class="mt-6 flex gap-3">
-        <UButton label="Subscribe to Updates" color="primary" />
-        <UButton label="Download Latest Brief" variant="outline" />
+      <div class="mt-6 flex justify-center gap-3">
+        <UButton label="Subscribe to Updates" color="primary" size="lg" />
+        <UButton label="Download Latest Brief" variant="outline" size="lg" />
       </div>
     </UPageSection>
 
@@ -182,6 +208,7 @@ useSeoMeta({
       id="organizations"
       title="For Organizations"
       description="Tailored offerings to institutionalize data stewardship across your organization."
+      class="bg-gray-50 mb-0 !py-12 sm:!py-16 lg:!py-24"
     >
       <UPageColumns class="lg:columns-3">
         <UPageCard
@@ -191,7 +218,7 @@ useSeoMeta({
           :description="offer.description"
         />
       </UPageColumns>
-      <div class="mt-6">
+      <div class="mt-6 flex justify-center">
         <UButton label="Schedule a Consultation" size="lg" color="primary" />
       </div>
     </UPageSection>
@@ -200,6 +227,7 @@ useSeoMeta({
       id="testimonials"
       title="What Our Alumni Say"
       description="Join hundreds of data stewards who have transformed their organizations."
+      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
     >
       <UPageColumns class="xl:columns-3">
         <UPageCard
@@ -225,6 +253,7 @@ useSeoMeta({
         { label: 'Learn More', to: '#', size: 'lg', variant: 'outline' }
       ]"
       variant="naked"
+      class="bg-primary/10 rounded-none"
     />
   </div>
 </template>

@@ -147,17 +147,20 @@ const emptyStateCopy = computed(() => {
   return 'No posts available right now.'
 })
 
-const tagColors = ['primary', 'secondary', 'success', 'info', 'warning', 'error'] as const
-
-const getTagColor = (tag: string) => {
-  const hash = tag.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
-  return tagColors[hash % tagColors.length]
+const getCategoryColor = (category: string | undefined): 'primary' | 'secondary' | 'success' | 'warning' => {
+  const categoryMap: Record<string, 'primary' | 'secondary' | 'success' | 'warning'> = {
+    blog: 'primary',
+    interviews: 'secondary',
+    videos: 'success',
+    events: 'warning'
+  }
+  return categoryMap[category ?? 'blog'] ?? 'primary'
 }
 </script>
 
 <template>
   <div class="relative">
-    <section class="relative isolate overflow-hidden border border-primary/30 bg-gradient-to-b from-primary/15 via-transparent to-transparent py-16 sm:py-24">
+    <section class="relative isolate overflow-hidden border border-primary/30 bg-gradient-to-b from-primary/15 via-transparent to-transparent py-12 sm:py-16">
       <HeroBackground class="pointer-events-none absolute inset-0 opacity-40 mix-blend-multiply" />
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.4),_transparent_60%)] dark:bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]" />
 
@@ -178,7 +181,7 @@ const getTagColor = (tag: string) => {
         <div
           v-if="featuredPosts.length > 0"
           id="featured-posts"
-          class="mx-auto mt-12 max-w-5xl"
+          class="mx-auto max-w-5xl"
         >
           <h2 class="mb-4 text-left text-sm font-semibold uppercase tracking-[0.25em] text-primary">Featured</h2>
           <UPageGrid class="gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -189,7 +192,7 @@ const getTagColor = (tag: string) => {
             >
               <template #header>
                 <div class="flex items-center justify-between gap-3 text-sm text-muted-foreground">
-                  <UBadge :label="categoryLabels[post.category] ?? 'Post'" variant="subtle" />
+                  <UBadge :label="categoryLabels[post.category] ?? 'Post'" variant="subtle" :color="getCategoryColor(post.category)" />
                   <span class="ml-auto whitespace-nowrap">{{ formatDate(post.date) }}</span>
                 </div>
               </template>
@@ -227,8 +230,8 @@ const getTagColor = (tag: string) => {
       </UContainer>
     </section>
 
-    <UPage class="py-16">
-      <UPageBody class="space-y-16">
+    <UPage>
+      <UPageBody>
         <UPageSection id="news-feed">
           <template #title>
             <div class="flex flex-col gap-6">
@@ -289,8 +292,7 @@ const getTagColor = (tag: string) => {
                     <UBadge
                       v-for="tag in post.tags"
                       :key="tag"
-                      variant="soft"
-                      :color="getTagColor(tag)"
+                      variant="subtle"
                       :label="tag"
                     />
                   </div>
