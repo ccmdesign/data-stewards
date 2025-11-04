@@ -66,6 +66,8 @@ const postsSchema = z.object({
 })
 
 const offeringPrograms = createEnum(['foundations', 'deep-dives', 'community', 'organizational'])
+const offeringLevels = createEnum(['introductory', 'intermediate', 'advanced', 'executive'])
+const offeringDeliveryModes = createEnum(['in-person', 'virtual', 'hybrid', 'asynchronous'])
 const offeringStatuses = createEnum(['upcoming', 'waitlist', 'closed', 'past'])
 const offeringRegistrationStates = createEnum(['open', 'waitlist', 'closed', 'invite-only'])
 const offeringsMetaLinkSchema = createLinkSchema().partial().extend({
@@ -98,29 +100,44 @@ const offeringsMetaSchema = z.object({
   }).optional()
 }).passthrough()
 
+const offeringScheduleCadence = createEnum(['single', 'rolling', 'quarterly', 'custom'])
+
 const offeringContentSchema = z.object({
   documentType: z.literal('offering').optional(),
+  slug: z.string().optional(),
   title: z.string().nonempty(),
-  program: offeringPrograms,
-  lecturer: z.string().optional(),
   summary: z.string().nonempty(),
+  program: offeringPrograms,
+  level: offeringLevels.optional(),
   format: z.string().nonempty(),
-  location: z.string().optional(),
-  dates: z.string().nonempty(),
-  cohortSlug: z.string().optional(),
-  duration: z.string().optional(),
-  partners: z.array(z.string().nonempty()).optional(),
-  filterTag: z.string().optional(),
+  deliveryMode: offeringDeliveryModes.optional(),
   status: offeringStatuses,
+  featured: z.boolean().optional(),
+  order: z.number().int().optional(),
+  schedule: z.object({
+    start: z.string().optional(),
+    end: z.string().optional(),
+    nextStart: z.string().optional(),
+    cadence: offeringScheduleCadence.optional(),
+    duration: z.string().optional()
+  }).optional(),
+  location: z.object({
+    city: z.string().optional(),
+    country: z.string().optional(),
+    venue: z.string().optional()
+  }).optional(),
   registration: z.object({
     label: z.string().nonempty(),
-    url: z.string().url(),
+    url: z.string().nonempty(),
     state: offeringRegistrationStates,
     note: z.string().optional()
   }).optional(),
-  preview: z.boolean().optional(),
-  order: z.number().int().optional(),
-  heroImage: z.string().optional()
+  partners: z.array(z.string().nonempty()).optional(),
+  lecturer: z.string().optional(),
+  cohortSlug: z.string().optional(),
+  heroImage: z.string().optional(),
+  filterTag: z.string().optional(),
+  preview: z.boolean().optional()
 }).passthrough()
 
 export const collections = {
