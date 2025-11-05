@@ -1,15 +1,5 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
-import { usePageHero } from '~/composables/usePageHero'
-
-const { setPageHero } = usePageHero()
-
-setPageHero({
-  showHero: true,
-  title: 'Meet the leaders guiding the Data Stewards Academy',
-  subtitle: 'Our Faculty',
-  description: 'Explore the instructors, advisors, and guest experts who shape our curriculum and support every cohort.'
-})
 
 type FacultyCard = {
   id: string
@@ -28,7 +18,12 @@ const { data: rawFaculty } = await useAsyncData('faculty-directory', () =>
   queryCollection('faculty').all()
 )
 
+// Type assertion to access Nuxt Content's auto-generated properties
+type FacultyItem = any
+
 const tabValue = ref<'all' | 'instructor' | 'guest-faculty'>('all')
+const isModalOpen = ref(false)
+const selectedFaculty = ref<FacultyCard | null>(null)
 
 const formatLabel = (value: string | null | undefined) => {
   if (!value) {
@@ -47,7 +42,7 @@ const allFacultyMembers = computed<FacultyCard[]>(() => {
   const fallbackImage = '/images/light/connect.svg' // Placeholder image - will be replaced with actual faculty photos
 
   return items
-    .map((item: any) => {
+    .map((item: FacultyItem) => {
       const path = item.path || item._path || ''
       const fileName = path.split('/').pop()?.replace(/\.md$/, '') || item.name?.toLowerCase().replace(/\s+/g, '-') || ''
       const fallbackName = formatLabel(fileName)
@@ -95,23 +90,17 @@ const tabItems = computed(() => {
   return [
     {
       label: 'All',
-      icon: 'i-lucide-users',
       value: 'all',
-      badge: counts.all,
       disabled: false
     },
     {
       label: 'Instructors',
-      icon: 'i-lucide-graduation-cap',
       value: 'instructor',
-      badge: counts.instructor ?? 0,
       disabled: (counts.instructor ?? 0) === 0
     },
     {
       label: 'Guest Faculty',
-      icon: 'i-lucide-user-plus',
       value: 'guest-faculty',
-      badge: counts['guest-faculty'] ?? 0,
       disabled: (counts['guest-faculty'] ?? 0) === 0
     }
   ]
@@ -132,6 +121,16 @@ const facultyMembers = computed(() => {
 
   return allFacultyMembers.value.filter(member => member.category === category)
 })
+
+const openFacultyModal = (faculty: FacultyCard) => {
+  selectedFaculty.value = faculty
+  isModalOpen.value = true
+}
+
+const closeFacultyModal = () => {
+  isModalOpen.value = false
+  selectedFaculty.value = null
+}
 </script>
 
 <template>
@@ -140,14 +139,17 @@ const facultyMembers = computed(() => {
       <UPageBody class="py-0 sm:py-0 md:py-0 lg:py-0 xl:py-0">
         <UPageSection id="faculty-directory">
           <template #links>
-            <div class="w-full overflow-x-auto">
-              <UTabs
-                v-model="tabValue"
-                :items="tabItems"
-                :content="false"
-                size="md"
-                variant="pill"
-              />
+            <div class="flex flex-wrap gap-2">
+              <UButton
+                v-for="item in tabItems"
+                :key="item.value"
+                :variant="tabValue === item.value ? 'solid' : 'outline'"
+                :disabled="item.disabled"
+                :size="'md'"
+                @click="tabValue = item.value as typeof tabValue"
+              >
+                {{ item.label }}
+              </UButton>
             </div>
           </template>
 
@@ -166,28 +168,39 @@ const facultyMembers = computed(() => {
                       :src="person.avatar.src"
                       :alt="person.avatar.alt || `${person.name} headshot`"
                       class="h-full w-full object-cover object-center"
-                    />
+                    >
                   </div>
                 </template>
 
                 <template #default>
                   <div class="space-y-3">
                     <div>
-                      <h3 class="text-lg font-semibold">{{ person.name }}</h3>
-                      <p class="text-sm text-muted-foreground">{{ person.description }}</p>
+                      <h3 class="text-lg font-semibold">
+                        {{ person.name }}
+                      </h3>
+                      <p class="text-sm text-muted-foreground">
+                        {{ person.description }}
+                      </p>
                     </div>
                   </div>
                 </template>
 
                 <template #footer>
                   <div class="flex items-center justify-between text-sm">
-                    <span v-if="person.categoryLabel" class="text-muted-foreground">{{ person.categoryLabel }}</span>
-                    <NuxtLink
-                      :to="person.path"
-                      class="font-medium text-primary hover:underline"
+                    <span
+                      v-if="person.categoryLabel"
+                      class="text-muted-foreground"
+                    >
+                      {{ person.categoryLabel }}
+                    </span>
+                    <UButton
+                      variant="link"
+                      color="primary"
+                      size="sm"
+                      @click="openFacultyModal(person)"
                     >
                       View profile
-                    </NuxtLink>
+                    </UButton>
                   </div>
                 </template>
               </UCard>
@@ -196,8 +209,12 @@ const facultyMembers = computed(() => {
 
           <template v-else>
             <div class="rounded-lg border border-dashed p-6 text-sm text-muted-foreground">
-              <p v-if="tabValue !== 'all'">No faculty members found in this category.</p>
-              <p v-else>Faculty profiles will appear here once added to the collection.</p>
+              <p v-if="tabValue !== 'all'">
+                No faculty members found in this category.
+              </p>
+              <p v-else>
+                Faculty profiles will appear here once added to the collection.
+              </p>
             </div>
           </template>
         </UPageSection>
@@ -205,4 +222,3 @@ const facultyMembers = computed(() => {
     </UPage>
   </div>
 </template>
-
