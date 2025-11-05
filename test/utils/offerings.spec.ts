@@ -1,97 +1,96 @@
 import { describe, expect, it } from 'vitest'
-import type { OfferingProgram, OfferingWithRelations } from '../../app/types/offerings'
+import type { NormalizedOffering, OfferingEntry } from '../../app/types/offerings'
 import {
-  filterOfferingsList,
-  formatSlugLabel,
-  groupPastByProgram,
-  sortOfferings
+  groupArchiveByYear,
+  normalizeOfferings,
+  pickRelatedOfferings,
+  startCase
 } from '../../app/utils/offerings'
 
 let sequence = 0
 
-const makeOffering = (overrides: Partial<OfferingWithRelations> = {}): OfferingWithRelations => ({
+const makeEntry = (overrides: Partial<OfferingEntry> = {}): OfferingEntry => ({
   _id: overrides._id ?? `offering-${sequence++}`,
+  _path: overrides._path ?? `/offerings/${overrides.program ?? 'foundations'}/${overrides._id ?? sequence}`,
+  documentType: 'offering',
   title: overrides.title ?? 'Test Offering',
   program: overrides.program ?? 'foundations',
+  summary: overrides.summary ?? 'Summary copy',
+  format: overrides.format ?? 'In-Person Intensive',
+  deliveryMode: overrides.deliveryMode ?? 'in-person',
+  level: overrides.level ?? 'introductory',
+  dates: overrides.dates ?? 'January 1-5, 2026',
   status: overrides.status ?? 'upcoming',
-  partners: overrides.partners ?? [],
-  partnersDetailed: overrides.partnersDetailed ?? [],
+  nextStart: overrides.nextStart,
+  duration: overrides.duration,
+  partners: overrides.partners,
+  filterTag: overrides.filterTag,
   registration: overrides.registration,
-  summary: overrides.summary,
   order: overrides.order,
   heroImage: overrides.heroImage,
-  lecturer: overrides.lecturer,
-  format: overrides.format,
-  location: overrides.location,
-  dates: overrides.dates,
   cohortSlug: overrides.cohortSlug,
-  duration: overrides.duration,
-  preview: overrides.preview,
-  _path: overrides._path
+  closedAt: overrides.closedAt,
+  featured: overrides.featured
 })
 
-describe('formatSlugLabel', () => {
-  it('converts kebab case to title case', () => {
-    expect(formatSlugLabel('deep-dives')).toBe('Deep Dives')
+describe('startCase', () => {
+  it('formats slugs into title case', () => {
+    expect(startCase('deep-dives')).toBe('Deep Dives')
+    expect(startCase('always_on')).toBe('Always On')
   })
 })
 
-describe('sortOfferings', () => {
-  it('orders offerings by status priority then order value', () => {
-    const offerings = [
-      makeOffering({ _id: '2', status: 'waitlist', order: 5, title: 'Waitlist' }),
-      makeOffering({ _id: '1', status: 'upcoming', order: 10, title: 'Upcoming' }),
-      makeOffering({ _id: '3', status: 'closed', order: 1, title: 'Closed' })
+describe('normalizeOfferings', () => {
+  it('enriches base entries with derived fields', () => {
+    const entries = [
+      makeEntry({
+        _id: 'alpha',
+        format: 'Hybrid Bootcamp',
+        deliveryMode: 'hybrid',
+        partners: ['the-govlab'],
+        filterTag: 'Foundations',
+        nextStart: '2025-04-01'
+      })
     ]
 
-    const sorted = sortOfferings(offerings).map(item => item._id)
+    const normalized = normalizeOfferings(entries)
 
-    expect(sorted).toEqual(['1', '2', '3'])
+    expect(normalized[0].formatCategory).toBe('cohort')
+    expect(normalized[0].partnerLabels).toContain('The Govlab')
+    expect(normalized[0].focusLabel).toBe('Foundations')
+    expect(normalized[0].sortTimestamp).toBeGreaterThan(0)
   })
 })
 
-describe('filterOfferingsList', () => {
-  const partnersDetailed = [{ slug: 'fari', name: 'FARI', path: '/partners/fari' }]
-
-  const offerings = [
-    makeOffering({ _id: '1', program: 'foundations', status: 'upcoming', partners: ['fari'], partnersDetailed }),
-    makeOffering({ _id: '2', program: 'deep-dives', status: 'waitlist', partners: [], partnersDetailed: [] }),
-    makeOffering({ _id: '3', program: 'foundations', status: 'closed', partners: [], partnersDetailed: [] })
-  ]
-
-  it('filters by program', () => {
-    const result = filterOfferingsList(offerings, { program: 'deep-dives' })
-    expect(result).toHaveLength(1)
-    expect(result[0]._id).toBe('2')
-  })
-
-  it('filters by status', () => {
-    const result = filterOfferingsList(offerings, { status: 'closed' })
-    expect(result).toHaveLength(1)
-    expect(result[0]._id).toBe('3')
-  })
-
-  it('filters by partner slug', () => {
-    const result = filterOfferingsList(offerings, { partner: 'fari' })
-    expect(result).toHaveLength(1)
-    expect(result[0]._id).toBe('1')
-  })
-})
-
-describe('groupPastByProgram', () => {
-  it('groups by program and sorts most recent first', () => {
-    const basePast = (program: OfferingProgram, order: number, title: string) =>
-      makeOffering({ program, status: 'past', order, title })
-
-    const grouped = groupPastByProgram([
-      basePast('foundations', 1, 'Older'),
-      basePast('foundations', 5, 'Newer'),
-      basePast('deep-dives', 3, 'Deep Dive')
+describe('groupArchiveByYear', () => {
+  it('groups offerings by archive year and orders newest first', () => {
+    const normalized = normalizeOfferings([
+      makeEntry({ _id: 'past-a', status: 'past', closedAt: '2024-12-01', dates: 'Dec 2024' }),
+      makeEntry({ _id: 'past-b', status: 'past', closedAt: '2023-05-01', dates: 'May 2023' }),
+      makeEntry({ _id: 'past-c', status: 'past', closedAt: '2024-06-15', dates: 'Jun 2024' })
     ])
 
-    expect(grouped.foundations.map(item => item.title)).toEqual(['Newer', 'Older'])
-    expect(grouped['deep-dives'][0].title).toBe('Deep Dive')
-    expect(grouped.community).toHaveLength(0)
+    const grouped = groupArchiveByYear(normalized)
+
+    expect(grouped[0].year).toBe('2024')
+    expect(grouped[0].items.map(item => item._id)).toEqual(['past-a', 'past-c'])
+    expect(grouped[1].year).toBe('2023')
+  })
+})
+
+describe('pickRelatedOfferings', () => {
+  it('selects offerings sharing program or focus', () => {
+    const normalized = normalizeOfferings([
+      makeEntry({ _id: 'current', program: 'foundations', filterTag: 'Foundations' }),
+      makeEntry({ _id: 'match-program', program: 'foundations', filterTag: 'Community' }),
+      makeEntry({ _id: 'match-focus', program: 'community', filterTag: 'Foundations' }),
+      makeEntry({ _id: 'other', program: 'deep-dives', filterTag: 'Deep Dives' })
+    ])
+
+    const current = normalized.find(item => item._id === 'current') as NormalizedOffering
+    const related = pickRelatedOfferings(current, normalized, 3)
+
+    expect(related.map(item => item._id)).toEqual(['match-program', 'match-focus'])
   })
 })
 

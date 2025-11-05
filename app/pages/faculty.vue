@@ -220,5 +220,81 @@ const closeFacultyModal = () => {
         </UPageSection>
       </UPageBody>
     </UPage>
+
+    <UModal
+      v-model:open="isModalOpen"
+      :title="selectedFaculty?.name"
+      @close="closeFacultyModal"
+      :ui="{ content: 'max-w-2xl' }"
+    >
+      <template v-if="selectedFaculty" #body>
+        <div class="space-y-6">
+          <!-- Faculty Avatar -->
+          <div class="flex justify-center">
+            <div class="relative aspect-square w-32 overflow-hidden rounded-full bg-muted animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <img
+                :src="selectedFaculty.avatar.src"
+                :alt="selectedFaculty.avatar.alt || `${selectedFaculty.name} headshot`"
+                class="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-105"
+              >
+            </div>
+          </div>
+
+          <!-- Faculty Details -->
+          <div class="space-y-4 text-center animate-in fade-in slide-in-from-bottom-2 duration-500 delay-150">
+            <div>
+              <h3 class="text-xl font-semibold">{{ selectedFaculty.name }}</h3>
+              <p class="text-muted-foreground">{{ selectedFaculty.description }}</p>
+            </div>
+
+            <div v-if="selectedFaculty.categoryLabel" class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary animate-in fade-in slide-in-from-bottom-2 duration-500 delay-300">
+              {{ selectedFaculty.categoryLabel }}
+            </div>
+          </div>
+
+          <!-- Additional faculty information from the raw data -->
+          <div v-if="selectedFaculty" class="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-500">
+            <div v-for="item in rawFaculty" :key="(item as any)._id">
+              <div v-if="item.name === selectedFaculty.name" class="space-y-3">
+                <div v-if="(item as any).bio" class="prose prose-sm max-w-none">
+                  <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Bio</h4>
+                  <MDC :value="(item as any).bio" />
+                </div>
+
+                <div v-if="(item as any).expertise && (item as any).expertise.length" class="space-y-2">
+                  <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Expertise</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <UBadge v-for="skill in (item as any).expertise" :key="skill" variant="subtle">
+                      {{ skill }}
+                    </UBadge>
+                  </div>
+                </div>
+
+                <div v-if="(item as any).linkedin" class="space-y-2">
+                  <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Connect</h4>
+                  <UButton
+                    :to="(item as any).linkedin"
+                    target="_blank"
+                    icon="i-lucide-linkedin"
+                    variant="outline"
+                    size="sm"
+                  >
+                    LinkedIn Profile
+                  </UButton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <div class="flex justify-end">
+          <UButton @click="closeFacultyModal">
+            Close
+          </UButton>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>
