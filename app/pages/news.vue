@@ -183,40 +183,54 @@ const getCategoryColor = (category: string | undefined): 'primary' | 'secondary'
           id="featured-posts"
           class="mx-auto max-w-5xl"
         >
-          <h2 class="mb-4 text-left text-sm font-semibold uppercase tracking-[0.25em] text-primary">Featured</h2>
-          <UPageGrid class="gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <h2 class="text-left pl-11 font-semibold uppercase tracking-[0.125em] text-primary">Featured</h2>
+          
+          <UCarousel
+            v-slot="{ item }"
+            :items="featuredPosts"
+            arrows
+            slides-to-scroll="auto"
+            :ui="{ 
+              item: 'basis-[40%] shrink-0', 
+              container: 'gap-6 items-stretch',
+              viewport: 'px-3 py-4'
+            }"
+            class="w-full border-r-1 border-l-1 border-primary/30"
+          >
             <UCard
-              v-for="post in featuredPosts"
-              :key="post.slug ?? post.path"
-              class="h-full"
+              :key="item.slug ?? item.path"
+              :ui="{ root: 'flex flex-col h-full', body: 'flex-1' }"
+              
             >
-              <template #header>
-                <div class="flex items-center justify-between gap-3 text-sm text-muted-foreground">
-                  <UBadge :label="categoryLabels[post.category] ?? 'Post'" variant="subtle" :color="getCategoryColor(post.category)" />
-                  <span class="ml-auto whitespace-nowrap">{{ formatDate(post.date) }}</span>
-                </div>
-              </template>
+                <template #header>
+                  <div class="flex items-center justify-between gap-3 text-sm text-muted-foreground">
+                    <UBadge :label="categoryLabels[item.category] ?? 'Post'" variant="subtle" :color="getCategoryColor(item.category)" />
+                    <span class="ml-auto whitespace-nowrap">{{ formatDate(item.date) }}</span>
+                  </div>
+                </template>
 
-              <template #default>
-                <NuxtLink :to="resolvePostLink(post)" class="block space-y-3">
-                  <span class="text-lg font-semibold leading-tight line-clamp-2">
-                    {{ post.title }}
-                  </span>
-                </NuxtLink>
-                <p class="text-sm text-muted-foreground line-clamp-3">
-                  {{ post.description }}
-                </p>
-              </template>
+                <template #default>
+                  <div class="space-y-3">
+                    <NuxtLink :to="resolvePostLink(item)" class="block">
+                      <span class="text-lg font-semibold leading-tight line-clamp-2">
+                        {{ item.title }}
+                      </span>
+                    </NuxtLink>
+                    <p class="text-sm text-muted-foreground line-clamp-3">
+                      {{ item.description }}
+                    </p>
+                  </div>
+                </template>
 
               <template #footer>
                 <div class="flex items-center justify-between gap-3">
-                  <div v-if="post.category === 'events'" class="flex items-center gap-2 text-sm text-muted-foreground truncate">
+                  <div v-if="item.category === 'events'" class="flex items-center gap-2 text-sm text-muted-foreground truncate">
                     <UIcon name="i-lucide-map-pin" class="h-4 w-4" />
-                    <span class="truncate">{{ post.location }}</span>
+                    <span class="truncate">{{ item.location }}</span>
                   </div>
 
                   <UButton
-                    :to="resolvePostLink(post)"
+                    :to="resolvePostLink(item)"
                     variant="link"
                     size="sm"
                     trailing-icon="i-lucide-arrow-right"
@@ -225,7 +239,7 @@ const getCategoryColor = (category: string | undefined): 'primary' | 'secondary'
                 </div>
               </template>
             </UCard>
-          </UPageGrid>
+          </UCarousel>
         </div>
       </UContainer>
     </section>

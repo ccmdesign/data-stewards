@@ -20,12 +20,12 @@ const bootcampFormats = [
 ]
 
 const deepDiveTopics = [
-  { title: 'Social License & Digital Self-Determination' },
-  { title: 'Legal & Ethical Readiness' },
-  { title: 'Designing Data Spaces & Interoperability' },
-  { title: 'Data Contracts & Governance Agreements' },
-  { title: 'Evaluation, KPIs & Value Realization' },
-  { title: 'Synthetic Data & Privacy-Enhancing Technologies' }
+  { title: 'Social License & Digital Self-Determination', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Social+License' },
+  { title: 'Legal & Ethical Readiness', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Legal+%26+Ethical' },
+  { title: 'Designing Data Spaces & Interoperability', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Data+Spaces' },
+  { title: 'Data Contracts & Governance Agreements', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Data+Contracts' },
+  { title: 'Evaluation, KPIs & Value Realization', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Evaluation+%26+KPIs' },
+  { title: 'Synthetic Data & Privacy-Enhancing Technologies', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Synthetic+Data' }
 ]
 
 const exchangeItems = [
@@ -165,7 +165,18 @@ useSeoMeta({
           v-for="(topic, index) in deepDiveTopics"
           :key="index"
           :title="topic.title"
-        />
+          :ui="{ header: 'p-0' }"
+        >
+          <template #header>
+            <div class="relative aspect-video w-full overflow-hidden bg-muted rounded-t-lg">
+              <img
+                :src="topic.image"
+                :alt="topic.title"
+                class="h-full w-full object-cover object-center"
+              />
+            </div>
+          </template>
+        </UPageCard>
       </UPageColumns>
       <div class="mt-6 flex justify-center gap-3">
         <UButton
@@ -229,31 +240,20 @@ useSeoMeta({
       description="Join hundreds of data stewards who have transformed their organizations."
       class="mb-0 !py-12 sm:!py-16 lg:!py-24"
     >
-      <UPageColumns class="xl:columns-3">
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <UPageCard
           v-for="(testimonial, index) in testimonials"
           :key="index"
           variant="subtle"
           :description="testimonial.quote"
+          class="h-full"
         >
           <template #footer>
             <div class="text-sm font-medium">{{ testimonial.author }}</div>
           </template>
         </UPageCard>
-      </UPageColumns>
+      </div>
     </UPageSection>
 
-    <USeparator />
-
-    <UPageCTA
-      :title="'Ready to Transform Your Data Stewardship?'"
-      :description="'Join our next cohort and become part of a global community of responsible data leaders.'"
-      :links="[
-        { label: 'Apply Now', to: '#', size: 'lg', color: 'primary' },
-        { label: 'Learn More', to: '#', size: 'lg', variant: 'outline' }
-      ]"
-      variant="naked"
-      class="bg-primary/10 rounded-none"
-    />
   </div>
 </template>

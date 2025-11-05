@@ -177,8 +177,13 @@ const supportBenefits = [
         Interested in working with us? You can support a data stewards course in different ways:
       </p>
 
-      <UPageColumns id="join-our-community" class="lg:columns-2">
-        <UCard v-for="(card, index) in collaborationCards" :key="index">
+      <div id="join-our-community" class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <UCard 
+          v-for="(card, index) in collaborationCards" 
+          :key="index" 
+          class="h-full"
+          :ui="{ root: 'flex flex-col', body: 'flex-1' }"
+        >
           <template #header>
             <h3 class="text-xl font-semibold">{{ card.title }}</h3>
           </template>
@@ -193,7 +198,7 @@ const supportBenefits = [
             />
           </template>
         </UCard>
-      </UPageColumns>
+      </div>
     </UPageSection>
 
     <UPageSection
