@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
+import { usePageHero } from '~/composables/usePageHero'
+
+const { setPageHero } = usePageHero()
+
+setPageHero({
+  showHero: true,
+  title: 'Meet the leaders guiding the Data Stewards Academy',
+  subtitle: 'Our Faculty',
+  description: 'Explore the instructors, advisors, and guest experts who shape our curriculum and support every cohort.'
+})
 
 type FacultyCard = {
   id: string
@@ -126,28 +136,6 @@ const facultyMembers = computed(() => {
 
 <template>
   <div class="relative">
-    <section
-      class="relative isolate overflow-hidden border border-primary/20 bg-primary/10 py-16 sm:py-24"
-    >
-      <HeroBackground />
-
-      <div class="px-6 sm:px-12">
-        <UPageHero
-          class="relative z-10 mx-auto max-w-4xl text-left"
-          description="Explore the instructors, advisors, and guest experts who shape our curriculum and support every cohort."
-        >
-          <template #title>
-            <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
-              <span class="mb-4 block text-sm font-semibold uppercase tracking-[0.3em] text-primary">
-                Our Faculty
-              </span>
-              Meet the leaders guiding the Data Stewards Academy
-            </h1>
-          </template>
-        </UPageHero>
-      </div>
-    </section>
-
     <UPage>
       <UPageBody class="py-0 sm:py-0 md:py-0 lg:py-0 xl:py-0">
         <UPageSection id="faculty-directory">

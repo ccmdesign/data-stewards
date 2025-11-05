@@ -2,6 +2,8 @@
   <div class="flex min-h-screen flex-col">
     <AppHeader />
 
+    <PageHero />
+
     <UMain class="flex-1">
       <slot />
     </UMain>

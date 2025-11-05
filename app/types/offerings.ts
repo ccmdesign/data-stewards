@@ -1,8 +1,11 @@
+import type { ParsedContent } from '@nuxt/content/dist/runtime/types'
+
 export type OfferingProgram = 'foundations' | 'deep-dives' | 'community' | 'organizational'
-
 export type OfferingStatus = 'upcoming' | 'waitlist' | 'closed' | 'past'
-
 export type OfferingRegistrationState = 'open' | 'waitlist' | 'closed' | 'invite-only'
+export type OfferingLevel = 'introductory' | 'intermediate' | 'advanced' | 'executive'
+export type OfferingDeliveryMode = 'in-person' | 'virtual' | 'hybrid' | 'asynchronous'
+export type ScheduleCadence = 'single' | 'rolling' | 'quarterly' | 'custom'
 
 export interface OfferingRegistration {
   label: string
@@ -11,24 +14,47 @@ export interface OfferingRegistration {
   note?: string
 }
 
-export interface OfferingEntry {
-  documentType?: 'offering'
-  title: string
-  program: OfferingProgram
-  lecturer?: string
-  summary: string
-  format: string
-  location?: string
-  dates: string
-  cohortSlug?: string
+export interface OfferingSchedule {
+  start?: string
+  end?: string
+  nextStart?: string
+  cadence?: ScheduleCadence
   duration?: string
-  partners?: string[]
-  filterTag?: string
+}
+
+export interface OfferingLocation {
+  city?: string
+  country?: string
+  venue?: string
+}
+
+export interface OfferingMeta {
+  documentType?: 'offering'
+  slug?: string
+  summary: string
+  program: OfferingProgram
+  level?: OfferingLevel
+  format: string
+  deliveryMode?: OfferingDeliveryMode
   status: OfferingStatus
-  registration?: OfferingRegistration
-  preview?: boolean
+  featured?: boolean
   order?: number
+  schedule?: OfferingSchedule
+  location?: OfferingLocation
+  registration?: OfferingRegistration
+  partners?: string[]
+  lecturer?: string
+  cohortSlug?: string
   heroImage?: string
+  filterTag?: string
+  preview?: boolean
+}
+
+export interface OfferingEntry extends ParsedContent {
+  path?: string
+  title: string
+  description?: string
+  meta?: OfferingMeta
 }
 
 export interface OfferingsMetaLink {
@@ -48,10 +74,10 @@ export interface OfferingsMetaFilter {
 
 export interface OfferingsMeta {
   documentType: 'meta'
-  hero: {
+  hero?: {
     eyebrow?: string
-    title: string
-    description: string
+    title?: string
+    description?: string
     ctas?: OfferingsMetaLink[]
   }
   search?: {
@@ -73,55 +99,11 @@ export interface OfferingsMeta {
   }
 }
 
-export type OfferingDocument = OfferingsMeta | OfferingEntry
-
-export interface ResolvedPartner {
-  slug: string
-  title: string
+export interface OfferingsMetaEntry extends ParsedContent {
+  meta?: OfferingsMeta
 }
 
-export interface ResolvedOffering extends Omit<OfferingEntry, 'partners'> {
-  partners: ResolvedPartner[]
-}
-
-export type OfferingFilterProgram = OfferingProgram | 'all'
-export type OfferingFilterStatus = OfferingStatus | 'all'
-
-export interface OfferingFilters {
-  program: OfferingFilterProgram
-  status: OfferingFilterStatus
-  partner: string | 'all'
-}
-export type OfferingProgram = 'foundations' | 'deep-dives' | 'community' | 'organizational'
-export type OfferingStatus = 'upcoming' | 'waitlist' | 'closed' | 'past'
-export type OfferingRegistrationState = 'open' | 'waitlist' | 'closed' | 'invite-only'
-
-export interface OfferingRegistration {
-  label: string
-  url: string
-  state: OfferingRegistrationState
-  note?: string
-}
-
-export interface Offering {
-  _id: string
-  title: string
-  program: OfferingProgram
-  summary?: string
-  lecturer?: string
-  format?: string
-  location?: string
-  dates?: string
-  cohortSlug?: string
-  duration?: string
-  partners?: string[]
-  status: OfferingStatus
-  registration?: OfferingRegistration
-  preview?: boolean
-  order?: number
-  heroImage?: string
-  _path?: string
-}
+export type OfferingDocument = OfferingsMetaEntry | OfferingEntry
 
 export interface PartnerSummary {
   slug: string
@@ -129,44 +111,9 @@ export interface PartnerSummary {
   path: string
 }
 
-export interface OfferingWithRelations extends Offering {
-  partnersDetailed: PartnerSummary[]
+export interface NormalizedOffering extends OfferingEntry {
+  slug: string
+  path: string
+  stem: string
+  id: string
 }
-
-export interface OfferingsMeta {
-  title?: string
-  hero?: {
-    eyebrow?: string
-    title?: string
-    description?: string
-    ctas?: Array<{
-      label: string
-      to: string
-    }>
-  }
-  search?: {
-    heading?: string
-    filters?: Array<{
-      key: string
-      label: string
-      component?: string
-    }>
-  }
-  preview?: {
-    heading?: string
-  }
-  cta?: {
-    primary?: {
-      label: string
-      to: string
-    }
-    secondary?: {
-      label: string
-      to: string
-    }
-  }
-  testimonials?: {
-    tags?: string[]
-  }
-}
-

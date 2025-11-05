@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import type { ButtonProps } from '#ui/types'
+import { usePageHero } from '~/composables/usePageHero'
 
 const heroLinks: ButtonProps[] = [
   { label: 'Explore Programs', to: '#programs', color: 'primary', size: 'lg' }
 ]
+
+const { setPageHero } = usePageHero()
+
+setPageHero({
+  showHero: true,
+  title: 'Data Stewardship for a New Era',
+  subtitle: 'Accessing Data in Systematic, Sustainable and Responsible Ways',
+  description: 'Make data stewardship strategic with world-class training, frameworks, and a global community of practitioners.',
+  links: heroLinks
+})
 
 const programCards = [
   { title: 'Foundations', description: 'Bootcamps for building stewardship maturity', image: 'https://placehold.co/600x400/f3f4f6/6b7280?text=Foundations' },
@@ -64,29 +75,6 @@ useSeoMeta({
 
 <template>
   <div class="relative">
-    <section
-      class="relative isolate overflow-hidden border border-primary/20 bg-primary/10 py-12 sm:py-16"
-    >
-      <HeroBackground />
-
-      <div class="px-6 sm:px-12">
-        <UPageHero
-          class="relative z-10 mx-auto max-w-4xl space-y-8 text-left"
-          :description="'Make data stewardship strategic with world-class training, frameworks, and a global community of practitioners.'"
-          :links="heroLinks"
-        >
-          <template #title>
-            <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
-              <span class="mb-4 block text-sm font-semibold uppercase tracking-[0.3em] text-primary">
-                Accessing Data in Systematic, Sustainable and Responsible Ways
-              </span>
-              Data Stewardship for a New Era
-            </h1>
-          </template>
-        </UPageHero>
-      </div>
-    </section>
-
     <UPageSection
       id="programs"
       title="Our Programs"

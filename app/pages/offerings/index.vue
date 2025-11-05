@@ -1,6 +1,23 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
+import type { ButtonProps } from '#ui/types'
+import { usePageHero } from '~/composables/usePageHero'
 import type { OfferingDocument, OfferingEntry, OfferingLevel } from '~/types/offerings'
+
+const { setPageHero } = usePageHero()
+
+const heroLinks: ButtonProps[] = [
+  { label: 'Explore Programs', to: '#upcoming', color: 'primary', size: 'lg' },
+  { label: 'View Past Offerings', to: '#past', variant: 'outline', size: 'lg' }
+]
+
+setPageHero({
+  showHero: true,
+  title: 'Programs & Training Offerings',
+  subtitle: 'Advance Your Data Stewardship Skills',
+  description: 'Discover comprehensive training programs designed to build expertise in responsible data management, from foundational bootcamps to specialized deep dives.',
+  links: heroLinks
+})
 
 const { data: offeringsData } = await useAsyncData<OfferingDocument[]>('offerings-collection', () =>
   queryCollection('offerings').all()
@@ -68,16 +85,8 @@ useSeoMeta({
   <UPage>
     <UPageBody>
       <UContainer class="space-y-16">
-        <!-- Page Header -->
-        <header class="text-center space-y-4">
-          <h1 class="text-4xl font-bold tracking-tight">Offerings</h1>
-          <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover our comprehensive programs designed to advance data stewardship skills and practices.
-          </p>
-        </header>
-
         <!-- Upcoming Section -->
-        <section class="space-y-6">
+        <section id="upcoming" class="space-y-6 scroll-mt-20">
           <header class="space-y-2">
             <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Upcoming</p>
             <div>
@@ -152,7 +161,7 @@ useSeoMeta({
           <UAlert v-else icon="i-lucide-info" title="No upcoming offerings" description="New programs will be announced soon." />
         </section>
 
-        <section class="space-y-6">
+        <section id="past" class="space-y-6 scroll-mt-20">
           <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Archive</p>

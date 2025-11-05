@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { ButtonProps } from '#ui/types'
 import type { FormError, FormSubmitEvent } from '@nuxt/ui'
+import { usePageHero } from '~/composables/usePageHero'
 
 useSeoMeta({
   title: 'Contact',
   description: 'Reach out to the Data Stewardship Academy team for program details, partnerships, and tailored support.'
 })
 
-const toast = useToast()
+const { setPageHero } = usePageHero()
 
 const heroLinks: ButtonProps[] = [
   {
@@ -23,6 +24,16 @@ const heroLinks: ButtonProps[] = [
     icon: 'i-lucide-message-circle'
   }
 ]
+
+setPageHero({
+  showHero: true,
+  title: 'Contact the Data Stewardship Academy',
+  subtitle: 'Get in Touch',
+  description: 'Let\'s build responsible data practices together. Call our team or share a note and we\'ll respond within two business days.',
+  links: heroLinks
+})
+
+const toast = useToast()
 
 const state = reactive({
   name: '',
@@ -104,26 +115,6 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
 
 <template>
   <div class="relative">
-    <section class="relative isolate overflow-hidden border border-primary/20 bg-primary/10 py-16 sm:py-24">
-      <HeroBackground />
-
-      <div class="px-6 sm:px-12">
-        <UPageHero
-          class="relative z-10 mx-auto max-w-3xl space-y-8 text-left"
-          :description="'Let’s build responsible data practices together. Call our team or share a note and we’ll respond within two business days.'"
-          :links="heroLinks"
-        >
-          <template #title>
-            <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
-              <span class="mb-4 block text-sm font-semibold uppercase tracking-[0.3em] text-primary">
-                Get in Touch
-              </span>
-              Contact the Data Stewardship Academy
-            </h1>
-          </template>
-        </UPageHero>
-      </div>
-    </section>
 
     <UPageSection class="space-y-12">
       <UCard variant="subtle">

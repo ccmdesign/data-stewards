@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps } from '#ui/types'
+import { usePageHero } from '~/composables/usePageHero'
 
 useSeoMeta({
   title: 'Community',
@@ -10,6 +11,16 @@ const heroLinks: ButtonProps[] = [
   { label: 'Join the Slack', to: '#join-our-community', color: 'primary', size: 'lg' },
   { label: 'Host With Us', to: '#become-partner', variant: 'outline', size: 'lg' }
 ]
+
+const { setPageHero } = usePageHero()
+
+setPageHero({
+  showHero: true,
+  title: 'Stay connected, informed, and ready to collaborate',
+  subtitle: 'Our Community',
+  description: 'A network for practitioners, alumni, and partners to stay engaged.',
+  links: heroLinks
+})
 
 type CardCta = Pick<ButtonProps, 'label' | 'to' | 'color' | 'variant' | 'size'>
 
@@ -94,27 +105,6 @@ const supportBenefits = [
 
 <template>
   <div class="relative">
-    <section class="relative isolate overflow-hidden border border-primary/20 bg-primary/10 py-16 sm:py-24">
-      <HeroBackground />
-
-      <div class="px-6 sm:px-12">
-        <UPageHero
-          class="relative z-10 mx-auto max-w-4xl space-y-8 text-left"
-          :description="'A network for practitioners, alumni, and partners to stay engaged.'"
-          :links="heroLinks"
-        >
-          <template #title>
-            <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
-              <span class="mb-4 block text-sm font-semibold uppercase tracking-[0.3em] text-primary">
-                Our Community
-              </span>
-              Stay connected, informed, and ready to collaborate
-            </h1>
-          </template>
-        </UPageHero>
-      </div>
-    </section>
-
     <UPageSection
       id="community-highlights"
       title="What’s happening"
