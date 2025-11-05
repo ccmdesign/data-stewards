@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Example Course Title 1"
 summary: "Intensive cohort experience hosted in Berlin for stewardship teams."
 program: foundations
@@ -25,7 +24,6 @@ registration:
   url: "?tab=t.ow5eir59y1pz"
   state: open
 
-filterTag: "Foundations"
 ---
 
 Plan for immersive, facilitator-led sessions that help teams stand up their stewardship practice in a single week.

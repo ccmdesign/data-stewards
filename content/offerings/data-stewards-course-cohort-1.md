@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Data Stewards Course Cohort 1"
 summary: "Inaugural virtual cohort establishing the Data Stewards curriculum."
 program: foundations
@@ -16,7 +15,6 @@ schedule:
   cadence: single
   duration: "8 weeks"
 
-filterTag: "Foundations"
 ---
 
 The first cohort piloted stewardship frameworks, peer coaching, and the capstone challenge that remain core to the Academy today.

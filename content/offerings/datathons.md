@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Datathons"
 summary: "Collaborative sprints tackling real data governance challenges with live datasets."
 program: community
@@ -18,7 +17,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Community"
 ---
 
 Work through real-world stewardship problems in collaborative sprints. Datathons pair participants with course leads to prototype approaches using live datasets.

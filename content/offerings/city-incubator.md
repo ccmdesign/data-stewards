@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "City Incubator"
 summary: "City innovation teams collaborated virtually on responsible data experiments."
 program: foundations
@@ -21,7 +20,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: closed
 
-filterTag: "Foundations"
 ---
 
 Municipal leaders partnered with peers and GovLab faculty to prototype data collaborations that advance community priorities.

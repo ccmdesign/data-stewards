@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Data Stewards Course Cohort 2"
 summary: "Second global virtual cohort advancing shared stewardship practices."
 program: foundations
@@ -16,7 +15,6 @@ schedule:
   cadence: single
   duration: "8 weeks"
 
-filterTag: "Foundations"
 ---
 
 Participants collaborated across sectors to apply stewardship playbooks to live challenges within their organizations.

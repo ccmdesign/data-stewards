@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Hybrid Bootcamp"
 summary: "Flexible for distributed teams; combines live instruction and collaborative labs."
 program: foundations
@@ -18,7 +17,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Foundations"
 ---
 
 Blend three weeks of live online instruction with an in-person, two-day capstone. The hybrid bootcamp keeps distributed teams engaged while giving them space to collaborate on stewardship challenges together.

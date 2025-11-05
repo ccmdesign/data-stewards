@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Data Stewards Bootcamp in Brussels"
 summary: "Immersive steward training co-hosted with FARI, The Data Tank, and The GovLab."
 program: foundations
@@ -30,7 +29,6 @@ registration:
   url: "?tab=t.ow5eir59y1pz"
   state: open
 
-filterTag: "Foundations"
 ---
 
 Spend a week in Brussels working through applied stewardship labs with faculty from the GovLab alongside European partners shaping the field.

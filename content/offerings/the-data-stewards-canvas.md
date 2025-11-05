@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "The Data Stewards Canvas"
 summary: "Apply the Data Stewards Canvas to steward strategic data futures."
 program: deep-dives
@@ -26,7 +25,6 @@ registration:
   url: "?tab=t.58d2riq1xs8v"
   state: open
 
-filterTag: "Deep Dives"
 ---
 
 Apply the Data Stewards Canvas with guidance from GovLab faculty and partners to scope impact pathways and governance safeguards.

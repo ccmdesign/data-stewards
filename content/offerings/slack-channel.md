@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Data Stewardship Slack Channel"
 summary: "Dedicated Slack space to share lessons, tools, and trends with fellow participants."
 program: community
@@ -18,7 +17,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Community"
 ---
 
 Join the Data Stewardship Slack channel to trade resources, pose questions, and stay connected with alumni and peers between live sessions.

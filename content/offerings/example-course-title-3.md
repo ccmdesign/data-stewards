@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Example Course Title 3"
 summary: "Virtual cohort experience hosted online for stewardship teams."
 program: foundations
@@ -21,7 +20,6 @@ registration:
   url: "?tab=t.ow5eir59y1pz"
   state: open
 
-filterTag: "Foundations"
 ---
 
 Virtual cohort experience for teams that want to learn stewardship practices remotely.

@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Berlin Data Stewards Intensive Course 1st Edition"
 summary: "Five-day in-person intensive with Bertelsmann Stiftung."
 program: foundations
@@ -22,7 +21,6 @@ location:
 partners:
   - bertelsmann-stiftung
 
-filterTag: "Foundations"
 ---
 
 The inaugural Berlin intensive equipped civic technologists with governance frameworks, stewardship canvases, and live coaching from alumni mentors.

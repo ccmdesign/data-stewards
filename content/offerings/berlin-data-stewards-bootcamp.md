@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Berlin Data Stewards Bootcamp"
 summary: "Hybrid cohort anchored in Turin with Fondazione Compagnia Di San Paolo."
 program: foundations
@@ -27,7 +26,6 @@ registration:
 partners:
   - fondazione-compagnia-di-san-paolo
 
-filterTag: "Foundations"
 ---
 
 Participants advanced steward capabilities through a month-long blend of virtual sessions and in-person design studios hosted alongside European civic partners.

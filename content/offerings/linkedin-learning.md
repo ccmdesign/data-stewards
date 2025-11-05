@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "LinkedIn Learning: Data Stewardship Essentials"
 summary: "Orientation and pre-work; ideal for team onboarding."
 program: foundations
@@ -18,7 +17,6 @@ registration:
   url: "https://www.linkedin.com/learning/global-data-stewardship"
   state: open
 
-filterTag: "Foundations"
 ---
 
 Use our one-hour LinkedIn Learning course as an orientation or pre-work module. It gives teams a concise overview of responsible data stewardship before they dive into bootcamps or deep dives.

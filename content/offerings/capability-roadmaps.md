@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Capability Roadmaps"
 summary: "Consulting engagements that build long-term data stewardship capacity."
 program: organizational
@@ -18,7 +17,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Organizational"
 ---
 
 Partner with our team for a 6-12 week engagement that delivers a practical roadmap for institutionalizing data stewardship, from governance structures to talent development.

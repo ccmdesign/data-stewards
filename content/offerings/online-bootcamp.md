@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Online Bootcamp"
 summary: "Global cohort-based, fully remote with recordings and office hours."
 program: foundations
@@ -18,7 +17,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Foundations"
 ---
 
 Join a global cohort for six weeks of fully remote instruction. Weekly three-hour live sessions, recordings, and office hours make it easy to participate regardless of time zone.

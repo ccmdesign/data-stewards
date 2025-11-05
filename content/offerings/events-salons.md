@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Events & Salons"
 summary: "Keynotes, fireside chats, and panels with global thought leaders."
 program: community
@@ -17,7 +16,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Community"
 ---
 
 Gather with fellow practitioners for curated events ranging from intimate salons to larger keynotes. Each session spotlights thought leaders advancing responsible data stewardship.

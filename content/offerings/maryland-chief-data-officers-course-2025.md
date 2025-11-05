@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Maryland Chief Data Officers Course 2025"
 summary: "Hybrid cohort for state leaders in partnership with Maryland DoIT."
 program: foundations
@@ -22,7 +21,6 @@ location:
 partners:
   - maryland-department-of-information-technology
 
-filterTag: "Foundations"
 ---
 
 Maryland DoIT convened agency data leaders for a four-week journey covering stewardship frameworks, governance modernization, and actionable policy playbooks.

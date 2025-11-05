@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Synthetic Data & Privacy-Enhancing Technologies"
 summary: "Deploy synthetic data and PETs to unlock insight while protecting sensitive information."
 program: deep-dives
@@ -17,7 +16,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Deep Dives"
 ---
 
 Examine when and how to use synthetic data, differential privacy, secure computation, and other privacy-enhancing technologies. We focus on practical selection criteria and implementation patterns.

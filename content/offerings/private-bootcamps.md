@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Private Bootcamps"
 summary: "Tailored training for a specific organization with curriculum aligned to staff needs."
 program: organizational
@@ -17,7 +16,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Organizational"
 ---
 
 Commission a private bootcamp built around your organization's goals. We customize the curriculum to address specific knowledge gaps and deliver a focused experience for your team.

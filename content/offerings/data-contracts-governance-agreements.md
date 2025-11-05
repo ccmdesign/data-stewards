@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Data Contracts & Governance Agreements"
 summary: "Structure contracts and governance agreements that sustain equitable data collaborations."
 program: deep-dives
@@ -17,7 +16,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Deep Dives"
 ---
 
 Learn how to draft and operationalize data contracts that align incentives, clarify responsibilities, and manage risk. We highlight agreement templates and negotiation tips drawn from cross-sector collaborations.

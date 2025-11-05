@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Swiss Data Stewards Intensive Course"
 summary: "In-person intensive delivered with Swiss Data Alliance, Opendata.ch, and Hasler Stiftung."
 program: foundations
@@ -24,7 +23,6 @@ partners:
   - opendata-ch
   - hasler-stiftung
 
-filterTag: "Foundations"
 ---
 
 Swiss stewardship leaders gathered for a five-day intensive focused on cross-sector collaboration, privacy engineering, and responsible innovation practices.

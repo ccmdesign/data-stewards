@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Example Course Title 2"
 summary: "Hybrid bootcamp blend of synchronous instruction and async projects."
 program: foundations
@@ -22,7 +21,6 @@ registration:
   state: invite-only
   note: "Closed cohort. Contact the team to inquire about future dates."
 
-filterTag: "Foundations"
 ---
 
 Distributed teams move through foundational stewardship modules online before convening for live strategy sprints and peer review.

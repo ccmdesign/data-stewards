@@ -1,5 +1,4 @@
 ---
-documentType: offering
 title: "Evaluation, KPIs, and Value Realization"
 summary: "Evaluate stewardship initiatives with KPIs that capture impact, trust, and value creation."
 program: deep-dives
@@ -17,7 +16,6 @@ registration:
   url: "mailto:datastewards@thegovlab.org"
   state: open
 
-filterTag: "Deep Dives"
 ---
 
 Walk through frameworks for measuring stewardship performance. We translate mission goals into KPIs, surface qualitative indicators for trust, and show how to communicate value to stakeholders.
