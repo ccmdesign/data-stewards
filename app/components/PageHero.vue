@@ -15,7 +15,7 @@ const { heroData } = usePageHero()
       <UPageHero
         class="relative z-10 mx-auto max-w-4xl space-y-8 text-left"
         :description="heroData.description"
-        :links="heroData.links"
+        :links="heroData.links ? JSON.parse(JSON.stringify(heroData.links)) : undefined"
       >
         <template #title>
           <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -27,6 +27,10 @@ const { heroData } = usePageHero()
             </span>
             {{ heroData.title }}
           </h1>
+        </template>
+
+        <template #below-title>
+          <slot name="below-title" />
         </template>
       </UPageHero>
     </div>

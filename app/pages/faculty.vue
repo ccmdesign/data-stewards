@@ -1,6 +1,20 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
 
+definePageMeta({
+  layout: 'default'
+})
+
+const { setPageHero } = usePageHero()
+
+// Set page hero data
+setPageHero({
+  title: 'Faculty Directory',
+  subtitle: 'Our Experts',
+  description: 'Meet our world-class faculty of data stewardship experts, instructors, and guest lecturers.',
+  showHero: true
+})
+
 type FacultyCard = {
   id: string
   path: string
@@ -135,39 +149,35 @@ const closeFacultyModal = () => {
 
 <template>
   <div class="relative">
-    <UPage>
-      <UPageBody class="py-0 sm:py-0 md:py-0 lg:py-0 xl:py-0">
-        <UPageSection id="faculty-directory">
-          <template #links>
-            <div class="flex flex-wrap gap-2">
-              <UButton
-                v-for="item in tabItems"
-                :key="item.value"
-                :variant="tabValue === item.value ? 'solid' : 'outline'"
-                :disabled="item.disabled"
-                :size="'md'"
-                @click="tabValue = item.value as typeof tabValue"
-              >
-                {{ item.label }}
-              </UButton>
-            </div>
-          </template>
-
+    <UPageSection id="faculty-directory">
+      <div class="flex flex-wrap gap-2 justify-center">
+          <UButton
+            v-for="item in tabItems"
+            :key="item.value"
+            :variant="tabValue === item.value ? 'solid' : 'outline'"
+            :disabled="item.disabled"
+            :size="'md'"
+            @click="tabValue = item.value as typeof tabValue"
+          >
+            {{ item.label }}
+          </UButton>
+        </div>
           <template v-if="facultyMembers.length">
             <UPageGrid class="gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
               <UCard
                 v-for="person in facultyMembers"
                 :key="person.id"
                 as="article"
-                class="h-full overflow-hidden flex flex-col"
+                class="h-full overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                 :ui="{ header: 'p-0 sm:px-0', body: 'flex-1' }"
+                @click="openFacultyModal(person)"
               >
                 <template #header>
                   <div class="relative aspect-square w-full overflow-hidden bg-muted rounded-t-lg">
                     <img
                       :src="person.avatar.src"
                       :alt="person.avatar.alt || `${person.name} headshot`"
-                      class="h-full w-full object-cover object-center"
+                      class="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-105"
                     >
                   </div>
                 </template>
@@ -181,26 +191,13 @@ const closeFacultyModal = () => {
                       <p class="text-sm text-muted-foreground">
                         {{ person.description }}
                       </p>
+                      <span
+                        v-if="person.categoryLabel"
+                        class="inline-block mt-2 text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full"
+                      >
+                        {{ person.categoryLabel }}
+                      </span>
                     </div>
-                  </div>
-                </template>
-
-                <template #footer>
-                  <div class="flex items-center justify-between text-sm">
-                    <span
-                      v-if="person.categoryLabel"
-                      class="text-muted-foreground"
-                    >
-                      {{ person.categoryLabel }}
-                    </span>
-                    <UButton
-                      variant="link"
-                      color="primary"
-                      size="sm"
-                      @click="openFacultyModal(person)"
-                    >
-                      View profile
-                    </UButton>
                   </div>
                 </template>
               </UCard>
@@ -217,15 +214,14 @@ const closeFacultyModal = () => {
               </p>
             </div>
           </template>
-        </UPageSection>
-      </UPageBody>
-    </UPage>
+    </UPageSection>
 
     <UModal
       v-model:open="isModalOpen"
       :title="selectedFaculty?.name"
       @close="closeFacultyModal"
       :ui="{ content: 'max-w-2xl' }"
+      class="transition-all duration-300"
     >
       <template v-if="selectedFaculty" #body>
         <div class="space-y-6">
@@ -285,14 +281,6 @@ const closeFacultyModal = () => {
               </div>
             </div>
           </div>
-        </div>
-      </template>
-
-      <template #footer>
-        <div class="flex justify-end">
-          <UButton @click="closeFacultyModal">
-            Close
-          </UButton>
         </div>
       </template>
     </UModal>
