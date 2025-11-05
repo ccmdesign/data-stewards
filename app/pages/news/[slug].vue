@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { usePageHero } from '~/composables/usePageHero'
+
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -8,6 +10,8 @@ const categoryLabels: Record<string, string> = {
   videos: 'Video',
   events: 'Event'
 }
+
+const { setPageHero } = usePageHero()
 
 const { data: postData } = await useAsyncData(`news-post-${slug}`, () =>
   queryCollection('posts')
@@ -23,6 +27,21 @@ if (!post.value) {
     message: 'Post not found'
   })
 }
+
+// Set hero data after post is loaded
+const headline = computed(() => categoryLabels[post.value?.category ?? 'blog'] ?? 'News')
+const heroLinks = [
+  { label: 'Back to News', to: '/news', variant: 'outline', size: 'lg' },
+  ...(post.value?.registrationLink ? [{ label: 'Register', to: post.value.registrationLink, target: '_blank', size: 'lg', color: 'primary' }] : [])
+]
+
+setPageHero({
+  showHero: true,
+  title: post.value.title,
+  subtitle: headline.value,
+  description: post.value.description,
+  links: heroLinks
+})
 
 useSeoMeta({
   title: post.value.title,
@@ -42,33 +61,12 @@ const formatTimeRange = (start?: string, end?: string) => {
   return end ? `${start} – ${end}` : start
 }
 
-const headline = computed(() => categoryLabels[post.value?.category ?? 'blog'] ?? 'News')
 const eventTime = computed(() => formatTimeRange(post.value?.startTime, post.value?.endTime))
 </script>
 
 <template>
-  <UPage>
-    <UPageHeader
-      :headline="headline"
-      :title="post.title"
-      :description="post.description"
-    >
-      <template #footer>
-        <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-          <span>{{ formatDate(post.date) }}</span>
-          <template v-if="post.category === 'events'">
-            <span>•</span>
-            <span>{{ post.location }}</span>
-            <span v-if="eventTime">•</span>
-            <span v-if="eventTime">{{ eventTime }}</span>
-          </template>
-        </div>
-      </template>
-    </UPageHeader>
-
-    <UPageBody>
-      <UContainer>
-        <div class="mx-auto max-w-3xl space-y-10">
+  <UContainer class="py-12">
+    <div class="mx-auto max-w-3xl space-y-10">
           <div v-if="post.category === 'events'" class="rounded-lg border border-default bg-muted/30 p-6">
             <div class="flex flex-col gap-4 text-sm text-muted-foreground">
               <div class="flex items-center gap-2">
@@ -98,27 +96,16 @@ const eventTime = computed(() => formatTimeRange(post.value?.startTime, post.val
             <ContentRenderer :value="post" />
           </div>
 
-          <div class="flex flex-wrap items-center justify-between gap-4 border-t border-default pt-6">
-            <UButton
-              to="/news"
-              variant="link"
-              icon="i-lucide-arrow-left"
-              label="Back to news"
-            />
-
-            <div v-if="post.tags?.length" class="flex flex-wrap gap-2 text-sm text-muted-foreground">
-              <UBadge
-                v-for="tag in post.tags"
-                :key="tag"
-                variant="soft"
-                color="neutral"
-                :label="tag"
-              />
-            </div>
-          </div>
-        </div>
-      </UContainer>
-    </UPageBody>
-  </UPage>
+      <div v-if="post.tags?.length" class="flex flex-wrap gap-2 text-sm text-muted-foreground border-t border-default pt-6">
+        <UBadge
+          v-for="tag in post.tags"
+          :key="tag"
+          variant="soft"
+          color="neutral"
+          :label="tag"
+        />
+      </div>
+    </div>
+  </UContainer>
 </template>
 
