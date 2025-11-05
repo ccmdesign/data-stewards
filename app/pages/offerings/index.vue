@@ -15,31 +15,36 @@ const offerings = computed(() =>
 const upcomingOfferings = computed(() => offerings.value.filter(offering => offering.meta?.status === 'upcoming'))
 const pastOfferings = computed(() => offerings.value.filter(offering => offering.meta?.status === 'past'))
 
-type ProgramFilter = 'foundations' | 'deep-dives'
+type ProgramFilter = 'all' | 'foundations' | 'deep-dives'
 
 const programFilters: Array<{ label: string, value: ProgramFilter }> = [
+  { label: 'All', value: 'all' },
   { label: 'Foundations', value: 'foundations' },
   { label: 'Deep Dives', value: 'deep-dives' }
 ]
 
-const programFilter = ref<ProgramFilter>('foundations')
+const programFilter = ref<ProgramFilter>('all')
 
 const filteredPastOfferings = computed(() =>
-  pastOfferings.value.filter(offering => offering.meta?.program === programFilter.value)
+  programFilter.value === 'all'
+    ? pastOfferings.value
+    : pastOfferings.value.filter(offering => offering.meta?.program === programFilter.value)
 )
 
 watchEffect(() => {
   if (!pastOfferings.value.length) return
+  // 'all' filter is always valid
+  if (programFilter.value === 'all') return
   const hasCurrentProgram = pastOfferings.value.some(offering => offering.meta?.program === programFilter.value)
   if (hasCurrentProgram) return
   const fallback = programFilters.find(filter => pastOfferings.value.some(offering => offering.meta?.program === filter.value))
   if (fallback) programFilter.value = fallback.value
 })
 
-const levelColors: Record<OfferingLevel, string> = {
-  introductory: 'primary',
+const levelColors: Record<OfferingLevel, 'success' | 'warning' | 'error' | 'info'> = {
+  introductory: 'success',
   intermediate: 'warning',
-  advanced: 'rose',
+  advanced: 'error',
   executive: 'info'
 }
 
@@ -48,13 +53,14 @@ const formatLevelLabel = (level?: OfferingLevel) => {
   return level.split('-').map(part => part[0]?.toUpperCase() + part.slice(1)).join(' ')
 }
 
-const getLevelColor = (level?: OfferingLevel) => {
+const getLevelColor = (level?: OfferingLevel): 'success' | 'warning' | 'error' | 'info' | 'neutral' => {
   if (!level) return 'neutral'
   return levelColors[level] ?? 'neutral'
 }
 
 useSeoMeta({
-  title: 'Offerings | Data Stewardship Academy'
+  title: 'Programs & Offerings | Data Stewardship Academy',
+  description: 'Discover our comprehensive data stewardship programs and training offerings designed to advance skills and practices in responsible data management.'
 })
 </script>
 
@@ -62,11 +68,20 @@ useSeoMeta({
   <UPage>
     <UPageBody>
       <UContainer class="space-y-16">
+        <!-- Page Header -->
+        <header class="text-center space-y-4">
+          <h1 class="text-4xl font-bold tracking-tight">Offerings</h1>
+          <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Discover our comprehensive programs designed to advance data stewardship skills and practices.
+          </p>
+        </header>
+
+        <!-- Upcoming Section -->
         <section class="space-y-6">
           <header class="space-y-2">
             <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Upcoming</p>
             <div>
-              <h1 class="text-3xl font-semibold">Upcoming Offerings</h1>
+              <h2 class="text-3xl font-semibold">Upcoming Offerings</h2>
               <p class="text-muted-foreground">Discover the next experiences launching soon.</p>
             </div>
           </header>
@@ -92,9 +107,9 @@ useSeoMeta({
 
               <div class="">
                 <div class="space-y-2">
-                  <h2 class="text-2xl font-semibold tracking-tight">
+                  <h3 class="text-2xl font-semibold tracking-tight">
                     {{ offering.title }}
-                  </h2>
+                  </h3>
                   <p class="text-muted-foreground">
                     {{ offering.meta?.summary ?? offering.description }}
                   </p>
@@ -116,14 +131,21 @@ useSeoMeta({
               </div>
 
               <template #footer>
-                <UButton
-                  color="secondary"
-                  variant="solid"
-                  :to="offering.path ?? '/offerings'"
-                  trailing-icon="i-lucide-arrow-up-right"
-                >
-                  View more
-                </UButton>
+                <div class="flex gap-3">
+                  <UButton
+                    color="primary"
+                    :to="offering.path ?? '/offerings'"
+                  >
+                    Register
+                  </UButton>
+                  <UButton
+                    color="primary"
+                    variant="outline"
+                    :to="offering.path ?? '/offerings'"
+                  >
+                    View more
+                  </UButton>
+                </div>
               </template>
             </UCard>
           </div>
@@ -155,6 +177,7 @@ useSeoMeta({
               v-for="offering in filteredPastOfferings"
               :key="offering._id || offering.slug || offering.title"
               class="h-full transition-shadow hover:shadow-lg"
+              :ui="{ root: 'flex flex-col h-full', body: 'flex-1' }"
             >
               <template #header>
                 <div class="flex flex-wrap gap-2">
@@ -171,9 +194,9 @@ useSeoMeta({
 
               <div class="flex flex-col gap-4">
                 <div class="space-y-2">
-                  <h3 class="text-xl font-semibold tracking-tight">
+                  <h4 class="text-xl font-semibold tracking-tight">
                     {{ offering.title }}
-                  </h3>
+                  </h4>
                   <p class="text-sm text-muted-foreground">
                     {{ offering.meta?.summary ?? offering.description }}
                   </p>
@@ -196,11 +219,10 @@ useSeoMeta({
 
               <template #footer>
                 <UButton
-                  color="secondary"
-                  variant="solid"
+                  color="primary"
+                  variant="outline"
                   size="sm"
                   :to="offering.path ?? '/offerings'"
-                  trailing-icon="i-lucide-arrow-up-right"
                 >
                   View more
                 </UButton>
