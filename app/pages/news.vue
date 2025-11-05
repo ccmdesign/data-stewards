@@ -1,11 +1,24 @@
 <script setup lang="ts">
-const heroHeadline = 'Newsroom'
-const heroTitle = 'Latest stories, events, and media from Data Stewards Academy'
-const heroDescription = 'Track program launches, alumni spotlights, upcoming events, and recorded talks from across the community.'
+import type { ButtonProps } from '#ui/types'
+import { usePageHero } from '~/composables/usePageHero'
+
+const { setPageHero } = usePageHero()
+
+const heroLinks: ButtonProps[] = [
+  { label: 'Browse Updates', to: '#news-feed', color: 'primary', size: 'lg' }
+]
+
+setPageHero({
+  showHero: true,
+  title: 'Latest stories, events, and media from Data Stewards Academy',
+  subtitle: 'Newsroom',
+  description: 'Track program launches, alumni spotlights, upcoming events, and recorded talks from across the community.',
+  links: heroLinks
+})
 
 useSeoMeta({
   title: 'News',
-  description: heroDescription
+  description: 'Track program launches, alumni spotlights, upcoming events, and recorded talks from across the community.'
 })
 
 const searchTerm = ref('')
@@ -160,67 +173,47 @@ const getCategoryColor = (category: string | undefined): 'primary' | 'secondary'
 
 <template>
   <div class="relative">
-    <section class="relative isolate overflow-hidden border border-primary/30 bg-gradient-to-b from-primary/15 via-transparent to-transparent py-12 sm:py-16">
-      <HeroBackground class="pointer-events-none absolute inset-0 opacity-40 mix-blend-multiply" />
-      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.4),_transparent_60%)] dark:bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]" />
-
-      <UContainer class="relative z-10">
-        <UPageHero
-          :headline="heroHeadline"
-          :description="heroDescription"
-          class="mx-auto max-w-3xl text-center"
-        >
-          <template #title>
-            <h1 class="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              {{ heroTitle }}
-            </h1>
-          </template>
-
-        </UPageHero>
-
-        <div
+    <UPage>
+      <UPageBody>
+        <!-- Featured Posts Section -->
+        <UPageSection
           v-if="featuredPosts.length > 0"
           id="featured-posts"
-          class="mx-auto max-w-5xl"
+           class="py-0 my-0"
         >
-          <h2 class="text-left pl-11 font-semibold uppercase tracking-[0.125em] text-primary">Featured</h2>
-          
           <UCarousel
             v-slot="{ item }"
             :items="featuredPosts"
             arrows
             slides-to-scroll="auto"
             :ui="{ 
-              item: 'basis-[40%] shrink-0', 
-              container: 'gap-6 items-stretch',
-              viewport: 'px-3 py-4'
+              viewport: 'py-4 px-3 mx-auto border-r border-l border-gray-200 dark:border-gray-800',
+              item: 'max-w-[80vw]'
             }"
-            class="w-full border-r-1 border-l-1 border-primary/30"
           >
             <UCard
               :key="item.slug ?? item.path"
               :ui="{ root: 'flex flex-col h-full', body: 'flex-1' }"
-              
             >
-                <template #header>
-                  <div class="flex items-center justify-between gap-3 text-sm text-muted-foreground">
-                    <UBadge :label="categoryLabels[item.category] ?? 'Post'" variant="subtle" :color="getCategoryColor(item.category)" />
-                    <span class="ml-auto whitespace-nowrap">{{ formatDate(item.date) }}</span>
-                  </div>
-                </template>
+              <template #header>
+                <div class="flex items-center justify-between gap-3 text-sm text-muted-foreground">
+                  <UBadge :label="categoryLabels[item.category] ?? 'Post'" variant="subtle" :color="getCategoryColor(item.category)" />
+                  <span class="ml-auto whitespace-nowrap">{{ formatDate(item.date) }}</span>
+                </div>
+              </template>
 
-                <template #default>
-                  <div class="space-y-3">
-                    <NuxtLink :to="resolvePostLink(item)" class="block">
-                      <span class="text-lg font-semibold leading-tight line-clamp-2">
-                        {{ item.title }}
-                      </span>
-                    </NuxtLink>
-                    <p class="text-sm text-muted-foreground line-clamp-3">
-                      {{ item.description }}
-                    </p>
-                  </div>
-                </template>
+              <template #default>
+                <div class="space-y-3">
+                  <NuxtLink :to="resolvePostLink(item)" class="block">
+                    <span class="text-lg font-semibold leading-tight line-clamp-2">
+                      {{ item.title }}
+                    </span>
+                  </NuxtLink>
+                  <p class="text-sm text-muted-foreground line-clamp-3">
+                    {{ item.description }}
+                  </p>
+                </div>
+              </template>
 
               <template #footer>
                 <div class="flex items-center justify-between gap-3">
@@ -240,13 +233,9 @@ const getCategoryColor = (category: string | undefined): 'primary' | 'secondary'
               </template>
             </UCard>
           </UCarousel>
-        </div>
-      </UContainer>
-    </section>
+        </UPageSection>
 
-    <UPage>
-      <UPageBody>
-        <UPageSection id="news-feed">
+        <UPageSection id="news-feed" class="py-0 my-0">
           <template #title>
             <div class="flex flex-col gap-6">
               <div>
@@ -283,7 +272,7 @@ const getCategoryColor = (category: string | undefined): 'primary' | 'secondary'
               <UCard
                 v-for="post in filteredPosts"
                 :key="post.slug ?? post.path"
-                class="h-full"
+                :ui="{ root: 'flex flex-col h-full', body: 'flex-1' }"
               >
                 <template #header>
                   <div class="flex items-center justify-between gap-3 text-sm text-muted-foreground">
