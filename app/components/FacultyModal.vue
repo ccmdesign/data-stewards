@@ -37,6 +37,18 @@ const facultyDetails = computed(() => {
 const handleClose = () => {
   emit('close')
 }
+
+onMounted(() => {
+  const handleEscape = (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && isOpen.value) {
+      handleClose()
+    }
+  }
+  window.addEventListener('keydown', handleEscape)
+  onUnmounted(() => {
+    window.removeEventListener('keydown', handleEscape)
+  })
+})
 </script>
 
 <template>
@@ -44,6 +56,8 @@ const handleClose = () => {
     :open="isOpen"
     :title="faculty?.name"
     @close="handleClose"
+    @update:open="(value) => !value && handleClose()"
+    :dismissible="true"
     :ui="{ content: 'max-w-2xl' }"
     class="transition-all duration-300"
   >

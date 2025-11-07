@@ -5,6 +5,7 @@ export interface NavigationItem {
 
 export function useNavigation() {
   const router = useRouter()
+  const route = useRoute()
 
   const formatLabel = (path: string) => {
     if (path === '/') {
@@ -19,62 +20,71 @@ export function useNavigation() {
   }
 
   const items = computed<NavigationItem[]>(() => {
-    const seen = new Set<string>()
+    try {
+      route.path
+      const seen = new Set<string>()
 
-    const routes = router
-      .getRoutes()
-      .filter(routeRecord => {
-        if (!routeRecord.path) {
-          return false
-        }
+      const routes = router
+        .getRoutes()
+        .filter(routeRecord => {
+          if (!routeRecord.path) {
+            return false
+          }
 
-        const segments = routeRecord.path.split('/').filter(Boolean)
+          const segments = routeRecord.path.split('/').filter(Boolean)
 
-        if (seen.has(routeRecord.path)) {
-          return false
-        }
+          if (seen.has(routeRecord.path)) {
+            return false
+          }
 
-        if (routeRecord.path !== '/' && segments.length > 1) {
-          return false
-        }
+          if (routeRecord.path !== '/' && segments.length > 1) {
+            return false
+          }
 
-        if (segments.some(segment => segment.startsWith('_'))) {
-          return false
-        }
+          if (segments.some(segment => segment.startsWith('_'))) {
+            return false
+          }
 
-        if (routeRecord.path.includes(':') || routeRecord.path.includes('(')) {
-          return false
-        }
+          if (routeRecord.path.includes(':') || routeRecord.path.includes('(')) {
+            return false
+          }
 
-        const resolved = router.resolve(routeRecord.path)
-        if (!resolved.matched.length) {
-          return false
-        }
+          try {
+            const resolved = router.resolve(routeRecord.path)
+            if (!resolved.matched.length) {
+              return false
+            }
+          } catch {
+            return false
+          }
 
-        seen.add(routeRecord.path)
-        return true
-      })
-      .map(routeRecord => ({
-        path: routeRecord.path,
-        label: formatLabel(routeRecord.path)
-      }))
-      .sort((a, b) => {
-        if (a.path === '/') {
-          return -1
-        }
-        if (b.path === '/') {
-          return 1
-        }
-        if (a.path === '/contact') {
-          return 1
-        }
-        if (b.path === '/contact') {
-          return -1
-        }
-        return a.path.localeCompare(b.path)
-      })
+          seen.add(routeRecord.path)
+          return true
+        })
+        .map(routeRecord => ({
+          path: routeRecord.path,
+          label: formatLabel(routeRecord.path)
+        }))
+        .sort((a, b) => {
+          if (a.path === '/') {
+            return -1
+          }
+          if (b.path === '/') {
+            return 1
+          }
+          if (a.path === '/contact') {
+            return 1
+          }
+          if (b.path === '/contact') {
+            return -1
+          }
+          return a.path.localeCompare(b.path)
+        })
 
-    return routes
+      return routes
+    } catch {
+      return []
+    }
   })
 
   return {
