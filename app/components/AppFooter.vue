@@ -35,8 +35,11 @@ function onSubmit() {
   <UFooter :ui="{ top: 'border-b border-default' }">
     <template #top>
       <UContainer>
-        <UFooterColumns :columns="columns">
-          <template #right>
+        <div class="grid grid-cols-3 gap-8">
+          <div class="col-span-2">
+            <UFooterColumns :columns="columns" />
+          </div>
+          <div class="col-span-1">
             <form @submit.prevent="onSubmit">
               <UFormField
                 name="email"
@@ -59,8 +62,8 @@ function onSubmit() {
                 </UInput>
               </UFormField>
             </form>
-          </template>
-        </UFooterColumns>
+          </div>
+        </div>
       </UContainer>
     </template>
 

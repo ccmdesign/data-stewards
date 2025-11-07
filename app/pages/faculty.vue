@@ -249,14 +249,42 @@ const closeFacultyModal = () => {
           </div>
 
           <!-- Additional faculty information from the raw data -->
-          <div v-if="selectedFaculty" class="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-500">
+          <div v-if="selectedFaculty" class="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-500">
             <div v-for="item in rawFaculty" :key="(item as any)._id">
-              <div v-if="item.name === selectedFaculty.name" class="space-y-3">
-                <div v-if="(item as any).bio" class="prose prose-sm max-w-none">
-                  <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Bio</h4>
-                  <MDC :value="(item as any).bio" />
+              <div v-if="item.name === selectedFaculty.name" class="space-y-4">
+                <!-- Role and Affiliation -->
+                <div v-if="(item as any).role || (item as any).affiliation" class="space-y-2">
+                  <div v-if="(item as any).role" class="text-sm">
+                    <span class="font-semibold text-muted-foreground uppercase tracking-wide">Role:</span>
+                    <span class="ml-2">{{ (item as any).role }}</span>
+                  </div>
+                  <div v-if="(item as any).affiliation" class="text-sm">
+                    <span class="font-semibold text-muted-foreground uppercase tracking-wide">Affiliation:</span>
+                    <span class="ml-2">{{ (item as any).affiliation }}</span>
+                  </div>
                 </div>
 
+                <!-- Bio -->
+                <div v-if="(item as any).bio" class="space-y-2">
+                  <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Bio</h4>
+                  <div class="prose prose-sm max-w-none text-sm">
+                    <MDC :value="(item as any).bio" />
+                  </div>
+                </div>
+
+                <!-- Topic (for guest faculty) -->
+                <div v-if="(item as any).topic" class="space-y-2">
+                  <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Topic</h4>
+                  <p class="text-sm">{{ (item as any).topic }}</p>
+                </div>
+
+                <!-- Cohort (for guest faculty) -->
+                <div v-if="(item as any).cohort" class="space-y-2">
+                  <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Cohort</h4>
+                  <p class="text-sm">{{ (item as any).cohort }}</p>
+                </div>
+
+                <!-- Expertise -->
                 <div v-if="(item as any).expertise && (item as any).expertise.length" class="space-y-2">
                   <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Expertise</h4>
                   <div class="flex flex-wrap gap-2">
@@ -266,17 +294,31 @@ const closeFacultyModal = () => {
                   </div>
                 </div>
 
-                <div v-if="(item as any).linkedin" class="space-y-2">
+                <!-- Connect Links -->
+                <div v-if="(item as any).linkedin || (item as any).website" class="space-y-2">
                   <h4 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Connect</h4>
-                  <UButton
-                    :to="(item as any).linkedin"
-                    target="_blank"
-                    icon="i-lucide-linkedin"
-                    variant="outline"
-                    size="sm"
-                  >
-                    LinkedIn Profile
-                  </UButton>
+                  <div class="flex flex-wrap gap-2">
+                    <UButton
+                      v-if="(item as any).linkedin"
+                      :to="(item as any).linkedin"
+                      target="_blank"
+                      icon="i-lucide-linkedin"
+                      variant="outline"
+                      size="sm"
+                    >
+                      LinkedIn
+                    </UButton>
+                    <UButton
+                      v-if="(item as any).website"
+                      :to="(item as any).website"
+                      target="_blank"
+                      icon="i-lucide-external-link"
+                      variant="outline"
+                      size="sm"
+                    >
+                      Website
+                    </UButton>
+                  </div>
                 </div>
               </div>
             </div>
