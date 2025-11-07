@@ -9,6 +9,8 @@ cta_links:
     url: "https://www.linkedin.com/learning/global-data-stewardship"
   - label: "Request In-House Training"
     url: "#want-more?-check-out-our-offerings-for-organizations."
+  - label: "View Sample Syllabus"
+    url: "/syllabi/foundations-template"
 ---
 
 Our flagship, hands-on program for leaders seeking to build data stewardship strategies for their organizations. Learn the fundamentals of open data, data science, and data collaboration.
