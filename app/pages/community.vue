@@ -114,7 +114,7 @@ const supportBenefits = [
       no-margin
     >
       <UPageColumns class="lg:columns-3">
-        <UPageCard
+        <ExchangeCard
           v-for="(card, index) in highlightCards"
           :key="index"
           :title="card.title"
@@ -123,92 +123,11 @@ const supportBenefits = [
       </UPageColumns>
     </BaseSection>
 
-    <BaseSection
-      id="stay-updated"
-      title="Stay Updated"
-      description="Curated briefings, resources, and updates from the frontlines of responsible data stewardship."
-      padding="large"
-      no-margin
-    >
-      <div class="grid gap-8 lg:grid-cols-2">
-        <UCard v-for="(card, index) in stayUpdatedCards" :key="index">
-          <template #header>
-            <h3 class="text-xl font-semibold">{{ card.title }}</h3>
-          </template>
-          <p class="text-muted">{{ card.description }}</p>
-          <template #footer>
-            <div class="flex flex-wrap items-center gap-3">
-              <UButton
-                v-if="card.primaryCta"
-                :label="card.primaryCta.label"
-                :color="card.primaryCta.color"
-                :variant="card.primaryCta.variant"
-                :size="card.primaryCta.size"
-                :to="card.primaryCta.to"
-              />
-              <UButton
-                v-if="card.secondaryCta"
-                :label="card.secondaryCta.label"
-                :color="card.secondaryCta.color"
-                :variant="card.secondaryCta.variant"
-                :size="card.secondaryCta.size"
-                :to="card.secondaryCta.to"
-              />
-            </div>
-          </template>
-        </UCard>
-      </div>
-    </BaseSection>
+    <StayUpdatedSection :cards="stayUpdatedCards" />
 
-    <BaseSection
-      id="become-partner"
-      title="Become part of our community"
-      description="We work with partners worldwide to make each cohort thrive. Support the movement in the way that fits you best."
-      variant="muted"
-      padding="large"
-      no-margin
-    >
-      <p class="text-lg text-muted-foreground">
-        Interested in working with us? You can support a data stewards course in different ways:
-      </p>
+    <CommunitySection :cards="collaborationCards" />
 
-      <div id="join-our-community" class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <UCard 
-          v-for="(card, index) in collaborationCards" 
-          :key="index" 
-          class="h-full"
-          :ui="{ root: 'flex flex-col', body: 'flex-1' }"
-        >
-          <template #header>
-            <h3 class="text-xl font-semibold">{{ card.title }}</h3>
-          </template>
-          <p class="text-muted">{{ card.body }}</p>
-          <template #footer>
-            <UButton
-              label="Contact us"
-              to="/contact"
-              color="primary"
-              variant="outline"
-              size="lg"
-            />
-          </template>
-        </UCard>
-      </div>
-    </BaseSection>
-
-    <BaseSection
-      id="why-support"
-      title="Why support a data stewards course?"
-      description="Backing this work multiplies impact across organizations, sectors, and regions."
-      padding="large"
-      no-margin
-    >
-      <UCard>
-        <ul class="list-disc space-y-3 pl-6">
-          <li v-for="(benefit, index) in supportBenefits" :key="index">{{ benefit }}</li>
-        </ul>
-      </UCard>
-    </BaseSection>
+    <SupportSection :benefits="supportBenefits" />
   </div>
 </template>
 

@@ -52,6 +52,14 @@ const organizationOffers = [
   { title: 'Capability Roadmaps', description: '6–12 week consulting engagements to establish stewardship functions.' }
 ]
 
+const learningOutcomes = [
+  'Understand the core principles of responsible data stewardship',
+  'Design and govern data initiatives using the 4P framework (Purpose, Principles, Processes, Practices)',
+  'Learn to establish a social license for data re-use',
+  'Develop data-sharing agreements, evaluation KPIs, and trust mechanisms',
+  'Build a capstone plan ready to implement in your organization'
+]
+
 const testimonials = [
   {
     quote: 'The Data Stewardship Academy transformed how we approach data governance. The bootcamp gave us practical frameworks we could implement immediately.',
@@ -75,159 +83,32 @@ useSeoMeta({
 
 <template>
   <div class="relative">
-    <BaseSection
-      id="programs"
-      title="Our Programs"
-      description="From foundational bootcamps to deep dives, we offer comprehensive training for every stage of your data stewardship journey."
-      variant="muted"
-      no-margin
-    >
-      <ProgramCards :cards="programCards" :columns="2" />
-    </BaseSection>
+    <ProgramsSection :cards="programCards" :columns="2" />
 
-    <BaseSection
-      id="foundations"
-      title="Data Stewardship Foundations"
-      description="Our flagship, hands-on program for leaders building data stewardship maturity. Learn to define purpose, design trust frameworks, and operationalize stewardship."
-      padding="large"
-      no-margin
-    >
-      <div class="space-y-6">
-        <div class="grid gap-4 lg:grid-cols-2">
-          <UCard
-            v-for="(format, index) in bootcampFormats"
-            :key="index"
-          >
-            <template #header>
-              <div class="flex items-center justify-between">
-                <span class="font-semibold">{{ format.title }}</span>
-                <UBadge variant="subtle">{{ format.badge }}</UBadge>
-              </div>
-            </template>
-            <p class="text-muted">{{ format.description }}</p>
-          </UCard>
-        </div>
+    <FoundationsSection
+      :formats="bootcampFormats"
+      :outcomes="learningOutcomes"
+      :primary-action="{ label: 'Reserve Your Seat', color: 'primary', size: 'lg' }"
+      :secondary-action="{ label: 'Request In-House Training', variant: 'outline', size: 'lg' }"
+    />
 
-        <UCard>
-          <template #header>
-            <span class="font-semibold">Learning Outcomes</span>
-          </template>
-          <ul class="list-disc space-y-2 pl-5">
-            <li>Understand the core principles of responsible data stewardship</li>
-            <li>Design and govern data initiatives using the 4P framework (Purpose, Principles, Processes, Practices)</li>
-            <li>Learn to establish a social license for data re-use</li>
-            <li>Develop data-sharing agreements, evaluation KPIs, and trust mechanisms</li>
-            <li>Build a capstone plan ready to implement in your organization</li>
-          </ul>
-          <div class="mt-4 flex justify-center gap-3">
-            <UButton label="Reserve Your Seat" color="primary" size="lg" />
-            <UButton label="Request In-House Training" variant="outline" size="lg" />
-          </div>
-        </UCard>
-      </div>
-    </BaseSection>
+    <DeepdiveSection
+      :topics="deepDiveTopics"
+      :primary-action="{ label: 'Reserve Your Seat', color: 'primary', size: 'lg', to: '/deep-dives/learn-more' }"
+      :secondary-action="{ label: 'Request In-House Training', variant: 'outline', size: 'lg', to: 'mailto:datastewards@thegovlab.org', target: '_blank' }"
+    />
 
-    <BaseSection
-      id="deep-dives"
-      title="Deep Dives"
-      description="Focused 1-hour masterclasses for experienced stewards who want to specialize in specific topics."
-      variant="muted"
-      padding="large"
-      no-margin
-    >
-      <UPageColumns class="lg:columns-3">
-        <UPageCard
-          v-for="(topic, index) in deepDiveTopics"
-          :key="index"
-          :title="topic.title"
-          :ui="{ header: 'p-0' }"
-        >
-          <template #header>
-            <div class="relative aspect-video w-full overflow-hidden bg-muted rounded-t-lg">
-              <img
-                :src="topic.image"
-                :alt="topic.title"
-                class="h-full w-full object-cover object-center"
-              />
-            </div>
-          </template>
-        </UPageCard>
-      </UPageColumns>
-      <div class="mt-6 flex justify-center gap-3">
-        <UButton
-          label="Reserve Your Seat"
-          color="primary"
-          size="lg"
-          to="/deep-dives/learn-more"
-        />
-        <UButton
-          label="Request In-House Training"
-          variant="outline"
-          size="lg"
-          to="mailto:datastewards@thegovlab.org"
-          target="_blank"
-        />
-      </div>
-    </BaseSection>
+    <ExchangeSection
+      :items="exchangeItems"
+      :primary-action="{ label: 'Subscribe to Updates', color: 'primary', size: 'lg' }"
+      :secondary-action="{ label: 'Download Latest Brief', variant: 'outline', size: 'lg' }"
+    />
 
-    <BaseSection
-      id="exchange"
-      title="Exchange"
-      description="A vibrant network for practitioners, alumni, and partners to stay engaged and share knowledge."
-      padding="large"
-      no-margin
-    >
-      <UPageColumns class="lg:columns-2">
-        <UPageCard
-          v-for="(item, index) in exchangeItems"
-          :key="index"
-          :title="item.title"
-          :description="item.description"
-        />
-      </UPageColumns>
-      <div class="mt-6 flex justify-center gap-3">
-        <UButton label="Subscribe to Updates" color="primary" size="lg" />
-        <UButton label="Download Latest Brief" variant="outline" size="lg"         />
-      </div>
-    </BaseSection>
+    <OrganizationSection
+      :offers="organizationOffers"
+      :primary-action="{ label: 'Schedule a Consultation', size: 'lg', color: 'primary' }"
+    />
 
-    <BaseSection
-      id="organizations"
-      title="For Organizations"
-      description="Tailored offerings to institutionalize data stewardship across your organization."
-      variant="muted"
-      padding="large"
-      no-margin
-    >
-      <UPageColumns class="lg:columns-3">
-        <UPageCard
-          v-for="(offer, index) in organizationOffers"
-          :key="index"
-          :title="offer.title"
-          :description="offer.description"
-        />
-      </UPageColumns>
-      <div class="mt-6 flex justify-center">
-        <UButton label="Schedule a Consultation" size="lg" color="primary"         />
-      </div>
-    </BaseSection>
-
-    <BaseSection
-      id="testimonials"
-      title="What Our Alumni Say"
-      description="Join hundreds of data stewards who have transformed their organizations."
-      padding="large"
-      no-margin
-    >
-      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <QuoteCard
-          v-for="(testimonial, index) in testimonials"
-          :key="index"
-          :quote="testimonial.quote"
-          :author="testimonial.author"
-        />
-      </div>
-    </BaseSection>
-
+    <AlumniSection :testimonials="testimonials" />
   </div>
 </template>
