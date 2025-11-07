@@ -2,7 +2,8 @@
 import { computed, ref, watchEffect } from 'vue'
 import type { ButtonProps } from '#ui/types'
 import { usePageHero } from '~/composables/usePageHero'
-import type { OfferingDocument, OfferingEntry, OfferingLevel } from '~/types/offerings'
+import type { OfferingDocument, OfferingEntry } from '~/types/offerings'
+import type { FilterItem } from '~/components/FiltersMenu.vue'
 
 const { setPageHero } = usePageHero()
 
@@ -34,13 +35,18 @@ const pastOfferings = computed(() => offerings.value.filter(offering => offering
 
 type ProgramFilter = 'all' | 'foundations' | 'deep-dives'
 
-const programFilters: Array<{ label: string, value: ProgramFilter }> = [
-  { label: 'All', value: 'all' },
-  { label: 'Foundations', value: 'foundations' },
-  { label: 'Deep Dives', value: 'deep-dives' }
-]
-
 const programFilter = ref<ProgramFilter>('all')
+
+const programFilters = computed<FilterItem[]>(() => {
+  const hasFoundations = pastOfferings.value.some(offering => offering.meta?.program === 'foundations')
+  const hasDeepDives = pastOfferings.value.some(offering => offering.meta?.program === 'deep-dives')
+
+  return [
+    { label: 'All', value: 'all', disabled: false },
+    { label: 'Foundations', value: 'foundations', disabled: !hasFoundations },
+    { label: 'Deep Dives', value: 'deep-dives', disabled: !hasDeepDives }
+  ]
+})
 
 const filteredPastOfferings = computed(() =>
   programFilter.value === 'all'
@@ -54,26 +60,9 @@ watchEffect(() => {
   if (programFilter.value === 'all') return
   const hasCurrentProgram = pastOfferings.value.some(offering => offering.meta?.program === programFilter.value)
   if (hasCurrentProgram) return
-  const fallback = programFilters.find(filter => pastOfferings.value.some(offering => offering.meta?.program === filter.value))
-  if (fallback) programFilter.value = fallback.value
+  const fallback = programFilters.value.find(filter => pastOfferings.value.some(offering => offering.meta?.program === filter.value))
+  if (fallback) programFilter.value = fallback.value as ProgramFilter
 })
-
-const levelColors: Record<OfferingLevel, 'success' | 'warning' | 'error' | 'info'> = {
-  introductory: 'success',
-  intermediate: 'warning',
-  advanced: 'error',
-  executive: 'info'
-}
-
-const formatLevelLabel = (level?: OfferingLevel) => {
-  if (!level) return null
-  return level.split('-').map(part => part[0]?.toUpperCase() + part.slice(1)).join(' ')
-}
-
-const getLevelColor = (level?: OfferingLevel): 'success' | 'warning' | 'error' | 'info' | 'neutral' => {
-  if (!level) return 'neutral'
-  return levelColors[level] ?? 'neutral'
-}
 
 useSeoMeta({
   title: 'Programs & Offerings | Data Stewardship Academy',
@@ -96,67 +85,12 @@ useSeoMeta({
           </header>
 
           <div v-if="upcomingOfferings.length" class="space-y-6">
-            <UCard
+            <OfferingCard
               v-for="offering in upcomingOfferings"
               :key="offering._id || offering.slug || offering.title"
-              class="w-full transition-shadow hover:shadow-lg flex flex-col"
-            >
-              <template #header>
-                <div class="flex flex-wrap gap-2">
-                  <UBadge variant="subtle" color="primary">{{ offering.meta?.program }}</UBadge>
-                  <UBadge
-                    v-if="offering.meta?.level"
-                    variant="soft"
-                    :color="getLevelColor(offering.meta?.level)"
-                  >
-                    {{ formatLevelLabel(offering.meta?.level) }}
-                  </UBadge>
-                </div>
-              </template>
-
-              <div class="">
-                <div class="space-y-2">
-                  <h3 class="text-2xl font-semibold tracking-tight">
-                    {{ offering.title }}
-                  </h3>
-                  <p class="text-muted-foreground">
-                    {{ offering.meta?.summary ?? offering.description }}
-                  </p>
-                </div>
-                <dl class="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                  <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-layers" class="h-4 w-4" />
-                    <span>{{ offering.meta?.format }}</span>
-                  </div>
-                  <div v-if="offering.meta?.schedule?.duration" class="flex items-center gap-2">
-                    <UIcon name="i-lucide-clock" class="h-4 w-4" />
-                    <span>{{ offering.meta?.schedule?.duration }}</span>
-                  </div>
-                  <div v-if="offering.meta?.location" class="flex items-center gap-2">
-                    <UIcon name="i-lucide-map-pin" class="h-4 w-4" />
-                    <span>{{ [offering.meta?.location?.city, offering.meta?.location?.country].filter(Boolean).join(', ') }}</span>
-                  </div>
-                </dl>
-              </div>
-
-              <template #footer>
-                <div class="flex gap-3">
-                  <UButton
-                    color="primary"
-                    :to="offering.path ?? '/offerings'"
-                  >
-                    Register
-                  </UButton>
-                  <UButton
-                    color="primary"
-                    variant="outline"
-                    :to="offering.path ?? '/offerings'"
-                  >
-                    View more
-                  </UButton>
-                </div>
-              </template>
-            </UCard>
+              :offering="offering"
+              variant="upcoming"
+            />
           </div>
           <UAlert v-else icon="i-lucide-info" title="No upcoming offerings" description="New programs will be announced soon." />
         </section>
@@ -167,76 +101,19 @@ useSeoMeta({
               <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Archive</p>
               <h2 class="text-3xl font-semibold">Explore past programs</h2>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <UButton
-                v-for="filter in programFilters"
-                :key="filter.value"
-                :variant="programFilter === filter.value ? 'solid' : 'ghost'"
-                color="primary"
-                size="sm"
-                @click="programFilter = filter.value"
-              >
-                {{ filter.label }}
-              </UButton>
-            </div>
+            <FiltersMenu
+              v-model="programFilter"
+              :items="programFilters"
+            />
           </header>
 
           <div v-if="filteredPastOfferings.length" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <UCard
+            <OfferingCard
               v-for="offering in filteredPastOfferings"
               :key="offering._id || offering.slug || offering.title"
-              class="h-full transition-shadow hover:shadow-lg"
-              :ui="{ root: 'flex flex-col h-full', body: 'flex-1' }"
-            >
-              <template #header>
-                <div class="flex flex-wrap gap-2">
-                  <UBadge variant="subtle" color="primary">{{ offering.meta?.program }}</UBadge>
-                  <UBadge
-                    v-if="offering.meta?.level"
-                    variant="soft"
-                    :color="getLevelColor(offering.meta?.level)"
-                  >
-                    {{ formatLevelLabel(offering.meta?.level) }}
-                  </UBadge>
-                </div>
-              </template>
-
-              <div class="flex flex-col gap-4">
-                <div class="space-y-2">
-                  <h4 class="text-xl font-semibold tracking-tight">
-                    {{ offering.title }}
-                  </h4>
-                  <p class="text-sm text-muted-foreground">
-                    {{ offering.meta?.summary ?? offering.description }}
-                  </p>
-                </div>
-                <dl class="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                  <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-layers" class="h-4 w-4" />
-                    <span>{{ offering.meta?.format }}</span>
-                  </div>
-                  <div v-if="offering.meta?.schedule?.duration" class="flex items-center gap-2">
-                    <UIcon name="i-lucide-clock" class="h-4 w-4" />
-                    <span>{{ offering.meta?.schedule?.duration }}</span>
-                  </div>
-                  <div v-if="offering.meta?.location" class="flex items-center gap-2">
-                    <UIcon name="i-lucide-map-pin" class="h-4 w-4" />
-                    <span>{{ [offering.meta?.location?.city, offering.meta?.location?.country].filter(Boolean).join(', ') }}</span>
-                  </div>
-                </dl>
-              </div>
-
-              <template #footer>
-                <UButton
-                  color="primary"
-                  variant="outline"
-                  size="sm"
-                  :to="offering.path ?? '/offerings'"
-                >
-                  View more
-                </UButton>
-              </template>
-            </UCard>
+              :offering="offering"
+              variant="archived"
+            />
           </div>
           <UAlert v-else icon="i-lucide-info" title="No offerings found" description="Try a different filter to see more programs." />
         </section>
