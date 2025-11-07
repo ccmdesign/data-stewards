@@ -65,7 +65,7 @@ const cta = computed(() => page.value?.cta)
 
     <UPageBody>
       <UContainer>
-        <UPageSection
+        <BaseSection
           v-if="detailItems.length || lecturer"
           title="Key Details"
           description="Quick facts for this masterclass"
@@ -94,13 +94,13 @@ const cta = computed(() => page.value?.cta)
               </div>
             </UCard>
           </div>
-        </UPageSection>
+        </BaseSection>
 
-        <UPageSection title="Overview">
+        <BaseSection title="Overview">
           <div class="prose max-w-none dark:prose-invert">
             <ContentRenderer :value="page" />
           </div>
-        </UPageSection>
+        </BaseSection>
       </UContainer>
     </UPageBody>
   </UPage>

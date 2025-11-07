@@ -149,7 +149,7 @@ const closeFacultyModal = () => {
 
 <template>
   <div class="relative">
-    <UPageSection id="faculty-directory">
+    <BaseSection id="faculty-directory">
       <div class="flex flex-wrap gap-2 justify-center">
           <UButton
             v-for="item in tabItems"
@@ -214,7 +214,7 @@ const closeFacultyModal = () => {
               </p>
             </div>
           </template>
-    </UPageSection>
+    </BaseSection>
 
     <UModal
       v-model:open="isModalOpen"

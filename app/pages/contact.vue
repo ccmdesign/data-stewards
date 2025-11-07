@@ -116,7 +116,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
 <template>
   <div class="relative">
 
-    <UPageSection class="space-y-12">
+    <BaseSection class="space-y-12">
       <UCard variant="subtle">
         <div class="flex items-start gap-4">
           <div class="rounded-full bg-muted p-3 text-foreground">
@@ -180,7 +180,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
           </UForm>
         </div>
       </UCard>
-    </UPageSection>
+    </BaseSection>
   </div>
 </template>
 

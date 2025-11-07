@@ -105,11 +105,13 @@ const supportBenefits = [
 
 <template>
   <div class="relative">
-    <UPageSection
+    <BaseSection
       id="community-highlights"
-      title="What’s happening"
+      title="What's happening"
       description="Explore active channels and touchpoints designed to keep stewardship practitioners aligned."
-      class="bg-gray-50 mb-0 !py-12 sm:!py-16 lg:!py-24"
+      variant="muted"
+      padding="large"
+      no-margin
     >
       <UPageColumns class="lg:columns-3">
         <UPageCard
@@ -119,13 +121,14 @@ const supportBenefits = [
           :description="card.description"
         />
       </UPageColumns>
-    </UPageSection>
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="stay-updated"
       title="Stay Updated"
       description="Curated briefings, resources, and updates from the frontlines of responsible data stewardship."
-      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
+      padding="large"
+      no-margin
     >
       <div class="grid gap-8 lg:grid-cols-2">
         <UCard v-for="(card, index) in stayUpdatedCards" :key="index">
@@ -155,13 +158,15 @@ const supportBenefits = [
           </template>
         </UCard>
       </div>
-    </UPageSection>
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="become-partner"
       title="Become part of our community"
       description="We work with partners worldwide to make each cohort thrive. Support the movement in the way that fits you best."
-      class="bg-gray-50 mb-0 !py-12 sm:!py-16 lg:!py-24"
+      variant="muted"
+      padding="large"
+      no-margin
     >
       <p class="text-lg text-muted-foreground">
         Interested in working with us? You can support a data stewards course in different ways:
@@ -189,20 +194,21 @@ const supportBenefits = [
           </template>
         </UCard>
       </div>
-    </UPageSection>
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="why-support"
       title="Why support a data stewards course?"
       description="Backing this work multiplies impact across organizations, sectors, and regions."
-      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
+      padding="large"
+      no-margin
     >
       <UCard>
         <ul class="list-disc space-y-3 pl-6">
           <li v-for="(benefit, index) in supportBenefits" :key="index">{{ benefit }}</li>
         </ul>
       </UCard>
-    </UPageSection>
+    </BaseSection>
   </div>
 </template>
 

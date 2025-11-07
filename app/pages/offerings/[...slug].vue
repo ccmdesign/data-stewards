@@ -260,26 +260,12 @@ useSeoMeta({
 
             <!-- Testimonial (Quote) -->
             <section class="space-y-6">
-              <div class="bg-primary/5 rounded-xl p-8 border border-primary/10">
-                <div class="flex items-start gap-4">
-                  <UIcon name="i-lucide-quote" class="h-8 w-8 text-primary flex-shrink-0 mt-1" />
-                  <div class="space-y-4">
-                    <blockquote class="text-lg italic text-muted-foreground leading-relaxed">
-                      "{{ randomTestimonial.quote }}"
-                    </blockquote>
-                    <div class="flex items-center gap-3">
-                      <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <UIcon name="i-lucide-user" class="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <p class="font-semibold text-foreground">{{ randomTestimonial.name }}</p>
-                        <p class="text-sm text-muted-foreground">{{ randomTestimonial.affiliation }}</p>
-                        <p v-if="randomTestimonial.cohort" class="text-xs text-muted-foreground">{{ randomTestimonial.cohort }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <QuoteCard
+                :quote="randomTestimonial.quote"
+                :name="randomTestimonial.name"
+                :affiliation="randomTestimonial.affiliation"
+                :cohort="randomTestimonial.cohort"
+              />
             </section>
           </div>
 

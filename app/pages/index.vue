@@ -75,37 +75,22 @@ useSeoMeta({
 
 <template>
   <div class="relative">
-    <UPageSection
+    <BaseSection
       id="programs"
       title="Our Programs"
       description="From foundational bootcamps to deep dives, we offer comprehensive training for every stage of your data stewardship journey."
-      class="bg-gray-50 mb-0"
+      variant="muted"
+      no-margin
     >
-      <UPageColumns class="lg:columns-2">
-        <UPageCard
-          v-for="(program, index) in programCards"
-          :key="index"
-          :title="program.title"
-          :description="program.description"
-        >
-          <template #header>
-            <div class="relative aspect-video w-full overflow-hidden bg-muted rounded-t-lg">
-              <img
-                :src="program.image"
-                :alt="program.title"
-                class="h-full w-full object-cover object-center"
-              />
-            </div>
-          </template>
-        </UPageCard>
-      </UPageColumns>
-    </UPageSection>
+      <ProgramCards :cards="programCards" :columns="2" />
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="foundations"
       title="Data Stewardship Foundations"
       description="Our flagship, hands-on program for leaders building data stewardship maturity. Learn to define purpose, design trust frameworks, and operationalize stewardship."
-      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
+      padding="large"
+      no-margin
     >
       <div class="space-y-6">
         <div class="grid gap-4 lg:grid-cols-2">
@@ -140,13 +125,15 @@ useSeoMeta({
           </div>
         </UCard>
       </div>
-    </UPageSection>
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="deep-dives"
       title="Deep Dives"
       description="Focused 1-hour masterclasses for experienced stewards who want to specialize in specific topics."
-      class="bg-gray-50 mb-0 !py-12 sm:!py-16 lg:!py-24"
+      variant="muted"
+      padding="large"
+      no-margin
     >
       <UPageColumns class="lg:columns-3">
         <UPageCard
@@ -181,13 +168,14 @@ useSeoMeta({
           target="_blank"
         />
       </div>
-    </UPageSection>
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="exchange"
       title="Exchange"
       description="A vibrant network for practitioners, alumni, and partners to stay engaged and share knowledge."
-      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
+      padding="large"
+      no-margin
     >
       <UPageColumns class="lg:columns-2">
         <UPageCard
@@ -199,15 +187,17 @@ useSeoMeta({
       </UPageColumns>
       <div class="mt-6 flex justify-center gap-3">
         <UButton label="Subscribe to Updates" color="primary" size="lg" />
-        <UButton label="Download Latest Brief" variant="outline" size="lg" />
+        <UButton label="Download Latest Brief" variant="outline" size="lg"         />
       </div>
-    </UPageSection>
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="organizations"
       title="For Organizations"
       description="Tailored offerings to institutionalize data stewardship across your organization."
-      class="bg-gray-50 mb-0 !py-12 sm:!py-16 lg:!py-24"
+      variant="muted"
+      padding="large"
+      no-margin
     >
       <UPageColumns class="lg:columns-3">
         <UPageCard
@@ -218,30 +208,26 @@ useSeoMeta({
         />
       </UPageColumns>
       <div class="mt-6 flex justify-center">
-        <UButton label="Schedule a Consultation" size="lg" color="primary" />
+        <UButton label="Schedule a Consultation" size="lg" color="primary"         />
       </div>
-    </UPageSection>
+    </BaseSection>
 
-    <UPageSection
+    <BaseSection
       id="testimonials"
       title="What Our Alumni Say"
       description="Join hundreds of data stewards who have transformed their organizations."
-      class="mb-0 !py-12 sm:!py-16 lg:!py-24"
+      padding="large"
+      no-margin
     >
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <UPageCard
+        <QuoteCard
           v-for="(testimonial, index) in testimonials"
           :key="index"
-          variant="subtle"
-          :description="testimonial.quote"
-          class="h-full"
-        >
-          <template #footer>
-            <div class="text-sm font-medium">{{ testimonial.author }}</div>
-          </template>
-        </UPageCard>
+          :quote="testimonial.quote"
+          :author="testimonial.author"
+        />
       </div>
-    </UPageSection>
+    </BaseSection>
 
   </div>
 </template>
