@@ -31,3 +31,6 @@ _process/
 
 #VSC
 .history
+
+#
+pnpm-lock.yaml
