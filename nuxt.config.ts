@@ -7,6 +7,13 @@ export default defineNuxtConfig({
     '@nuxt/content'
   ],
 
+  content: {
+    experimental: {
+      // Force sqlite3 connector so Netlify builds don't need better-sqlite3 native bindings
+      sqliteConnector: 'sqlite3'
+    }
+  },
+
   devtools: {
     enabled: true
   },
