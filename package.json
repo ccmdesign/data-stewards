@@ -7,7 +7,7 @@
     "generate": "nuxt generate",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "npm rebuild sqlite3 --build-from-source",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "test": "vitest"
