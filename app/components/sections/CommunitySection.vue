@@ -17,10 +17,12 @@ withDefaults(defineProps<Props>(), {
 <template>
   <BaseSection
     id="become-partner"
-    title="Become part of our community"
-    description="We work with partners worldwide to make each cohort thrive. Support the movement in the way that fits you best."
-    variant="muted"
-    padding="large"
+    :content="{
+      title: 'Become part of our community',
+      tagline: 'We work with partners worldwide to make each cohort thrive. Support the movement in the way that fits you best.'
+    }"
+    color="muted"
+    size="l"
     no-margin
   >
     <p class="text-lg text-muted-foreground">
@@ -37,4 +39,5 @@ withDefaults(defineProps<Props>(), {
     </div>
   </BaseSection>
 </template>
+
 

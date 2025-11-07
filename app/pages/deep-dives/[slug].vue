@@ -67,8 +67,10 @@ const cta = computed(() => page.value?.cta)
       <UContainer>
         <BaseSection
           v-if="detailItems.length || lecturer"
-          title="Key Details"
-          description="Quick facts for this masterclass"
+          :content="{
+            title: 'Key Details',
+            tagline: 'Quick facts for this masterclass'
+          }"
         >
           <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             <UCard v-for="item in detailItems" :key="item.label">
@@ -96,7 +98,7 @@ const cta = computed(() => page.value?.cta)
           </div>
         </BaseSection>
 
-        <BaseSection title="Overview">
+        <BaseSection :content="{ title: 'Overview' }">
           <div class="prose max-w-none dark:prose-invert">
             <ContentRenderer :value="page" />
           </div>

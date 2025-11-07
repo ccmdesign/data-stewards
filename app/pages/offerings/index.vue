@@ -3,7 +3,7 @@ import { computed, ref, watchEffect } from 'vue'
 import type { ButtonProps } from '#ui/types'
 import { usePageHero } from '~/composables/usePageHero'
 import type { OfferingDocument, OfferingEntry } from '~/types/offerings'
-import type { FilterItem } from '~/components/FiltersMenu.vue'
+import type { FilterItem } from '~/components/molecules/FiltersMenu.vue'
 
 const { setPageHero } = usePageHero()
 

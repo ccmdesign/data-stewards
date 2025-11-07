@@ -21,9 +21,11 @@ const props = withDefaults(defineProps<Props>(), {
 <template>
   <BaseSection
     id="programs"
-    title="Our Programs"
-    description="From foundational bootcamps to deep dives, we offer comprehensive training for every stage of your data stewardship journey."
-    variant="muted"
+    :content="{
+      title: 'Our Programs',
+      tagline: 'From foundational bootcamps to deep dives, we offer comprehensive training for every stage of your data stewardship journey.'
+    }"
+    color="muted"
     no-margin
   >
     <ProgramCards :cards="cards" :columns="columns" />

@@ -18,9 +18,11 @@ defineProps<Props>()
 <template>
   <BaseSection
     id="stay-updated"
-    title="Stay Updated"
-    description="Curated briefings, resources, and updates from the frontlines of responsible data stewardship."
-    padding="large"
+    :content="{
+      title: 'Stay Updated',
+      tagline: 'Curated briefings, resources, and updates from the frontlines of responsible data stewardship.'
+    }"
+    size="l"
     no-margin
   >
     <div class="grid gap-8 lg:grid-cols-2">
@@ -35,4 +37,5 @@ defineProps<Props>()
     </div>
   </BaseSection>
 </template>
+
 

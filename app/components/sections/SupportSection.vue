@@ -9,9 +9,11 @@ defineProps<Props>()
 <template>
   <BaseSection
     id="why-support"
-    title="Why support a data stewards course?"
-    description="Backing this work multiplies impact across organizations, sectors, and regions."
-    padding="large"
+    :content="{
+      title: 'Why support a data stewards course?',
+      tagline: 'Backing this work multiplies impact across organizations, sectors, and regions.'
+    }"
+    size="l"
     no-margin
   >
     <UCard>
@@ -21,4 +23,5 @@ defineProps<Props>()
     </UCard>
   </BaseSection>
 </template>
+
 

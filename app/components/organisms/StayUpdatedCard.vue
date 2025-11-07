@@ -32,3 +32,4 @@ defineProps<StayUpdatedCardProps>()
   </UCard>
 </template>
 
+

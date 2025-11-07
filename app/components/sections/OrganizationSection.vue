@@ -17,10 +17,12 @@ defineProps<Props>()
 <template>
   <BaseSection
     id="organizations"
-    title="For Organizations"
-    description="Tailored offerings to institutionalize data stewardship across your organization."
-    variant="muted"
-    padding="large"
+    :content="{
+      title: 'For Organizations',
+      tagline: 'Tailored offerings to institutionalize data stewardship across your organization.'
+    }"
+    color="muted"
+    size="l"
     no-margin
   >
     <UPageColumns class="lg:columns-3">

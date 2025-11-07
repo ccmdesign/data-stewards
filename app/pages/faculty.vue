@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
-import type { FacultyCard } from '~/components/FacultyCard.vue'
-import type { FilterItem } from '~/components/FiltersMenu.vue'
+import type { FacultyCard } from '~/components/organisms/FacultyCard.vue'
+import type { FilterItem } from '~/components/molecules/FiltersMenu.vue'
 
 definePageMeta({
   layout: 'default'

@@ -17,9 +17,11 @@ defineProps<Props>()
 <template>
   <BaseSection
     id="testimonials"
-    title="What Our Alumni Say"
-    description="Join hundreds of data stewards who have transformed their organizations."
-    padding="large"
+    :content="{
+      title: 'What Our Alumni Say',
+      tagline: 'Join hundreds of data stewards who have transformed their organizations.'
+    }"
+    size="l"
     no-margin
   >
     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

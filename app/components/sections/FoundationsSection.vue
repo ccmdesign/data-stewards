@@ -26,9 +26,11 @@ defineProps<FoundationsSectionProps>()
 <template>
   <BaseSection
     id="foundations"
-    title="Data Stewardship Foundations"
-    description="Our flagship, hands-on program for leaders building data stewardship maturity. Learn to define purpose, design trust frameworks, and operationalize stewardship."
-    padding="large"
+    :content="{
+      title: 'Data Stewardship Foundations',
+      tagline: 'Our flagship, hands-on program for leaders building data stewardship maturity. Learn to define purpose, design trust frameworks, and operationalize stewardship.'
+    }"
+    size="l"
     no-margin
   >
     <div class="space-y-6">

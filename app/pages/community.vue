@@ -107,10 +107,12 @@ const supportBenefits = [
   <div class="relative">
     <BaseSection
       id="community-highlights"
-      title="What's happening"
-      description="Explore active channels and touchpoints designed to keep stewardship practitioners aligned."
-      variant="muted"
-      padding="large"
+      :content="{
+        title: 'What\'s happening',
+        tagline: 'Explore active channels and touchpoints designed to keep stewardship practitioners aligned.'
+      }"
+      color="muted"
+      size="l"
       no-margin
     >
       <UPageColumns class="lg:columns-3">

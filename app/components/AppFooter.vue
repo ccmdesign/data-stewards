@@ -16,6 +16,8 @@ const toast = useToast()
 const email = ref('')
 const loading = ref(false)
 
+const currentYear = computed(() => new Date().getFullYear())
+
 function onSubmit() {
   loading.value = true
 
@@ -69,7 +71,7 @@ function onSubmit() {
 
     <template #left>
       <p class="text-sm text-muted">
-        Data Stewards Academy • © {{ new Date().getFullYear() }}
+        Data Stewards Academy • © {{ currentYear }}
       </p>
     </template>
 

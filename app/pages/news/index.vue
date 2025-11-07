@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { usePageHero } from '~/composables/usePageHero'
-import type { FilterItem } from '~/components/FiltersMenu.vue'
+import type { FilterItem } from '~/components/molecules/FiltersMenu.vue'
 
 const categoryLabels: Record<string, string> = {
   blog: 'Blog',

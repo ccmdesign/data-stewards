@@ -6,3 +6,11 @@
 @theme {
   --font-sans: 'Public Sans', sans-serif;
 }
+
+:root {
+  --ui-primary: #56AFFF;
+}
+
+.dark {
+  --ui-primary: #56AFFF;
+}

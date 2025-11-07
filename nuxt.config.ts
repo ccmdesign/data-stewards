@@ -7,6 +7,15 @@ export default defineNuxtConfig({
     '@nuxt/content'
   ],
 
+  // Configure component auto-imports - components in nested directories
+  // will be available without path prefix (e.g., BaseSection not SectionsBaseSection)
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ],
+
   content: {
     experimental: {
       // Force sqlite3 connector so Netlify builds don't need better-sqlite3 native bindings
