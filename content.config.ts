@@ -44,7 +44,7 @@ const deepDiveSchema = createBaseSchema().extend({
     to: z.string().nonempty(),
     target: createEnum(['_blank', '_self']).optional()
   })
-})
+}).passthrough()
 
 const postsSchema = z.object({
   title: z.string().nonempty(),
@@ -63,7 +63,7 @@ const postsSchema = z.object({
   registrationLink: z.string().optional(),
   videoUrl: z.string().optional(),
   duration: z.string().optional()
-})
+}).passthrough()
 
 const offeringPrograms = createEnum(['foundations', 'deep-dives', 'community', 'organizational'])
 const offeringLevels = createEnum(['introductory', 'intermediate', 'advanced', 'executive'])
@@ -314,7 +314,7 @@ export const collections = {
       photo: z.string().optional(),
       bio: z.string().optional(),
       expertise: z.array(z.string()).optional()
-    })
+    }).passthrough()
   }),
   offerings: defineCollection({
     source: 'offerings/**/*.md',
@@ -331,7 +331,7 @@ export const collections = {
       program: offeringPrograms.optional(),
       tags: z.array(z.string().nonempty()).optional(),
       quote: z.string().optional()
-    })
+    }).passthrough()
   }),
   syllabi: defineCollection({
     source: 'syllabi/**/*.md',
