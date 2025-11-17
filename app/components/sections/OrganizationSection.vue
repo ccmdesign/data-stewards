@@ -18,7 +18,7 @@ defineProps<Props>()
   <BaseSection
     id="organizations"
     :content="{
-      title: 'For Organizations',
+      title: 'Organizational Support',
       tagline: 'Tailored offerings to institutionalize data stewardship across your organization.'
     }"
     color="muted"
