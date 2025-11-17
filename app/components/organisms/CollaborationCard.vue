@@ -8,24 +8,25 @@ defineProps<CollaborationCardProps>()
 </script>
 
 <template>
-  <UCard
-    class="h-full"
-    :ui="{ root: 'flex flex-col', body: 'flex-1' }"
-  >
-    <template #header>
-      <h3 class="text-xl font-semibold">{{ title }}</h3>
-    </template>
-    <p class="text-muted">{{ body }}</p>
-    <template #footer>
+  <div class="bg-white border border-[#e2e8f0] rounded-2xl flex flex-col h-full">
+    <!-- Header -->
+    <div class="px-6 py-4">
+      <h3 class="text-2xl font-semibold">{{ title }}</h3>
+    </div>
+    <!-- Body -->
+    <div class="border-t border-b border-[#e2e8f0] px-6 py-6 flex-1">
+      <p class="text-base text-muted-foreground text-center">{{ body }}</p>
+    </div>
+    <!-- Footer -->
+    <div class="px-6 py-4">
       <UButton
-        label="Contact us"
+        label="Contact Us"
         to="/contact"
         color="primary"
-        variant="outline"
         size="lg"
       />
-    </template>
-  </UCard>
+    </div>
+  </div>
 </template>
 
 

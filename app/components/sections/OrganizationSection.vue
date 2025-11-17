@@ -18,23 +18,31 @@ defineProps<Props>()
   <BaseSection
     id="organizations"
     :content="{
-      title: 'Organizational Support',
+      title: 'For Organizations',
       tagline: 'Tailored offerings to institutionalize data stewardship across your organization.'
     }"
-    color="muted"
     size="l"
     no-margin
   >
-    <UPageColumns class="lg:columns-3">
-      <OrganizationCard
-        v-for="(offer, index) in offers"
-        :key="index"
-        :title="offer.title"
-        :description="offer.description"
-      />
-    </UPageColumns>
-    <div v-if="primaryAction" class="mt-6 flex justify-center">
-      <UButton v-bind="primaryAction" />
+    <div class="flex flex-col gap-8">
+      <div class="flex gap-8">
+        <OrganizationCard
+          v-for="(offer, index) in offers"
+          :key="index"
+          :title="offer.title"
+          :description="offer.description"
+        />
+      </div>
+      <div v-if="primaryAction" class="flex justify-center">
+        <UButton v-bind="primaryAction" />
+      </div>
+      <div class="h-[684px] relative rounded-2xl overflow-hidden bg-muted border border-border">
+        <img
+          alt=""
+          class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-2xl size-full"
+          src="/images/organization-workshop.png"
+        />
+      </div>
     </div>
   </BaseSection>
 </template>

@@ -14,35 +14,41 @@ const displayName = computed(() => props.name || props.author || 'Anonymous')
 </script>
 
 <template>
-  <div class="bg-primary/5 rounded-xl p-8 border border-primary/10">
-    <div class="flex items-start gap-4">
-      <UIcon name="i-lucide-quote" class="h-8 w-8 text-primary shrink-0 mt-1" />
-      <div class="space-y-4">
-        <blockquote class="text-lg italic text-muted-foreground leading-relaxed">
+  <UCard class="bg-muted border flex flex-col gap-4 p-6">
+    <div class="flex flex-col gap-8">
+      <img
+        alt=""
+        src="/images/quote-icon.svg"
+        class="w-4 h-4 shrink-0"
+      />
+      <div class="flex flex-col gap-1">
+        <p class="text-[15px] text-muted-foreground">
           "{{ quote }}"
-        </blockquote>
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-            <UIcon
-              v-if="!avatar"
-              name="i-lucide-user"
-              class="h-6 w-6 text-primary"
-            />
-            <img
-              v-else
-              :src="avatar"
-              :alt="displayName"
-              class="w-12 h-12 rounded-full object-cover"
-            />
-          </div>
-          <div>
-            <p class="font-semibold text-foreground">{{ displayName }}</p>
-            <p v-if="affiliation" class="text-sm text-muted-foreground">{{ affiliation }}</p>
-            <p v-if="cohort" class="text-xs text-muted-foreground">{{ cohort }}</p>
-          </div>
-        </div>
+        </p>
       </div>
     </div>
-  </div>
+    <div class="flex gap-2.5 items-center">
+      <div class="relative rounded-full shrink-0 size-9">
+        <img
+          v-if="avatar"
+          :src="avatar"
+          :alt="displayName"
+          class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-full size-full"
+        />
+        <div
+          v-else
+          class="absolute inset-0 bg-muted-foreground/20 rounded-full"
+        />
+      </div>
+      <div class="flex flex-col leading-5 text-sm">
+        <p class="font-medium text-foreground">
+          {{ displayName }}
+        </p>
+        <p v-if="affiliation" class="text-muted-foreground">
+          {{ affiliation }}
+        </p>
+      </div>
+    </div>
+  </UCard>
 </template>
 

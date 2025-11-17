@@ -25,23 +25,38 @@ defineProps<Props>()
     size="l"
     no-margin
   >
-    <UPageColumns class="lg:columns-2">
-      <ExchangeCard
-        v-for="(item, index) in items"
-        :key="index"
-        :title="item.title"
-        :description="item.description"
-      />
-    </UPageColumns>
-    <div v-if="primaryAction || secondaryAction" class="mt-6 flex justify-center gap-3">
-      <UButton
-        v-if="primaryAction"
-        v-bind="primaryAction"
-      />
-      <UButton
-        v-if="secondaryAction"
-        v-bind="secondaryAction"
-      />
+    <div class="flex gap-16 items-center">
+      <!-- Left Image -->
+      <div class="flex-1 h-full relative rounded-lg rounded-br-lg rounded-tr-lg overflow-hidden bg-muted border border-border">
+        <img
+          alt=""
+          class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-lg size-full"
+          src="/images/workshop-image-1.png"
+        />
+      </div>
+
+      <!-- Right Content -->
+      <div class="flex-1 flex flex-col gap-8">
+        <div class="flex flex-col gap-8">
+          <ExchangeCard
+            v-for="(item, index) in items"
+            :key="index"
+            :title="item.title"
+            :description="item.description"
+            :icon="item.icon"
+          />
+        </div>
+        <div v-if="primaryAction || secondaryAction" class="flex gap-6">
+          <UButton
+            v-if="primaryAction"
+            v-bind="primaryAction"
+          />
+          <UButton
+            v-if="secondaryAction"
+            v-bind="secondaryAction"
+          />
+        </div>
+      </div>
     </div>
   </BaseSection>
 </template>

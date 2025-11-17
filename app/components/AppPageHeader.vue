@@ -16,6 +16,22 @@ const navItems = computed(() =>
 const appear = ref(false)
 const appeared = ref(false)
 
+const isOfferingsPage = computed(() => route.path.startsWith('/offerings'))
+const isNewsPage = computed(() => route.path.startsWith('/news'))
+
+const heroBackgroundImage = computed(() => {
+  if (isOfferingsPage.value) {
+    return '/images/offerings-hero-bg.png'
+  }
+  if (route.path === '/community') {
+    return '/images/community-hero-bg.png'
+  }
+  if (route.path.startsWith('/news')) {
+    return '/images/news-hero-bg.png'
+  }
+  return '/images/hero-background.png'
+})
+
 onMounted(() => {
   if (import.meta.client) {
     setTimeout(() => {
@@ -60,171 +76,94 @@ onMounted(() => {
     <!-- Hero Section -->
     <section
       v-if="heroData?.showHero"
-      class="relative isolate overflow-hidden border border-primary/20 bg-primary/10 py-12 sm:py-16"
+      class="relative isolate overflow-hidden bg-[#10193f] rounded-bl-[32px] rounded-br-[32px]"
     >
-      <!-- Hero Background -->
-      <ClientOnly>
-        <div
-          class="absolute w-full -top-px transition-all text-primary shrink-0"
-          :class="[
-            appear ? '' : 'opacity-0',
-            appeared ? 'duration-[400ms]': 'duration-1000'
-          ]"
-        >
-          <svg
-            viewBox="0 0 1440 181"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class="pointer-events-none"
-          >
-            <mask
-              id="path-1-inside-1_414_5526"
-              fill="white"
-            >
-              <path d="M0 0H1440V181H0V0Z" />
-            </mask>
-            <path
-              d="M0 0H1440V181H0V0Z"
-              fill="url(#paint0_linear_414_5526)"
-              fill-opacity="0.22"
-            />
-            <path
-              d="M0 2H1440V-2H0V2Z"
-              fill="url(#paint1_linear_414_5526)"
-              mask="url(#path-1-inside-1_414_5526)"
-            />
-            <defs>
-              <linearGradient
-                id="paint0_linear_414_5526"
-                x1="720"
-                y1="0"
-                x2="720"
-                y2="181"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="currentColor" />
-                <stop
-                  offset="1"
-                  stop-color="currentColor"
-                  stop-opacity="0"
-                />
-              </linearGradient>
-              <linearGradient
-                id="paint1_linear_414_5526"
-                x1="0"
-                y1="90.5"
-                x2="1440"
-                y2="90.5"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop
-                  stop-color="currentColor"
-                  stop-opacity="0"
-                />
-                <stop
-                  offset="0.5"
-                  stop-color="currentColor"
-                />
-                <stop
-                  offset="1"
-                  stop-color="currentColor"
-                  stop-opacity="0"
-                />
-              </linearGradient>
-            </defs>
-          </svg>
+      <!-- Hero Background Overlay -->
+      <div
+        aria-hidden="true"
+        class="absolute inset-0 pointer-events-none rounded-bl-[32px] rounded-br-[32px]"
+      >
+        <div class="absolute bg-[#10193f] inset-0 rounded-bl-[32px] rounded-br-[32px]" />
+        <div class="absolute inset-0 mix-blend-overlay opacity-75 overflow-hidden rounded-bl-[32px] rounded-br-[32px]">
+          <img
+            alt=""
+            class="absolute h-[112.66%] left-0 max-w-none top-[9.02%] w-full"
+            :src="heroBackgroundImage"
+          />
         </div>
-        <template #fallback>
-          <div class="absolute w-full -top-px text-primary shrink-0 opacity-0">
-            <svg
-              viewBox="0 0 1440 181"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              class="pointer-events-none"
-            >
-              <mask
-                id="path-1-inside-1_414_5526"
-                fill="white"
-              >
-                <path d="M0 0H1440V181H0V0Z" />
-              </mask>
-              <path
-                d="M0 0H1440V181H0V0Z"
-                fill="url(#paint0_linear_414_5526)"
-                fill-opacity="0.22"
-              />
-              <path
-                d="M0 2H1440V-2H0V2Z"
-                fill="url(#paint1_linear_414_5526)"
-                mask="url(#path-1-inside-1_414_5526)"
-              />
-              <defs>
-                <linearGradient
-                  id="paint0_linear_414_5526"
-                  x1="720"
-                  y1="0"
-                  x2="720"
-                  y2="181"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stop-color="currentColor" />
-                  <stop
-                    offset="1"
-                    stop-color="currentColor"
-                    stop-opacity="0"
-                  />
-                </linearGradient>
-                <linearGradient
-                  id="paint1_linear_414_5526"
-                  x1="0"
-                  y1="90.5"
-                  x2="1440"
-                  y2="90.5"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop
-                    stop-color="currentColor"
-                    stop-opacity="0"
-                  />
-                  <stop
-                    offset="0.5"
-                    stop-color="currentColor"
-                  />
-                  <stop
-                    offset="1"
-                    stop-color="currentColor"
-                    stop-opacity="0"
-                  />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-        </template>
-      </ClientOnly>
+      </div>
 
       <!-- Hero Content -->
-      <div class="px-6 sm:px-12">
-        <UPageHero
-          class="relative z-10 mx-auto max-w-4xl space-y-8 text-left"
-          :description="heroData.description"
-          :links="heroData.links ? JSON.parse(JSON.stringify(heroData.links)) : undefined"
-        >
-          <template #title>
-            <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
-              <span
-                v-if="heroData.subtitle"
-                class="mb-4 block text-sm font-semibold uppercase tracking-[0.3em] text-primary"
-              >
-                {{ heroData.subtitle }}
-              </span>
-              {{ heroData.title }}
-            </h1>
-          </template>
+      <div class="relative mx-auto max-w-7xl px-7 py-32">
+        <div :class="isOfferingsPage || isNewsPage ? 'flex flex-col gap-4' : 'flex gap-24 items-center'">
+          <!-- Left Content -->
+          <div :class="isOfferingsPage || isNewsPage ? 'flex flex-col gap-4 w-full' : 'flex-1 flex flex-col gap-4'">
+            <!-- Badge -->
+            <UBadge
+              v-if="heroData.badge"
+              color="primary"
+              variant="subtle"
+              :class="isOfferingsPage ? 'self-start' : 'self-start'"
+            >
+              {{ heroData.badge }}
+            </UBadge>
 
-          <template #below-title>
-            <slot name="below-title" />
-          </template>
-        </UPageHero>
+            <!-- Title and Description -->
+            <div :class="isOfferingsPage ? 'flex flex-col gap-10 w-full' : 'flex flex-col gap-10'">
+              <div class="flex flex-col gap-6">
+                <h1 :class="isOfferingsPage ? 'text-5xl font-semibold leading-[48px] text-white' : 'text-6xl font-semibold leading-[60px] text-white'">
+                  {{ heroData.title }}
+                </h1>
+                <p :class="isOfferingsPage ? 'text-xl leading-6 text-[#62748e]' : 'text-xl leading-8 text-[#90a1b9]'">
+                  {{ heroData.description }}
+                </p>
+              </div>
+
+              <!-- Stats -->
+              <div
+                v-if="heroData.stats && heroData.stats.length > 0"
+                class="flex gap-4"
+              >
+                <div
+                  v-for="(stat, index) in heroData.stats"
+                  :key="index"
+                  class="flex-1 flex flex-col"
+                >
+                  <p class="text-5xl font-semibold leading-[48px] text-white">
+                    {{ stat.value }}
+                  </p>
+                  <p class="text-xl leading-8 text-white">
+                    {{ stat.label }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- CTA Links -->
+              <div
+                v-if="heroData.links && heroData.links.length > 0"
+                class="flex gap-6 items-center"
+              >
+                <UButton
+                  v-for="(link, index) in heroData.links"
+                  :key="index"
+                  v-bind="link"
+                  size="lg"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Image (only on non-offerings and non-news pages) -->
+          <div v-if="!isOfferingsPage && !isNewsPage" class="flex-shrink-0 w-[560px]">
+            <div class="relative rounded-lg h-full w-full aspect-[560/400] overflow-hidden">
+              <img
+                alt=""
+                class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-lg size-full"
+                src="/images/hero-image.png"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>

@@ -2,7 +2,8 @@
 interface ProgramCard {
   title: string
   description: string
-  image: string
+  image?: string
+  icon?: string
   to?: string
 }
 
@@ -15,35 +16,42 @@ const props = withDefaults(defineProps<Props>(), {
   columns: 2
 })
 
-const columnsClass = computed(() => {
-  const columnMap: Record<number, string> = {
-    2: 'lg:columns-2',
-    3: 'lg:columns-3',
-    4: 'lg:columns-4'
-  }
-  return columnMap[props.columns] || 'lg:columns-2'
-})
+const iconMap: Record<string, string> = {
+  Foundations: 'i-lucide-graduation-cap',
+  'Deep Dives': 'i-lucide-users-round',
+  Exchange: 'i-lucide-lightbulb',
+  'For Your Organization': 'i-lucide-building-2'
+}
+
+const getIcon = (title: string) => {
+  return iconMap[title] || 'i-lucide-circle'
+}
 </script>
 
 <template>
-  <UPageColumns :class="columnsClass">
-    <UPageCard
+  <div class="grid gap-8 grid-cols-1 md:grid-cols-2">
+    <UCard
       v-for="(card, index) in cards"
       :key="index"
-      :title="card.title"
-      :description="card.description"
-      :to="card.to"
+      class="bg-muted border"
     >
-      <template #header>
-        <div class="relative aspect-video w-full overflow-hidden bg-muted rounded-t-lg">
-          <img
-            :src="card.image"
-            :alt="card.title"
-            class="h-full w-full object-cover object-center"
+      <div class="flex flex-col gap-8 p-8">
+        <div class="flex flex-col gap-8">
+          <UIcon
+            :name="card.icon || getIcon(card.title)"
+            class="w-6 h-6 text-primary"
           />
+          <div class="flex flex-col gap-2">
+            <h3 class="text-2xl font-semibold">
+              {{ card.title }}
+            </h3>
+            <p class="text-[15px] text-muted-foreground">
+              {{ card.description }}
+            </p>
+          </div>
         </div>
-      </template>
-    </UPageCard>
-  </UPageColumns>
+      </div>
+    </UCard>
+  </div>
 </template>
 

@@ -8,14 +8,14 @@ import type { FilterItem } from '~/components/molecules/FiltersMenu.vue'
 const { setPageHero } = usePageHero()
 
 const heroLinks: ButtonProps[] = [
-  { label: 'Explore Programs', to: '#upcoming', color: 'primary', size: 'lg' },
+  { label: 'Explore Programs', to: '#upcoming', color: 'primary', size: 'lg', trailingIcon: 'i-lucide-arrow-right' },
   { label: 'View Past Offerings', to: '#past', variant: 'outline', size: 'lg' }
 ]
 
 setPageHero({
   showHero: true,
   title: 'Programs & Training Offerings',
-  subtitle: 'Advance Your Data Stewardship Skills',
+  badge: 'Advance Your Data Stewardship Skills',
   description: 'Discover comprehensive training programs designed to build expertise in responsible data management, from foundational bootcamps to specialized deep dives.',
   links: heroLinks
 })
@@ -43,7 +43,7 @@ const programFilters = computed<FilterItem[]>(() => {
 
   return [
     { label: 'All', value: 'all', disabled: false },
-    { label: 'Foundations', value: 'foundations', disabled: !hasFoundations },
+    { label: 'Bootcamps', value: 'foundations', disabled: !hasFoundations },
     { label: 'Deep Dives', value: 'deep-dives', disabled: !hasDeepDives }
   ]
 })
@@ -73,16 +73,17 @@ useSeoMeta({
 <template>
   <UPage>
     <UPageBody>
-      <UContainer class="space-y-16">
-        <!-- Upcoming Section -->
-        <section id="upcoming" class="space-y-6 scroll-mt-20">
-          <header class="space-y-2">
-            <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Upcoming</p>
-            <div>
-              <h2 class="text-3xl font-semibold">Upcoming Offerings</h2>
-              <p class="text-muted-foreground">Discover the next experiences launching soon.</p>
-            </div>
-          </header>
+      <!-- Upcoming Section -->
+      <UPageSection id="upcoming" class="scroll-mt-20">
+        <UContainer>
+          <div class="flex flex-col gap-3 mb-8">
+            <h2 class="text-5xl font-semibold leading-[48px] text-highlighted">
+              Upcoming Offerings
+            </h2>
+            <p class="text-base leading-6 text-muted-foreground">
+              Discover the next experiences launching soon.
+            </p>
+          </div>
 
           <div v-if="upcomingOfferings.length" class="space-y-6">
             <OfferingCard
@@ -93,19 +94,23 @@ useSeoMeta({
             />
           </div>
           <UAlert v-else icon="i-lucide-info" title="No upcoming offerings" description="New programs will be announced soon." />
-        </section>
+        </UContainer>
+      </UPageSection>
 
-        <section id="past" class="space-y-6 scroll-mt-20">
-          <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <!-- Past Offerings Section -->
+      <UPageSection id="past" class="bg-bg-elevated scroll-mt-20">
+        <UContainer>
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-8">
             <div>
-              <p class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Archive</p>
-              <h2 class="text-3xl font-semibold">Explore past programs</h2>
+              <h2 class="text-5xl font-semibold leading-[48px] text-highlighted">
+                Explore past programs
+              </h2>
             </div>
             <FiltersMenu
               v-model="programFilter"
               :items="programFilters"
             />
-          </header>
+          </div>
 
           <div v-if="filteredPastOfferings.length" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <OfferingCard
@@ -116,8 +121,29 @@ useSeoMeta({
             />
           </div>
           <UAlert v-else icon="i-lucide-info" title="No offerings found" description="Try a different filter to see more programs." />
-        </section>
-      </UContainer>
+        </UContainer>
+      </UPageSection>
+
+      <!-- Workshop Image Section -->
+      <UPageSection class="py-0">
+        <UContainer>
+          <div class="h-[684px] relative rounded-2xl overflow-hidden">
+            <img
+              src="/images/offerings-workshop.png"
+              alt="Data stewardship workshop"
+              class="absolute inset-0 w-full h-full object-cover object-center"
+            />
+          </div>
+        </UContainer>
+      </UPageSection>
+
+      <!-- Final CTA Section -->
+      <FinalCTASection
+        title="Ready to Transform Your Data Stewardship?"
+        description="Join our next cohort and become part of a global community of responsible data leaders."
+        :primary-action="{ label: 'Talk to Us', to: '/contact', color: 'primary', size: 'lg' }"
+        :secondary-action="{ label: 'Explore Programs', to: '#upcoming', variant: 'outline', size: 'lg' }"
+      />
     </UPageBody>
   </UPage>
 </template>

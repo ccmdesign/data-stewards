@@ -19,7 +19,7 @@ const heroLinks = [
 setPageHero({
   showHero: true,
   title: 'News & Updates',
-  subtitle: 'Latest Posts',
+  badge: 'Latest Posts',
   description: 'Stay updated with the latest news, events, interviews, and videos from our community.',
   links: heroLinks
 })
@@ -44,10 +44,8 @@ const filterOptions = computed<FilterItem[]>(() => {
     { label: 'All', value: 'all', disabled: false },
     { label: 'Blog', value: 'blog', disabled: false },
     { label: 'Events', value: 'events', disabled: false },
-    { label: 'Interviews', value: 'interviews', disabled: false },
     { label: 'Videos', value: 'videos', disabled: false },
-    { label: 'Workshop', value: 'workshop', disabled: !allTags.has('Workshop') },
-    { label: 'Webinar', value: 'webinar', disabled: !allTags.has('Webinar') }
+    { label: 'Research', value: 'research', disabled: false }
   ]
 })
 
@@ -57,7 +55,7 @@ const filteredPosts = computed(() => {
   }
 
   // Check if it's a category filter
-  if (['blog', 'events', 'interviews', 'videos'].includes(activeFilter.value)) {
+  if (['blog', 'events', 'interviews', 'videos', 'research'].includes(activeFilter.value)) {
     return posts.value.filter(post => post.category === activeFilter.value)
   }
 
@@ -72,31 +70,36 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer class="py-12">
-    <div class="mb-8">
+  <div>
+    <!-- Filters Section -->
+    <div class="px-4 sm:px-7 md:px-14 lg:px-28 pb-20 pt-32">
       <FiltersMenu
         v-model="activeFilter"
         :items="filterOptions"
       />
     </div>
 
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <UpdatesCard
-        v-for="post in filteredPosts"
-        :key="post.slug"
-        :post="post"
-        :category-labels="categoryLabels"
-      />
+    <!-- Posts Grid Section -->
+    <div class="px-4 sm:px-7 md:px-14 lg:px-28 pb-32">
+      <div class="flex flex-wrap gap-8 justify-center lg:justify-start">
+        <UpdatesCard
+          v-for="post in filteredPosts"
+          :key="post.slug"
+          :post="post"
+          :category-labels="categoryLabels"
+          class="w-full sm:w-[calc(50%-16px)] lg:w-[384px]"
+        />
 
-      <div v-if="filteredPosts.length === 0" class="col-span-full text-center py-12">
-        <UIcon name="i-lucide-file-x" class="mx-auto size-12 text-muted-foreground mb-4" />
-        <h3 class="text-lg font-medium text-muted-foreground mb-2">
-          {{ activeFilter === 'all' ? 'No posts found' : `No ${activeFilter} posts found` }}
-        </h3>
-        <p class="text-sm text-muted-foreground">
-          {{ activeFilter === 'all' ? 'Check back later for new content.' : `Try selecting a different filter.` }}
-        </p>
+        <div v-if="filteredPosts.length === 0" class="w-full text-center py-12">
+          <UIcon name="i-lucide-file-x" class="mx-auto size-12 text-muted-foreground mb-4" />
+          <h3 class="text-lg font-medium text-muted-foreground mb-2">
+            {{ activeFilter === 'all' ? 'No posts found' : `No ${activeFilter} posts found` }}
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            {{ activeFilter === 'all' ? 'Check back later for new content.' : `Try selecting a different filter.` }}
+          </p>
+        </div>
       </div>
     </div>
-  </UContainer>
+  </div>
 </template>

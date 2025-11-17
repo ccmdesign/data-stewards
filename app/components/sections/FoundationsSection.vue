@@ -30,11 +30,12 @@ defineProps<FoundationsSectionProps>()
       title: 'Data Stewardship Foundations',
       tagline: 'Our flagship, hands-on program for leaders building data stewardship maturity. Learn to define purpose, design trust frameworks, and operationalize stewardship.'
     }"
+    color="muted"
     size="l"
     no-margin
   >
-    <div class="space-y-6">
-      <div class="grid gap-4 lg:grid-cols-2">
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-wrap gap-8">
         <FoundationsCard
           v-for="(format, index) in formats"
           :key="index"
@@ -44,11 +45,13 @@ defineProps<FoundationsSectionProps>()
         />
       </div>
 
-      <OutcomesCard
-        :outcomes="outcomes"
-        :primary-action="primaryAction"
-        :secondary-action="secondaryAction"
-      />
+      <div class="h-[684px] relative rounded-2xl overflow-hidden">
+        <img
+          alt=""
+          class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-2xl size-full"
+          src="/images/foundations-workshop.png"
+        />
+      </div>
     </div>
   </BaseSection>
 </template>

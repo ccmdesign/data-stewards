@@ -16,24 +16,35 @@ defineProps<Props>()
 </script>
 
 <template>
-  <BaseSection
-    id="stay-updated"
-    :content="{
-      title: 'Stay Updated',
-      tagline: 'Curated briefings, resources, and updates from the frontlines of responsible data stewardship.'
-    }"
-    size="l"
-    no-margin
-  >
-    <div class="grid gap-8 lg:grid-cols-2">
-      <StayUpdatedCard
-        v-for="(card, index) in cards"
-        :key="index"
-        :title="card.title"
-        :description="card.description"
-        :primary-cta="card.primaryCta"
-        :secondary-cta="card.secondaryCta"
-      />
+    <BaseSection
+      id="stay-updated"
+      :content="{
+        title: 'Stay Updated',
+        tagline: 'Curated briefings, resources, and updates from the frontlines of responsible data stewardship.'
+      }"
+      color="muted"
+      size="l"
+      no-margin
+    >
+    <div class="flex flex-col gap-16">
+      <div class="flex gap-8">
+        <StayUpdatedCard
+          v-for="(card, index) in cards"
+          :key="index"
+          :title="card.title"
+          :description="card.description"
+          :primary-cta="card.primaryCta"
+          :secondary-cta="card.secondaryCta"
+          class="flex-1"
+        />
+      </div>
+      <div class="h-[684px] relative rounded-2xl overflow-hidden">
+        <img
+          alt=""
+          class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-2xl size-full"
+          src="/images/community-workshop-large.png"
+        />
+      </div>
     </div>
   </BaseSection>
 </template>

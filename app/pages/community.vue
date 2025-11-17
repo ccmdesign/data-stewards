@@ -16,6 +16,7 @@ const { setPageHero } = usePageHero()
 
 setPageHero({
   showHero: true,
+  badge: 'Our Community',
   title: 'Stay connected, informed, and ready to collaborate',
   subtitle: 'Our Community',
   description: 'A network for practitioners, alumni, and partners to stay engaged.',
@@ -67,7 +68,7 @@ const stayUpdatedCards: StayUpdatedCard[] = [
   {
     title: 'Blog / Resources',
     description: 'Short articles, case studies, and interviews with data stewards in practice.',
-    secondaryCta: { label: 'Visit News Hub', to: '/news', variant: 'outline', size: 'lg' }
+    primaryCta: { label: 'Visit News Hub', to: '/news', color: 'primary', size: 'lg' }
   }
 ]
 
@@ -107,22 +108,25 @@ const supportBenefits = [
   <div class="relative">
     <BaseSection
       id="community-highlights"
-      :content="{
-        title: 'What\'s happening',
-        tagline: 'Explore active channels and touchpoints designed to keep stewardship practitioners aligned.'
-      }"
       color="muted"
       size="l"
       no-margin
     >
-      <UPageColumns class="lg:columns-3">
+      <header class="mb-8 space-y-6 text-left">
+        <h2 class="text-5xl font-semibold">Deep Dives</h2>
+        <p class="text-base text-muted-foreground">
+          Focused 1-hour masterclasses for experienced stewards who want to specialize in specific topics.
+        </p>
+      </header>
+      <div class="flex gap-8">
         <ExchangeCard
           v-for="(card, index) in highlightCards"
           :key="index"
           :title="card.title"
           :description="card.description"
+          class="flex-1"
         />
-      </UPageColumns>
+      </div>
     </BaseSection>
 
     <StayUpdatedSection :cards="stayUpdatedCards" />

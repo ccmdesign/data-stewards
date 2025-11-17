@@ -1,9 +1,16 @@
 import type { ButtonProps } from '#ui/types'
 
+export interface HeroStat {
+  value: string
+  label: string
+}
+
 export interface PageHeroData {
   title?: string
   subtitle?: string
   description?: string
+  badge?: string
+  stats?: HeroStat[]
   links?: ButtonProps[]
   showHero?: boolean
 }

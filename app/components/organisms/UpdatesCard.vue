@@ -9,6 +9,7 @@ type Post = {
   location?: string
   duration?: string
   tags?: string[]
+  image?: string | string[] | null
 }
 
 interface Props {
@@ -29,94 +30,69 @@ const formatDate = (input: string) => {
   const date = new Date(input)
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
-    day: 'numeric',
-    year: 'numeric'
+    day: 'numeric'
   }).format(date)
 }
 
-const badgeColor = computed(() => {
-  const category = props.post.category
-  if (category === 'events') {
-    return 'primary'
+const getAuthorAvatar = (author?: string) => {
+  if (author === 'Hannah Chafetz') {
+    return '/images/avatar-hannah-chafetz.png'
   }
-  if (category === 'videos') {
-    return 'error'
+  if (author === 'The GovLab') {
+    return '/images/avatar-govlab.png'
   }
-  return 'neutral'
-})
+  if (author === 'Adam Zable' || author === 'A Zahuranec') {
+    return '/images/avatar-adam-zable.png'
+  }
+  return null
+}
 </script>
 
 <template>
-  <UCard
-    class="transition-all duration-200 hover:shadow-lg"
-    :ui="{ root: 'flex flex-col', body: 'flex-1' }"
+  <NuxtLink
+    :to="`/news/${post.slug}`"
+    class="flex flex-col items-start overflow-hidden rounded-2xl transition-all duration-200 hover:shadow-lg w-full"
   >
-    <template #header>
-      <div class="flex items-center justify-between">
-        <UBadge
-          :label="categoryLabels[post.category] || 'Post'"
-          :color="badgeColor"
-          variant="soft"
-        />
-        <span class="text-sm text-muted-foreground">
+    <div class="h-[216px] relative rounded-2xl shadow-lg shrink-0 w-full bg-muted border border-border overflow-hidden">
+      <img
+        v-if="post.image"
+        :alt="post.title"
+        class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-2xl size-full"
+        :src="Array.isArray(post.image) ? post.image[0] : post.image"
+      />
+    </div>
+    <div class="flex flex-col items-start p-6 shrink-0 w-full">
+      <div class="flex gap-2 items-center pb-2 pt-0 px-0">
+        <p class="text-sm text-muted-foreground">
           {{ formatDate(post.date) }}
-        </span>
+        </p>
       </div>
-
-      <h3 class="mt-3 text-lg font-semibold leading-tight">
-        {{ post.title }}
-      </h3>
-    </template>
-
-    <p class="text-sm text-muted-foreground line-clamp-3">
-      {{ post.description }}
-    </p>
-
-    <template #footer>
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2 text-xs text-muted-foreground">
-          <template v-if="post.author">
-            <UIcon name="i-lucide-user" class="size-3" />
-            <span>{{ post.author }}</span>
-          </template>
-          <template v-if="post.category === 'events' && post.location">
-            <UIcon name="i-lucide-map-pin" class="size-3" />
-            <span>{{ post.location }}</span>
-          </template>
-          <template v-if="post.category === 'videos' && post.duration">
-            <UIcon name="i-lucide-clock" class="size-3" />
-            <span>{{ post.duration }}</span>
-          </template>
+      <div class="flex flex-col gap-1 items-start">
+        <h3 class="text-xl font-semibold leading-7 line-clamp-2">
+          {{ post.title }}
+        </h3>
+        <p class="text-base text-muted-foreground line-clamp-3">
+          {{ post.description }}
+        </p>
+      </div>
+      <div class="flex gap-2 items-center pb-0 pt-4 px-0">
+        <div class="relative rounded-[24px] shrink-0 size-8 overflow-hidden">
+          <img
+            v-if="getAuthorAvatar(post.author)"
+            :src="getAuthorAvatar(post.author)"
+            :alt="post.author"
+            class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[24px] size-full"
+          />
+          <div
+            v-else
+            class="absolute inset-0 bg-muted-foreground/20 rounded-[24px]"
+          />
         </div>
-
-        <UButton
-          :to="`/news/${post.slug}`"
-          label="Read More"
-          variant="outline"
-          color="primary"
-          size="sm"
-          icon="i-lucide-arrow-right"
-        />
+        <p class="text-sm font-medium text-foreground">
+          {{ post.author }}
+        </p>
       </div>
-
-      <div v-if="post.tags?.length" class="mt-3 flex flex-wrap gap-1">
-        <UBadge
-          v-for="tag in post.tags.slice(0, 3)"
-          :key="tag"
-          :label="tag"
-          size="sm"
-          variant="outline"
-          color="neutral"
-        />
-        <UBadge
-          v-if="post.tags.length > 3"
-          :label="`+${post.tags.length - 3} more`"
-          size="sm"
-          variant="outline"
-          color="neutral"
-        />
-      </div>
-    </template>
-  </UCard>
+    </div>
+  </NuxtLink>
 </template>
 

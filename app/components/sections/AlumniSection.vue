@@ -24,16 +24,23 @@ defineProps<Props>()
     size="l"
     no-margin
   >
-    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-      <QuoteCard
-        v-for="(testimonial, index) in testimonials"
-        :key="index"
-        :quote="testimonial.quote"
-        :author="testimonial.author"
-        :name="testimonial.name"
-        :affiliation="testimonial.affiliation"
-        :cohort="testimonial.cohort"
-      />
+    <div class="flex flex-col gap-6">
+      <UCarousel
+        v-slot="{ item }"
+        arrows
+        dots
+        :items="testimonials"
+        :ui="{ item: 'basis-full md:basis-1/2 lg:basis-1/3' }"
+        class="w-full"
+      >
+        <QuoteCard
+          :quote="item.quote"
+          :author="item.author"
+          :name="item.name"
+          :affiliation="item.affiliation"
+          :cohort="item.cohort"
+        />
+      </UCarousel>
     </div>
   </BaseSection>
 </template>
