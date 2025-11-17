@@ -52,6 +52,11 @@ const organizationOffers = [
   { title: 'Capability Roadmaps', description: '6–12 week consulting engagements to establish stewardship functions.' }
 ]
 
+const statistics = [
+  { value: '+8,000', label: 'Learners' },
+  { value: '50+', label: 'Faculty' }
+]
+
 const learningOutcomes = [
   'Understand the core principles of responsible data stewardship',
   'Design and govern data initiatives using the 4P framework (Purpose, Principles, Processes, Practices)',
@@ -83,6 +88,8 @@ useSeoMeta({
 
 <template>
   <div class="relative">
+    <StatisticsSection :stats="statistics" />
+
     <ProgramsSection :cards="programCards" :columns="2" />
 
     <FoundationsSection
