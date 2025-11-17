@@ -12,17 +12,22 @@ defineProps<StayUpdatedCardProps>()
 </script>
 
 <template>
-  <div class="bg-white border border-[#e2e8f0] rounded-2xl flex flex-col">
-    <!-- Header -->
-    <div class="h-[65px] px-6 py-4 flex items-center">
+  <UCard
+    variant="bordered"
+    radius="2xl"
+    :ui="{
+      header: 'h-[65px] px-6 py-4 flex items-center',
+      body: 'px-6 py-6',
+      footer: 'px-6 py-4'
+    }"
+  >
+    <template #header>
       <h3 class="text-2xl font-semibold">{{ title }}</h3>
-    </div>
-    <!-- Body -->
-    <div class="border-t border-b border-[#e2e8f0] px-6 py-6">
+    </template>
+    <template #default>
       <p class="text-base text-muted-foreground text-center">{{ description }}</p>
-    </div>
-    <!-- Footer -->
-    <div class="px-6 py-4">
+    </template>
+    <template #footer>
       <div class="flex flex-wrap items-center gap-4">
         <UButton
           v-if="primaryCta"
@@ -36,8 +41,8 @@ defineProps<StayUpdatedCardProps>()
           size="lg"
         />
       </div>
-    </div>
-  </div>
+    </template>
+  </UCard>
 </template>
 
 

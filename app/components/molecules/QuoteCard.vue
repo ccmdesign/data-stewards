@@ -14,7 +14,10 @@ const displayName = computed(() => props.name || props.author || 'Anonymous')
 </script>
 
 <template>
-  <UCard class="bg-muted border flex flex-col gap-4 p-6">
+  <UCard
+    variant="muted"
+    :ui="{ root: 'flex flex-col', body: 'gap-4 p-6' }"
+  >
     <div class="flex flex-col gap-8">
       <img
         alt=""

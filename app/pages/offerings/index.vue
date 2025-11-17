@@ -136,14 +136,6 @@ useSeoMeta({
           </div>
         </UContainer>
       </UPageSection>
-
-      <!-- Final CTA Section -->
-      <FinalCTASection
-        title="Ready to Transform Your Data Stewardship?"
-        description="Join our next cohort and become part of a global community of responsible data leaders."
-        :primary-action="{ label: 'Talk to Us', to: '/contact', color: 'primary', size: 'lg' }"
-        :secondary-action="{ label: 'Explore Programs', to: '#upcoming', variant: 'outline', size: 'lg' }"
-      />
     </UPageBody>
   </UPage>
 </template>

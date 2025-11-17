@@ -33,6 +33,9 @@
   --color-neutral-800: #1D293D;
   --color-neutral-900: #0F172B;
   --color-neutral-950: #020618;
+
+  /* Custom Accent Color (Navy) */
+  --color-navy: #10193f;
 }
 
 /* Pass 1: Design Tokens - CSS Variable Tokens */
@@ -60,6 +63,7 @@
   --ui-bg-elevated: var(--ui-color-neutral-100);
   --ui-bg-accented: var(--ui-color-neutral-200);
   --ui-bg-inverted: var(--ui-color-neutral-900);
+  --ui-bg-navy: var(--color-navy);
 
   /* Border Color Tokens */
   --ui-border: var(--ui-color-neutral-200);

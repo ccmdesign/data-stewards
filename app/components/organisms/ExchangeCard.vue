@@ -20,7 +20,10 @@ const getIcon = (title: string) => {
 </script>
 
 <template>
-  <div class="bg-[#f8fafc] border border-[#e2e8f0] flex flex-col gap-8 p-8">
+  <UCard
+    variant="muted"
+    :ui="{ body: 'flex flex-col gap-8 p-8' }"
+  >
     <div class="w-6 h-6">
       <img
         :src="icon || getIcon(title)"
@@ -36,6 +39,6 @@ const getIcon = (title: string) => {
         {{ description }}
       </p>
     </div>
-  </div>
+  </UCard>
 </template>
 

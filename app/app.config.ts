@@ -14,14 +14,52 @@ export default defineAppConfig({
         body: 'p-6',
         footer: 'px-6 py-4'
       },
+      variants: {
+        variant: {
+          outline: {
+            root: 'bg-default border border-default'
+          },
+          muted: {
+            root: 'bg-muted border border-default'
+          },
+          bordered: {
+            root: 'bg-default border border-default',
+            body: 'border-t border-b border-default'
+          }
+        },
+        radius: {
+          lg: {
+            root: 'rounded-lg'
+          },
+          xl: {
+            root: 'rounded-xl'
+          },
+          '2xl': {
+            root: 'rounded-2xl'
+          }
+        }
+      },
       defaultVariants: {
-        variant: 'outline'
+        variant: 'outline',
+        radius: 'lg'
       }
     },
 
     button: {
       slots: {
         base: 'px-3 py-2 gap-2'
+      },
+      variants: {
+        variant: {
+          solid: '',
+          outline: '',
+          soft: '',
+          ghost: '',
+          link: '',
+          'light-outline': {
+            base: 'bg-muted border-accented text-foreground hover:bg-elevated'
+          }
+        }
       },
       defaultVariants: {
         size: 'md',

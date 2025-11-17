@@ -76,14 +76,14 @@ onMounted(() => {
     <!-- Hero Section -->
     <section
       v-if="heroData?.showHero"
-      class="relative isolate overflow-hidden bg-[#10193f] rounded-bl-[32px] rounded-br-[32px]"
+      class="relative isolate overflow-hidden bg-navy rounded-bl-[32px] rounded-br-[32px]"
     >
       <!-- Hero Background Overlay -->
       <div
         aria-hidden="true"
         class="absolute inset-0 pointer-events-none rounded-bl-[32px] rounded-br-[32px]"
       >
-        <div class="absolute bg-[#10193f] inset-0 rounded-bl-[32px] rounded-br-[32px]" />
+        <div class="absolute bg-navy inset-0 rounded-bl-[32px] rounded-br-[32px]" />
         <div class="absolute inset-0 mix-blend-overlay opacity-75 overflow-hidden rounded-bl-[32px] rounded-br-[32px]">
           <img
             alt=""
@@ -114,7 +114,7 @@ onMounted(() => {
                 <h1 :class="isOfferingsPage ? 'text-5xl font-semibold leading-[48px] text-white' : 'text-6xl font-semibold leading-[60px] text-white'">
                   {{ heroData.title }}
                 </h1>
-                <p :class="isOfferingsPage ? 'text-xl leading-6 text-[#62748e]' : 'text-xl leading-8 text-[#90a1b9]'">
+                <p :class="isOfferingsPage ? 'text-xl leading-6 text-muted-foreground' : 'text-xl leading-8 text-muted-foreground'">
                   {{ heroData.description }}
                 </p>
               </div>
