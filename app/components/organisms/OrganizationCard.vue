@@ -11,6 +11,10 @@ defineProps<OrganizationCardProps>()
   <UPageCard
     :title="title"
     :description="description"
+    variant="outline"
+    orientation="vertical"
+    :reverse="false"
+    icon="i-lucide-lightbulb"
   />
 </template>
 
