@@ -10,28 +10,27 @@ defineProps<FoundationsCardProps>()
 
 <template>
   <UCard
-    variant="bordered"
     :ui="{
-      root: 'min-w-[400px] flex-1',
-      header: 'h-[65px] px-6 py-4',
-      body: 'px-6 py-6'
+      root: 'flex-1 shadow-lg border-0 ring-0',
+      body: 'flex flex-col gap-4 p-6'
     }"
   >
-    <template #header>
-      <div class="flex gap-2 items-center">
-        <span class="flex-1 text-xl font-semibold leading-7">{{ title }}</span>
+    <div class="flex flex-col gap-2">
+      <h3 class="text-lg font-bold text-gray-900">
+        {{ title }}
+      </h3>
+      <div>
         <UBadge
           variant="subtle"
-          color="primary"
-          class="text-[10px] leading-3 px-1.5 py-1"
+          class="bg-blue-50 text-blue-500 font-medium px-2.5 py-0.5 text-xs rounded-full"
         >
           {{ badge }}
         </UBadge>
       </div>
-    </template>
-    <template #default>
-      <p class="text-base text-muted-foreground">{{ description }}</p>
-    </template>
+    </div>
+    <p class="text-sm text-gray-500 leading-relaxed">
+      {{ description }}
+    </p>
   </UCard>
 </template>
 

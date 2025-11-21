@@ -3,7 +3,8 @@ import type { ButtonProps } from '#ui/types'
 
 interface DeepdiveCard {
   title: string
-  image: string
+  image?: string
+  icon?: string
   to?: string
 }
 
@@ -27,25 +28,14 @@ defineProps<Props>()
     no-margin
   >
     <div class="flex flex-col gap-8">
-      <div class="flex flex-col gap-8">
-        <div class="flex gap-8">
-          <DeepdiveCard
-            v-for="(topic, index) in topics.slice(0, 3)"
-            :key="index"
-            :title="topic.title"
-            :icon="topic.icon"
-            :to="topic.to"
-          />
-        </div>
-        <div class="flex gap-8">
-          <DeepdiveCard
-            v-for="(topic, index) in topics.slice(3, 6)"
-            :key="index + 3"
-            :title="topic.title"
-            :icon="topic.icon"
-            :to="topic.to"
-          />
-        </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <DeepdiveCard
+          v-for="(topic, index) in topics"
+          :key="index"
+          :title="topic.title"
+          :icon="topic.icon"
+          :to="topic.to"
+        />
       </div>
       <div v-if="primaryAction || secondaryAction" class="flex justify-center gap-6">
         <UButton

@@ -29,10 +29,11 @@ const getLevelColor = (level?: OfferingLevel): 'success' | 'warning' | 'error' |
 
 const isUpcoming = computed(() => props.variant === 'upcoming')
 const cardClasses = computed(() => {
+  const base = 'transition-shadow shadow-md hover:shadow-lg ring-1 ring-transparent divide-y-0'
   if (isUpcoming.value) {
-    return 'w-full transition-shadow hover:shadow-lg flex flex-col'
+    return `w-full flex flex-col ${base}`
   }
-  return 'h-full transition-shadow hover:shadow-lg'
+  return `h-full ${base}`
 })
 
 const cardUi = computed(() => {
@@ -51,20 +52,8 @@ const titleClasses = computed(() => {
   <UCard
     :class="cardClasses"
     :ui="cardUi"
+    class="border-none"
   >
-    <template #header>
-      <div class="flex flex-wrap gap-2">
-        <UBadge variant="subtle" color="primary">{{ offering.meta?.program }}</UBadge>
-        <UBadge
-          v-if="offering.meta?.level"
-          variant="soft"
-          :color="getLevelColor(offering.meta?.level)"
-        >
-          {{ formatLevelLabel(offering.meta?.level) }}
-        </UBadge>
-      </div>
-    </template>
-
     <div :class="isUpcoming ? '' : 'flex flex-col gap-4'">
       <div class="space-y-2">
         <h3 :class="titleClasses">
@@ -73,8 +62,8 @@ const titleClasses = computed(() => {
         <p :class="isUpcoming ? 'text-muted-foreground' : 'text-sm text-muted-foreground'">
           {{ offering.meta?.summary ?? offering.description }}
         </p>
-      </div>
-      <dl class="flex flex-wrap gap-4 text-sm text-muted-foreground">
+
+        <dl class="flex flex-wrap gap-4 text-sm text-muted-foreground">
         <div class="flex items-center gap-2">
           <UIcon name="i-lucide-layers" class="h-4 w-4" />
           <span>{{ offering.meta?.format }}</span>
@@ -88,6 +77,18 @@ const titleClasses = computed(() => {
           <span>{{ [offering.meta?.location?.city, offering.meta?.location?.country].filter(Boolean).join(', ') }}</span>
         </div>
       </dl>
+      <div class="flex flex-wrap gap-2">
+        <UBadge variant="subtle" color="primary">{{ offering.meta?.program }}</UBadge>
+        <UBadge
+          v-if="offering.meta?.level"
+          variant="soft"
+          :color="getLevelColor(offering.meta?.level)"
+        >
+          {{ formatLevelLabel(offering.meta?.level) }}
+        </UBadge>
+      </div>
+    </div>
+      
     </div>
 
     <template #footer>
@@ -119,3 +120,8 @@ const titleClasses = computed(() => {
   </UCard>
 </template>
 
+<style scoped>
+h2 {
+  color: var(--color-primary);
+}
+</style>

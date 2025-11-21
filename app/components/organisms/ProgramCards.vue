@@ -30,27 +30,12 @@ const getIcon = (title: string) => {
 
 <template>
   <div class="grid gap-8 grid-cols-1 md:grid-cols-2">
-    <UCard
+    <ProgramCard
       v-for="(card, index) in cards"
       :key="index"
-      variant="muted"
-      :ui="{ body: 'flex flex-col gap-8 p-8' }"
-    >
-      <div class="flex flex-col gap-8">
-        <UIcon
-          :name="card.icon || getIcon(card.title)"
-          class="w-6 h-6 text-primary"
-        />
-        <div class="flex flex-col gap-2">
-          <h3 class="text-2xl font-semibold">
-            {{ card.title }}
-          </h3>
-          <p class="text-[15px] text-muted-foreground">
-            {{ card.description }}
-          </p>
-        </div>
-      </div>
-    </UCard>
+      v-bind="card"
+      :icon="card.icon || getIcon(card.title)"
+    />
   </div>
 </template>
 

@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
   <BaseSection
     id="programs"
     :content="{
-      title: 'Organizational Support',
+      title: 'Our Programs',
       tagline: 'From foundational bootcamps to deep dives, we offer comprehensive training for every stage of your data stewardship journey.'
     }"
     no-margin

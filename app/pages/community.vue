@@ -106,30 +106,41 @@ const supportBenefits = [
 
 <template>
   <div class="relative">
-    <BaseSection
-      id="community-highlights"
-      color="muted"
-      size="l"
-      no-margin
+    <OverlaySection
+      id="deep-dives"
+      title="Deep Dives"
+      tagline="Focused 1-hour masterclasses for experienced stewards who want to specialize in specific topics."
+      image-src="/images/deep-dives-masterclass.jpg"
+      image-alt="Deep Dives Masterclass"
     >
-      <header class="mb-8 space-y-6 text-left">
-        <h2 class="text-5xl font-semibold">Deep Dives</h2>
-        <p class="text-base text-muted-foreground">
-          Focused 1-hour masterclasses for experienced stewards who want to specialize in specific topics.
-        </p>
-      </header>
-      <div class="flex gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <ExchangeCard
           v-for="(card, index) in highlightCards"
           :key="index"
           :title="card.title"
           :description="card.description"
-          class="flex-1"
         />
       </div>
-    </BaseSection>
+    </OverlaySection>
 
-    <StayUpdatedSection :cards="stayUpdatedCards" />
+    <OverlaySection
+      id="stay-updated"
+      title="Stay Updated"
+      tagline="Curated briefings, resources, and updates from the frontlines of responsible data stewardship."
+      image-src="/images/community-workshop-large.png"
+      image-alt="Community Workshop"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <StayUpdatedCard
+          v-for="(card, index) in stayUpdatedCards"
+          :key="index"
+          :title="card.title"
+          :description="card.description"
+          :primary-cta="card.primaryCta"
+          :secondary-cta="card.secondaryCta"
+        />
+      </div>
+    </OverlaySection>
 
     <CommunitySection :cards="collaborationCards" />
 

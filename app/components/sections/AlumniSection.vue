@@ -1,10 +1,9 @@
 <script setup lang="ts">
 interface Testimonial {
   quote: string
-  author?: string
-  name?: string
+  name: string
   affiliation?: string
-  cohort?: string
+  avatar?: string
 }
 
 interface Props {
@@ -24,21 +23,21 @@ defineProps<Props>()
     size="l"
     no-margin
   >
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-6 max-w-5xl mx-auto">
       <UCarousel
         v-slot="{ item }"
-        arrows
         dots
         :items="testimonials"
-        :ui="{ item: 'basis-full md:basis-1/2 lg:basis-1/3' }"
+        :ui="{ 
+          item: 'basis-full',
+        }"
         class="w-full"
       >
-        <QuoteCard
+        <AlumniCard
           :quote="item.quote"
-          :author="item.author"
           :name="item.name"
           :affiliation="item.affiliation"
-          :cohort="item.cohort"
+          :avatar="item.avatar"
         />
       </UCarousel>
     </div>

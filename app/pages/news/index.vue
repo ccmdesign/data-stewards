@@ -67,6 +67,14 @@ useSeoMeta({
   title: 'News & Updates',
   description: 'Stay updated with the latest news, events, interviews, and videos from our community.'
 })
+
+const formatDate = (input: string) => {
+  const date = new Date(input)
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric'
+  }).format(date)
+}
 </script>
 
 <template>
@@ -82,11 +90,15 @@ useSeoMeta({
     <!-- Posts Grid Section -->
     <div class="px-4 sm:px-7 md:px-14 lg:px-28 pb-32">
       <div class="flex flex-wrap gap-8 justify-center lg:justify-start">
-        <UpdatesCard
+        <PublicationCard
           v-for="post in filteredPosts"
           :key="post.slug"
-          :post="post"
-          :category-labels="categoryLabels"
+          :title="post.title"
+          :description="post.description"
+          :date="formatDate(post.date)"
+          :author="post.author || ''"
+          :image="Array.isArray(post.image) ? post.image[0] : post.image"
+          :to="`/news/${post.slug}`"
           class="w-full sm:w-[calc(50%-16px)] lg:w-[384px]"
         />
 

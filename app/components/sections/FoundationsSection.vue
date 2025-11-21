@@ -34,23 +34,30 @@ defineProps<FoundationsSectionProps>()
     size="l"
     no-margin
   >
-    <div class="flex flex-col gap-8">
-      <div class="flex flex-wrap gap-8">
-        <FoundationsCard
-          v-for="(format, index) in formats"
-          :key="index"
-          :title="format.title"
-          :badge="format.badge"
-          :description="format.description"
-        />
-      </div>
-
-      <div class="h-[684px] relative rounded-2xl overflow-hidden">
+    <div class="relative">
+      <!-- Background Image Container -->
+      <div class="h-[500px] relative rounded-2xl overflow-hidden">
         <img
           alt=""
-          class="absolute inset-0 max-w-none object-cover pointer-events-none rounded-2xl size-full"
+          class="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
           src="/images/foundations-workshop.png"
         />
+        <!-- Overlay to ensure text readability if needed, though design shows clean image -->
+        <div class="absolute inset-0 bg-black/10" />
+      </div>
+
+      <!-- Cards Container - Overlapping -->
+      <div class="relative -mt-32 px-8 pb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <FoundationsCard
+            v-for="(format, index) in formats"
+            :key="index"
+            :title="format.title"
+            :badge="format.badge"
+            :description="format.description"
+            class="bg-white"
+          />
+        </div>
       </div>
     </div>
   </BaseSection>

@@ -3,7 +3,7 @@ import type { ButtonProps } from '#ui/types'
 import { usePageHero } from '~/composables/usePageHero'
 
 const heroLinks: ButtonProps[] = [
-  { label: 'Explore Programs', to: '#programs', color: 'primary', size: 'lg' }
+  { label: 'Explore Programs', to: '#programs', color: 'primary', size: 'lg', icon: 'i-lucide-arrow-right', trailing: true }
 ]
 
 const { setPageHero } = usePageHero()
@@ -21,10 +21,10 @@ setPageHero({
 })
 
 const programCards = [
-  { title: 'Foundations', description: 'Bootcamps for building stewardship maturity', icon: 'i-lucide-graduation-cap' },
-  { title: 'Exchange', description: 'Network with global practitioners', icon: 'i-lucide-lightbulb' },
-  { title: 'Deep Dives', description: 'Advanced masterclasses for specialists', icon: 'i-lucide-users-round' },
-  { title: 'For Your Organization', description: 'Tailored enterprise solutions', icon: 'i-lucide-building-2' }
+  { title: 'Foundations', description: 'Bootcamps for building stewardship maturity', icon: 'i-lucide-graduation-cap', image: '/images/foundations-bootcamp.jpg' },
+  { title: 'Exchange', description: 'Network with global practitioners', icon: 'i-lucide-lightbulb', image: '/images/exchange-network.jpg' },
+  { title: 'Deep Dives', description: 'Advanced masterclasses for specialists', icon: 'i-lucide-users-round', image: '/images/deep-dives-masterclass.jpg' },
+  { title: 'For Your Organization', description: 'Tailored enterprise solutions', icon: 'i-lucide-building-2', image: '/images/organization-solutions.jpg' }
 ]
 
 const bootcampFormats = [

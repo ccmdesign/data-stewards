@@ -1,5 +1,5 @@
 ---
-image: /images/light/connect.svg
+image: /images/faculty/andrew-zahuranec.jpg
 name: "Andrew J. Zahuranec"
 role: "Course Facilitator"
 category: "instructor"

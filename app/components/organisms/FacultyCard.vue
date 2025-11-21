@@ -28,40 +28,38 @@ const handleClick = () => {
 </script>
 
 <template>
-  <UCard
-    as="article"
-    class="h-full overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-    :ui="{ header: 'p-0 sm:px-0', body: 'flex-1' }"
+  <div
+    class="group flex flex-col gap-4 cursor-pointer"
     @click="handleClick"
   >
-    <template #header>
-      <div class="relative aspect-square w-full overflow-hidden bg-muted rounded-t-lg">
-        <img
-          :src="faculty.avatar.src"
-          :alt="faculty.avatar.alt || `${faculty.name} headshot`"
-          class="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-105"
-        >
-      </div>
-    </template>
+    <!-- Image -->
+    <div class="aspect-square w-full overflow-hidden rounded-xl bg-gray-100 relative shadow-md">
+      <img
+        :src="faculty.avatar.src"
+        :alt="faculty.avatar.alt || `${faculty.name} headshot`"
+        class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+      >
+    </div>
 
-    <template #default>
-      <div class="space-y-3">
-        <div>
-          <h3 class="text-lg font-semibold">
-            {{ faculty.name }}
-          </h3>
-          <p class="text-sm text-muted-foreground">
-            {{ faculty.description }}
-          </p>
-          <span
-            v-if="faculty.categoryLabel"
-            class="inline-block mt-2 text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full"
-          >
-            {{ faculty.categoryLabel }}
-          </span>
-        </div>
+    <!-- Content -->
+    <div class="flex flex-col gap-3 px-4">
+      <!-- Name -->
+      <h3 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors">
+        {{ faculty.name }}
+      </h3>
+
+      <!-- Description -->
+      <p class="text-gray-600 line-clamp-3 leading-relaxed">
+        {{ faculty.description }}
+      </p>
+
+      <!-- Category -->
+      <div v-if="faculty.categoryLabel">
+        <span class="inline-block text-xs font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
+          {{ faculty.categoryLabel }}
+        </span>
       </div>
-    </template>
-  </UCard>
+    </div>
+  </div>
 </template>
 
