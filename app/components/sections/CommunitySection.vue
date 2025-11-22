@@ -27,12 +27,21 @@ withDefaults(defineProps<Props>(), {
     >
       <div id="join-our-community" class="flex flex-col gap-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <CollaborationCard
+          <ContentCard
             v-for="(card, index) in cards"
             :key="index"
             :title="card.title"
-            :body="card.body"
-          />
+            :description="card.body"
+          >
+            <template #footer>
+              <UButton
+                label="Contact Us"
+                to="/contact"
+                color="primary"
+                size="lg"
+              />
+            </template>
+          </ContentCard>
         </div>
       </div>
   </BaseSection>

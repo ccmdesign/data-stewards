@@ -49,7 +49,7 @@ defineProps<FoundationsSectionProps>()
       <!-- Cards Container - Overlapping -->
       <div class="relative -mt-32 px-8 pb-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <FoundationsCard
+          <ContentCard
             v-for="(format, index) in formats"
             :key="index"
             :title="format.title"

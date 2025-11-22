@@ -28,7 +28,7 @@ defineProps<Props>()
       <div class="flex flex-col gap-10">
         <div class="flex flex-col gap-4">
           <h2 class="text-4xl font-bold text-navy">Why support a data stewards course?</h2>
-          <p class="text-lg text-gray-600 leading-relaxed">
+          <p class="text-lg text-gray-600 leading-relaxed max-w-[60ch]">
             Backing this work multiplies impact across organizations, sectors, and regions.
           </p>
         </div>

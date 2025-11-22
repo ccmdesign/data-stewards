@@ -24,7 +24,7 @@ defineProps<Props>()
     :primary-action="primaryAction"
   >
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <OrganizationCard
+      <ContentCard
         v-for="(offer, index) in offers"
         :key="index"
         :title="offer.title"

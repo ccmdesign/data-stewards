@@ -28,15 +28,26 @@ defineProps<Props>()
     >
     <div class="flex flex-col gap-16">
       <div class="flex gap-8">
-        <StayUpdatedCard
+        <ContentCard
           v-for="(card, index) in cards"
           :key="index"
           :title="card.title"
           :description="card.description"
-          :primary-cta="card.primaryCta"
-          :secondary-cta="card.secondaryCta"
           class="flex-1"
-        />
+        >
+          <template #footer v-if="card.primaryCta || card.secondaryCta">
+            <div class="flex gap-3">
+              <UButton
+                v-if="card.primaryCta"
+                v-bind="card.primaryCta"
+              />
+              <UButton
+                v-if="card.secondaryCta"
+                v-bind="card.secondaryCta"
+              />
+            </div>
+          </template>
+        </ContentCard>
       </div>
       <div class="h-[684px] relative rounded-2xl overflow-hidden">
         <img

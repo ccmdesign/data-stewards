@@ -16,7 +16,7 @@ defineProps<Props>()
     <h2 v-if="title" class="text-4xl font-bold text-navy">
       {{ title }}
     </h2>
-    <p v-if="tagline" class="text-lg">
+    <p v-if="tagline" class="text-lg max-w-[60ch] mx-auto">
       {{ tagline }}
     </p>
   </header>

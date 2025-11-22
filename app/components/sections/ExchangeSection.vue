@@ -38,7 +38,7 @@ defineProps<Props>()
       <div class="flex flex-col gap-10">
         <div class="flex flex-col gap-4">
           <h2 class="text-4xl font-bold text-navy">Exchange</h2>
-          <p class="text-lg text-gray-600 leading-relaxed">
+          <p class="text-lg text-gray-600 leading-relaxed max-w-[60ch]">
             A vibrant network for practitioners, alumni, and partners to stay engaged and share knowledge.
           </p>
         </div>

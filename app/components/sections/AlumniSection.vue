@@ -33,7 +33,7 @@ defineProps<Props>()
         }"
         class="w-full"
       >
-        <AlumniCard
+        <QuoteCard
           :quote="item.quote"
           :name="item.name"
           :affiliation="item.affiliation"

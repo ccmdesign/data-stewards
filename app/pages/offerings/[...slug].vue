@@ -264,7 +264,6 @@ useSeoMeta({
                 :quote="randomTestimonial.quote"
                 :name="randomTestimonial.name"
                 :affiliation="randomTestimonial.affiliation"
-                :cohort="randomTestimonial.cohort"
               />
             </section>
           </div>

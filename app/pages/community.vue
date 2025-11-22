@@ -114,7 +114,7 @@ const supportBenefits = [
       image-alt="Deep Dives Masterclass"
     >
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <ExchangeCard
+        <ContentCard
           v-for="(card, index) in highlightCards"
           :key="index"
           :title="card.title"
@@ -131,14 +131,25 @@ const supportBenefits = [
       image-alt="Community Workshop"
     >
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <ExchangeCard
+        <ContentCard
           v-for="(card, index) in stayUpdatedCards"
           :key="index"
           :title="card.title"
           :description="card.description"
-          :primary-cta="card.primaryCta"
-          :secondary-cta="card.secondaryCta"
-        />
+        >
+          <template #footer v-if="card.primaryCta || card.secondaryCta">
+            <div class="flex gap-3">
+              <UButton
+                v-if="card.primaryCta"
+                v-bind="card.primaryCta"
+              />
+              <UButton
+                v-if="card.secondaryCta"
+                v-bind="card.secondaryCta"
+              />
+            </div>
+          </template>
+        </ContentCard>
       </div>
     </OverlaySection>
 

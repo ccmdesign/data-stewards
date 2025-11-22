@@ -117,7 +117,8 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
   <div class="relative">
 
     <BaseSection class="space-y-12">
-      <UCard :ui="{ root: 'ring-0 shadow-md' }">
+      <div class="max-w-[60ch] mx-auto space-y-12">
+        <UCard :ui="{ root: 'shadow-lg border-0 ring-0' }">
         <div class="flex items-start gap-4">
           <div class="rounded-full bg-muted p-3 text-foreground">
             <UIcon name="i-lucide-mail" class="h-6 w-6" />
@@ -132,7 +133,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
         </div>
       </UCard>
 
-      <UCard id="contact-form" :ui="{ root: 'ring-0 shadow-md', body: 'px-8 py-10 sm:p-12' }">
+        <div id="contact-form" class="px-8 py-10 sm:p-12">
         <div class="space-y-8">
           <div class="space-y-2">
             <h2 class="text-2xl font-semibold">Send us a message</h2>
@@ -144,25 +145,25 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
           <UForm
             :state="state"
             :validate="validate"
-            class="space-y-6"
+            class="space-y-8"
             @submit="onSubmit"
           >
-            <div class="grid gap-6 md:grid-cols-2">
+            <div class="grid gap-8">
               <UFormField label="Full name" name="name" required>
-                <UInput v-model="state.name" autocomplete="name" placeholder="Your name" class="w-full" />
+                <UInput v-model="state.name" size="xl" autocomplete="name" placeholder="Your name" class="w-full" />
               </UFormField>
 
               <UFormField label="Work email" name="email" required>
-                <UInput v-model="state.email" type="email" autocomplete="email" placeholder="you@company.com" class="w-full" />
+                <UInput v-model="state.email" size="xl" type="email" autocomplete="email" placeholder="you@company.com" class="w-full" />
               </UFormField>
 
               <UFormField label="Organization" name="organization">
-                <UInput v-model="state.organization" autocomplete="organization" placeholder="Company or team" class="w-full" />
+                <UInput v-model="state.organization" size="xl" autocomplete="organization" placeholder="Company or team" class="w-full" />
               </UFormField>
             </div>
 
             <UFormField label="How can we help?" name="message" required>
-              <UTextarea v-model="state.message" min-rows="4" placeholder="Share a bit about your project, goals, and timelines." class="w-full" />
+              <UTextarea v-model="state.message" size="xl" class="w-full" :ui="{ base: 'h-[320px]' }" placeholder="Share a bit about your project, goals, and timelines." />
             </UFormField>
 
             <div class="flex flex-wrap items-center justify-between gap-4">
@@ -179,7 +180,8 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
             </div>
           </UForm>
         </div>
-      </UCard>
+        </div>
+      </div>
     </BaseSection>
   </div>
 </template>

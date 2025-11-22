@@ -29,12 +29,13 @@ defineProps<Props>()
   >
     <div class="flex flex-col gap-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <DeepdiveCard
+        <FeatureCard
           v-for="(topic, index) in topics"
           :key="index"
           :title="topic.title"
           :icon="topic.icon"
           :to="topic.to"
+          variant="solid"
         />
       </div>
       <div v-if="primaryAction || secondaryAction" class="flex justify-center gap-6">
