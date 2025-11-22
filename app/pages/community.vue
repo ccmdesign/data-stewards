@@ -125,13 +125,13 @@ const supportBenefits = [
 
     <OverlaySection
       id="stay-updated"
-      title="Stay Updated"
+      title="Stay Connected"
       tagline="Curated briefings, resources, and updates from the frontlines of responsible data stewardship."
       image-src="/images/community-workshop-large.png"
       image-alt="Community Workshop"
     >
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <StayUpdatedCard
+        <ExchangeCard
           v-for="(card, index) in stayUpdatedCards"
           :key="index"
           :title="card.title"

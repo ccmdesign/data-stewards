@@ -7,7 +7,6 @@ category: blog
 tags:
   - Youth Engagement
   - Digital Well-Being
-image: /images/news-post-5.png
 slug: youth-assembly-digital-wellbeing
 featured: false
 ---

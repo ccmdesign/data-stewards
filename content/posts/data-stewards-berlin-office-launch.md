@@ -6,7 +6,6 @@ author: Adrienne Schmoeker
 category: blog
 tags:
   - Course Impact
-image: /images/light/connect.svg
 slug: berlin-cohort-stewardship-office
 featured: true
 ---

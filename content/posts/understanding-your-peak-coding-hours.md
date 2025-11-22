@@ -6,7 +6,6 @@ author: Sébastien Chopin
 category: blog
 tags:
   - Analytics
-image: /images/light/track.svg
 slug: understanding-your-peak-coding-hours
 ---
 

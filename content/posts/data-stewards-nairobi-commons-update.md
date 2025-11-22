@@ -6,7 +6,6 @@ author: Lucia Martens
 category: blog
 tags:
   - Community Stories
-image: /images/light/line-5.svg
 slug: nairobi-data-commons-dashboard
 ---
 

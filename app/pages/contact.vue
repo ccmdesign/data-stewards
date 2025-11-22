@@ -105,7 +105,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
     toast.add({
       title: 'Submission failed',
       description: 'Something went wrong. Please try again in a moment.',
-      color: 'danger'
+      color: 'error'
     })
   } finally {
     isSubmitting.value = false
@@ -117,7 +117,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
   <div class="relative">
 
     <BaseSection class="space-y-12">
-      <UCard variant="subtle">
+      <UCard :ui="{ root: 'ring-0 shadow-md' }">
         <div class="flex items-start gap-4">
           <div class="rounded-full bg-muted p-3 text-foreground">
             <UIcon name="i-lucide-mail" class="h-6 w-6" />
@@ -132,7 +132,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
         </div>
       </UCard>
 
-      <UCard id="contact-form">
+      <UCard id="contact-form" :ui="{ root: 'ring-0 shadow-md', body: 'px-8 py-10 sm:p-12' }">
         <div class="space-y-8">
           <div class="space-y-2">
             <h2 class="text-2xl font-semibold">Send us a message</h2>

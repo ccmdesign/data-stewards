@@ -13,7 +13,7 @@ defineProps<Props>()
     <p v-if="brow" class="text-sm font-semibold color-primary">
       {{ brow }}
     </p>
-    <h2 v-if="title" class="text-4xl font-semibold">
+    <h2 v-if="title" class="text-4xl font-bold text-navy">
       {{ title }}
     </h2>
     <p v-if="tagline" class="text-lg">

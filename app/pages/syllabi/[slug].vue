@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { ButtonProps } from '#ui/types'
+import { usePageHero } from '~/composables/usePageHero'
 
 const route = useRoute()
 const slug = route.params.slug as string
+const { setPageHero } = usePageHero()
 
 interface SyllabusDocument {
   title: string
@@ -26,7 +28,7 @@ interface SyllabusDocument {
 }
 
 const { data: syllabusData } = await useAsyncData(`syllabi-${slug}`, () =>
-  queryCollection('syllabi').path(`/syllabi/${slug}`).first<SyllabusDocument>()
+  queryCollection('syllabi').path(`/syllabi/${slug}`).first()
 )
 
 const syllabus = computed<SyllabusDocument>(() => {
@@ -117,25 +119,18 @@ useSeoMeta({
   title: `${syllabus.value.title} | Data Stewardship Academy`,
   description: metaDescription.value
 })
+
+setPageHero({
+  showHero: true,
+  title: syllabus.value.title,
+  subtitle: formatProgram(syllabus.value.program),
+  description: metaDescription.value,
+  links: actionLinks.value
+})
 </script>
 
 <template>
   <UPage>
-    <UPageHeader
-      :headline="formatProgram(syllabus.program)"
-      :title="syllabus.title"
-      :description="metaDescription"
-    >
-      <template v-if="actionLinks.length" #footer>
-        <div class="flex flex-wrap gap-3">
-          <UButton
-            v-for="link in actionLinks"
-            :key="link.label"
-            v-bind="link"
-          />
-        </div>
-      </template>
-    </UPageHeader>
 
     <UPageBody>
       <UContainer>

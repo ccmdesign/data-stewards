@@ -6,7 +6,6 @@ author: Benjamin Canac
 category: blog
 tags:
   - Tips & Tricks
-image: /images/light/optimize.svg
 slug: 10-tips-for-better-focus-time
 ---
 

@@ -6,7 +6,6 @@ author: Stefaan Verhulst
 category: blog
 tags:
   - Research Insights
-image: /images/light/track.svg
 slug: social-license-playbook-beta
 ---
 

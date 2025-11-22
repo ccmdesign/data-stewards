@@ -6,7 +6,6 @@ author: Sarah Moriceau
 category: blog
 tags:
   - Productivity
-image: /images/light/connect.svg
 slug: getting-started-with-ai-powered-development
 ---
 

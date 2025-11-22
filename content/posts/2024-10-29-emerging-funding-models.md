@@ -7,7 +7,6 @@ category: blog
 tags:
   - Research
   - Data Commons
-image: /images/news-post-1.png
 slug: emerging-funding-models
 featured: true
 ---

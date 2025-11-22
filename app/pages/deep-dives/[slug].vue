@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { usePageHero } from '~/composables/usePageHero'
+
 const route = useRoute()
 const slug = route.params.slug as string
+const { setPageHero } = usePageHero()
 
 const { data: pageData } = await useAsyncData(`deep-dive-${slug}`, () =>
   queryCollection('deepDives')
@@ -36,32 +39,32 @@ const detailItems = computed(() => (
 const lecturer = computed(() => page.value?.lecturer)
 const masterclass = computed(() => page.value?.masterclass)
 const cta = computed(() => page.value?.cta)
+
+// Set page hero data
+const heroLinks = computed(() => {
+  if (!cta.value) return undefined
+  
+  return [{
+    label: cta.value.label,
+    to: cta.value.to,
+    target: cta.value.target ?? '_self',
+    color: 'primary' as const,
+    size: 'lg' as const
+  }]
+})
+
+setPageHero({
+  showHero: true,
+  title: page.value.title,
+  subtitle: masterclass.value?.title ?? 'Deep Dives',
+  badge: masterclass.value?.subtitle,
+  description: page.value.description,
+  links: heroLinks.value
+})
 </script>
 
 <template>
   <UPage>
-    <UPageHeader
-      :headline="masterclass?.title ?? 'Deep Dives'"
-      :title="page.title"
-      :description="page.description"
-    >
-      <template v-if="masterclass?.subtitle || cta" #footer>
-        <div class="space-y-3">
-          <p v-if="masterclass?.subtitle" class="text-sm text-muted-foreground">
-            {{ masterclass.subtitle }}
-          </p>
-
-          <UButton
-            v-if="cta"
-            :label="cta.label"
-            :to="cta.to"
-            :target="cta.target ?? '_self'"
-            color="primary"
-            size="lg"
-          />
-        </div>
-      </template>
-    </UPageHeader>
 
     <UPageBody>
       <UContainer>
@@ -100,7 +103,7 @@ const cta = computed(() => page.value?.cta)
 
         <BaseSection :content="{ title: 'Overview' }">
           <div class="prose max-w-none dark:prose-invert">
-            <ContentRenderer :value="page" />
+            <ContentRenderer v-if="page" :value="page" />
           </div>
         </BaseSection>
       </UContainer>
